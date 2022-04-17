@@ -52,6 +52,17 @@ return [
     },
 
     /**
+     * The default note body
+     */
+    'noteplan_new_note' => function(string $title) {
+        return <<<MD
+        ---
+        title: {$title}
+        ---
+        MD;
+    },
+
+    /**
      * SQLite snippet options
      * I have no idea what the "size" does _exactly_, this was trial and error
      * 

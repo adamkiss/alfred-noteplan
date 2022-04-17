@@ -37,6 +37,8 @@ try {
         $items []= $item;
     }
 
+    $items []= alfred_create_note_item($originalQuery, $config);
+
     echo alfred_itemize($items);
 } catch (\Throwable $th) {
     echo alfred_return_error($th);

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/noteplan.php';
+
 function alfred_itemize(array $items): string {
     return json_encode(['items' => $items]);
 }
@@ -24,5 +26,30 @@ function alfred_query_to_sqlite(array $argv): array {
     return [
         $originalQuery,
         $sqliteQuery
+    ];
+}
+
+function alfred_create_note_item(string $title, array $config) {
+    return [
+        'title' => $title,
+        'subtitle' => 'Create new note',
+        'arg' => noteplan_callback_url('addNote', [
+            'text' => $config['noteplan_new_note']($title),
+            'openNote' => 'yes',
+            'useExistingSubwindow' => 'yes',
+        ]),
+        'icon' => [
+            'path' => __DIR__ . "/icons/noteplan-note.png",
+        ],
+        "mods" => [
+            "cmd" => [
+                "arg" => noteplan_callback_url('addNote', [
+                    'text' => $config['noteplan_new_note']($title),
+                    'openNote' => 'yes',
+                    'useExistingSubwindow' => 'yes',
+                ]),
+                "subtitle" => "Create a note in a new window"
+            ]
+        ]
     ];
 }
