@@ -8,6 +8,19 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
+		<key>04E80ED4-9863-46BE-A7C9-47FC4E99F469</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1186B4CE-C58A-4A3A-9F74-21F4ACADBB0C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
 		<array>
 			<dict>
@@ -180,11 +193,11 @@ php run-search-sqlite.php "{query}"</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>nclr</string>
+				<string>nref</string>
 				<key>subtext</key>
-				<string>Recache noteplan data into SQLite</string>
+				<string>Refresh SQLite cache with noteplan data</string>
 				<key>text</key>
-				<string>Noteplan: recache</string>
+				<string>Noteplan: refresh cache</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -357,17 +370,99 @@ php run-search-sqlite.php "{query}"</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string></string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>1186B4CE-C58A-4A3A-9F74-21F4ACADBB0C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>njs</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Looking for {query}</string>
+				<key>script</key>
+				<string>/usr/local/bin/node nodejs/search.js "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Full text search with Node JS</string>
+				<key>title</key>
+				<string>Noteplan NodeJS</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>04E80ED4-9863-46BE-A7C9-47FC4E99F469</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>04E80ED4-9863-46BE-A7C9-47FC4E99F469</key>
+		<dict>
+			<key>xpos</key>
+			<integer>135</integer>
+			<key>ypos</key>
+			<integer>760</integer>
+		</dict>
 		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
 		<dict>
 			<key>xpos</key>
 			<integer>135</integer>
 			<key>ypos</key>
 			<integer>130</integer>
+		</dict>
+		<key>1186B4CE-C58A-4A3A-9F74-21F4ACADBB0C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>355</integer>
+			<key>ypos</key>
+			<integer>760</integer>
 		</dict>
 		<key>238705F6-1A1A-4524-A61A-7CA8E4444EBA</key>
 		<dict>

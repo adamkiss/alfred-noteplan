@@ -10,8 +10,18 @@
             "problemMatcher": [],
             "group": {
                 "kind": "build",
+            }
+        },
+        {
+            "label": "Cache with nodejs",
+            "type": "shell",
+            "command": "time node nodejs/index.js",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
                 "isDefault": true
             }
         }
+
     ]
 }
