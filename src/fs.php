@@ -3,6 +3,15 @@
 define('FRONTMATTER_REGEX', '/---.*?title\:\s*?(.*?)\n.*?---/s');
 define('MARKDOWN_TITLE_REGEX', '/^#\s*(.*)(?:\n|\s---)/');
 
+function fs_relative_to_noteplan_root(string $path, array $config): string {
+    return str_replace($config['noteplan_root'] . '/', '', $path);
+}
+
+function fs_relative_to_noteplan_notes(string $path, array $config): string {
+    return str_replace($config['noteplan_root'] . '/Notes/', '', $path);
+}
+
+
 function fs_read_directory($folder, array $config): array {
     $notes = [];
 
@@ -13,7 +22,6 @@ function fs_read_directory($folder, array $config): array {
         // we're recursing
         $dir = new DirectoryIterator($folder->getPathname());
     }
-    
     
     foreach($dir as $file) {
         if ($file->isDot()) { continue; }
@@ -58,8 +66,37 @@ function fs_read_note(array $config, SplFileInfo $file): array {
     }
 
     return [
-        'file' => str_replace($config['noteplan_root'] . '/', '', $file->getPathname()),
+        'file' => fs_relative_to_noteplan_root($file->getPathname(), $config),
         'title' => $title,
         'body' => $content,
     ];
+}
+
+function fs_list_folders(mixed $folder, array $config): array {
+    $folders = [];
+
+    if (is_string($folder)) {
+        // we're starting out
+        $dir = new DirectoryIterator($config['noteplan_root'] . '/' . $config["noteplan_folder_$folder"]);
+    } else {
+        // we're recursing
+        $dir = new DirectoryIterator($folder->getPathname());
+    }
+
+    foreach ($dir as $file) {
+        if ($file->isDot()) { continue; }
+        if (!$file->isDir()) { continue; }
+
+        // Ignore special folders
+        if (str_starts_with($file->getFilename(), '@')) {continue;}
+        // Ignore attachments folders
+        if (str_ends_with($file->getFilename(), '_attachments')) {continue;}
+
+        // Recurse into subfolders
+        $folders = array_merge($folders, fs_list_folders($file, $config));
+
+        $folders [fs_relative_to_noteplan_notes($file->getPathname(), $config)] = $file->getFilename();
+    }
+
+    return $folders;
 }

@@ -31,25 +31,11 @@ function alfred_query_to_sqlite(array $argv): array {
 
 function alfred_create_note_item(string $title, array $config) {
     return [
-        'title' => $title,
-        'subtitle' => 'Create new note',
-        'arg' => noteplan_callback_url('addNote', [
-            'text' => $config['noteplan_new_note']($title),
-            'openNote' => 'yes',
-            'useExistingSubwindow' => 'yes',
-        ]),
+        'title' => "Create '$title'",
+        'subtitle' => 'Create a new note',
+        'arg' => $title,
         'icon' => [
             'path' => __DIR__ . "/icons/noteplan-note.png",
-        ],
-        "mods" => [
-            "cmd" => [
-                "arg" => noteplan_callback_url('addNote', [
-                    'text' => $config['noteplan_new_note']($title),
-                    'openNote' => 'yes',
-                    'useExistingSubwindow' => 'yes',
-                ]),
-                "subtitle" => "Create a note in a new window"
-            ]
         ]
     ];
 }
