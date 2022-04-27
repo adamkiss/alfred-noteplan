@@ -29,6 +29,25 @@ function alfred_query_to_sqlite(array $argv): array {
     ];
 }
 
+function alfred_query_to_rg_regex(array $argv): array {
+    // $argv[0] is the script name
+    $rawQuery = $argv[1]; 
+
+    // Remove everything except numbers, letters and spaces
+    $rawQuery = preg_replace('/[^\p{L}\s\d]/', '', $rawQuery);
+    // compress spaces
+    $rawQuery = preg_replace('/\s+/', ' ', $rawQuery);
+
+    $lookupParts = explode(' ', $rawQuery);
+    $last = array_pop($lookupParts);
+
+    // append suffix to each element: explode -> map -> implode 
+    return [
+        $rawQuery,
+        implode('', [...array_map(fn($l) => "{$l}(?s:(?!{$l}).)*?", $lookupParts), $last]),
+    ];
+}
+
 function alfred_create_note_item(string $title, array $config) {
     return [
         'title' => "Create '$title'",

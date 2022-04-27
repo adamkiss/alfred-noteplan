@@ -1,46 +1,26 @@
 <?php
-require_once __DIR__ . '/_shared.php';
+require_once __DIR__ . '/src/alfred.php';
 
-function prepareQuery(array $a) {
-    // $a[0] is the script name
-    $rawQuery = $a[1]; 
-    
+$config = array_merge(
+    require_once __DIR__ . '/src/defaults.php',
+    require_once __DIR__ . '/_config.php'
+);
 
-    // Remove everything except numbers, letters and spaces
-    $rawQuery = preg_replace('/[^\p{L}\s\d]/', '', $rawQuery);
-    // compress spaces
-    $rawQuery = preg_replace('/\s+/', ' ', $rawQuery);
-
-    $lookupParts = explode(' ', $rawQuery);
-    $last = array_pop($lookupParts);
-
-    // append suffix to each element: explode -> map -> implode 
-    return [
-        $rawQuery,
-        implode('', [...array_map(fn($l) => "{$l}(?s:(?!{$l}).)*?", $lookupParts), $last]),
-    ];
-}
-
-function itemize(array $items) {
-    return json_encode(['items' => $items]);
-}
-
-function main(array $arguments): string {
+try {
     $results = [];
-    [$rawQuery, $searchQuery] = prepareQuery($arguments);
+    [$rawQuery, $rgRegex] = alfred_query_to_rg_regex($argv);
 
-    $capture = shell_exec(sprintf("cd '%s' && rg --pcre2 -m 1 -iU '%s' Calendar Notes", NOTEPLAN_ROOT, $searchQuery));
+    $capture = shell_exec(
+        sprintf("cd '%s' && rg --pcre2 -m 1 -iU '%s' Calendar Notes",
+            $config['noteplan_root'],
+            $rgRegex
+        )
+    );
+
     if (! $capture) {
-        $results []= [
-            'title' => "Create '{$rawQuery}'",
-            'subtitle' => 'No results • Create a note instead',
-            'icon' => [
-                'path' => __DIR__ . "/icons/noteplan-note.png",
-            ],
-            'arg' => NOTEPLAN_URL_OPEN . '/openNote?noteDate=today',
-        ];
+        $results []= alfred_create_note_item($rawQuery, $config);
 
-        return itemize($results);
+        echo alfred_itemize($results);
     }
 
     $matches = explode("\n", $capture);
@@ -67,27 +47,33 @@ function main(array $arguments): string {
 
         $match = substr(implode('↩', $matchArray), 0, 100);
 
-        $results []= [
+        $callback = noteplan_callback_url(
+            method: 'openNote',
+            params: $type === 'Calendar'
+                ? ['noteDate' => $title]
+                : ['filename' => rawurlencode($notePath)]
+        );
+        
+        $items []= [
             'title' => $title,
             'subtitle' => $type === 'Calendar'
                 ? "📆 {$match}"
                 : "📝 {$notePath} • {$match}",
-            'arg' => NOTEPLAN_URL_OPEN . (
-                $type === 'Calendar'
-                    ? '?noteDate=' . $title
-                    : '?notePath=' . rawurlencode(implode('/', array_slice($path, 1)))
-            ) . '&useExistingSubWindow=yes',
+            'arg' => $callback . '&useExistingSubWindow=yes',
+            'valid' => true,
             'icon' => [
                 'path' => __DIR__ . "/icons/noteplan-{$iconType}.png",
             ],
+            "mods" => [
+                "cmd" => [
+                    "arg" => $callback . '&subWindow=yes',
+                    "subtitle" => "Open in a new window"
+                ]
+            ]
         ];
     }
-    
-    return itemize($results);
-}
 
-try {
-    echo main($argv);
+    echo alfred_itemize($items);
 } catch (\Throwable $th) {
-    ray($th);
+    echo alfred_return_error($th);
 }
