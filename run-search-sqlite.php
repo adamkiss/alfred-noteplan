@@ -24,7 +24,7 @@ try {
                 : $snip,
             'arg' => $r['callback'] . '&useExistingSubWindow=yes',
             'icon' => [
-                'path' => __DIR__ . "/icons/noteplan-{$r['type']}.png",
+                'path' => __DIR__ . "/icons/icon-{$r['type']}.icns",
             ],
             "mods" => [
                 "cmd" => [

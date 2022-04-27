@@ -23,7 +23,7 @@ try {
         'arg' => noteplan_create_note($config, $title, $relPath),
         'valid' => 'yes',
         'icon' => [
-            'path' => __DIR__ . "/icons/noteplan-note.png",
+            'path' => __DIR__ . "/icons/icon-folder.icns",
         ],
     ], $folders, array_keys($folders));
 

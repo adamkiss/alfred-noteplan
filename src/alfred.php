@@ -54,7 +54,7 @@ function alfred_create_note_item(string $title, array $config) {
         'subtitle' => 'Create a new note',
         'arg' => $title,
         'icon' => [
-            'path' => __DIR__ . "/icons/noteplan-note.png",
+            'path' => __DIR__ . "/../icons/icon-create.icns",
         ]
     ];
 }
