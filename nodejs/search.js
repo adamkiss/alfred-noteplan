@@ -1,8 +1,8 @@
-import Database from "better-sqlite3";
-const db = new Database("db2.sqlite3");
-import { ray } from "node-ray";
-import {dirname, resolve} from "path";
-import {fileURLToPath} from 'url';
+const Database = require("better-sqlite3");
+const {resolve} = require('path');
+const {ray} = require("node-ray");
+
+const db = new Database('db2.sqlite3');
 
 const results = db.prepare(`
 SELECT
@@ -19,15 +19,11 @@ LIMIT
     20
 `).all()
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const resultsFormatted = results.map(r => ({
     title: r.title,
     subtitle: r.path ? `${r.path} • ${r.snippet.replace(/\n/g, '↩')}` : r.snippet.replace(/\n/g, '↩'),
     arg: r.callback,
-    icon: {path: resolve(__dirname, "../icons/noteplan-calendar.png")}
+    icon: {path: "icons/noteplan-calendar.png"}
 }))
-
-ray(resultsFormatted[0].icon)
 
 console.log(JSON.stringify({items: resultsFormatted}))

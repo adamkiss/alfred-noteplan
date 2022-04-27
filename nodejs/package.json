@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +16,11 @@
   },
   "devDependencies": {
     "node-ray": "^1.18.0"
+  },
+  "bin": "search.js",
+  "pkg": {
+    "scripts": "search.js",
+    "targets": ["node16-macos-x64"],
+    "outputPath": "dist"
   }
 }

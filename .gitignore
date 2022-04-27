@@ -3,3 +3,4 @@ db*.sqlite*
 _config.php
 nodejs/config.js
 nodejs/node_modules
+nodejs/dist

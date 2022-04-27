@@ -1,14 +1,14 @@
-import Database from "better-sqlite3";
-import FastGlob from "fast-glob";
-import dayjs from "dayjs";
+const Database = require("better-sqlite3");
+const FastGlob = require("fast-glob");
+const dayjs = require("dayjs");
 
-import {readFile} from 'fs/promises'
-import {readFileSync} from 'fs'
-import {join} from 'path'
+const {readFile} = require('fs/promises')
+const {readFileSync} = require('fs')
+const {join} = require('path')
 
-import { ray } from "node-ray";
+const {ray} = require("node-ray");
 
-import noteplan_root from "./config.js";
+const noteplan_root = require("./config.js");
 
 
 const db = new Database("db2.sqlite3");

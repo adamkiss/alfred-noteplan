@@ -417,7 +417,7 @@ php run-search-sqlite.php "{query}"</string>
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>/usr/local/bin/node nodejs/search.js "{query}"</string>
+				<string>nodejs/dist/alfred-noteplan-fts "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
