@@ -29,6 +29,6 @@ try {
 
     echo alfred_itemize($items);
 } catch (\Throwable $th) {
-    echo $th->getMessage();
+    echo alfred_return_error($th);
 }
 
