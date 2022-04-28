@@ -40,6 +40,8 @@ For 500 notes, current runtime of the note import script is `~500ms`, which is f
 
 ![Keayboard Maestro setup](readme-keyboard-maestro.png)
 
+Edit: I've now updated the script to run _a minute_ after Noteplan was deactivated, with a bit of logic to cancel previous waiting runs of the keyboard maestro script, which is useful if you're transferring data between noteplan and other apps. You can find the macro to import in the `additional/` folder, just don't forget to edit the absolute path to the `run-cache-sqlite.php` file in your workflow folder. 
+
 ## This repository also contains
 - experimental `ripgrep` version - databaseless version of full-text search: PHP parses input, prepares ripgrep search, and then formats the results. Available via command `nrg`, which will be removed in future updates. 
 - experimental `nodejs` version - this one is super dirty/simple testing version, where I tried if it would be possible to do the sqlite access/formatting via packaged, standalone nodejs script for users with no programming experience. It is possible, but due to requirements like codesigning (Apple Developer Program yearly licenses, etc.), will probably not be developed further. Rough testing search version available as `njs`.
