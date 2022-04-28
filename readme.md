@@ -1,4 +1,7 @@
 # Noteplan FTS for Alfred
+
+![OG Social image](social.jpg)
+
 Noteplan full-text search for Alfred - some assembly required. Work in progress, mostly working.
 
 ---
