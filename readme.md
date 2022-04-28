@@ -28,6 +28,7 @@ Noteplan full-text search for Alfred - some assembly required. Work in progress,
 return [
   'noteplan_root' => '/absolute/path/to/noteplan/'
 ];
+?>
 ```
 
 ## This repository also contains
