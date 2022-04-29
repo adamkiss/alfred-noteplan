@@ -1,6 +1,6 @@
 <?php
 
-define('FRONTMATTER_REGEX', '/---.*?title\:\s*?(.*?)\n.*?---/s');
+define('FRONTMATTER_REGEX', '/---.*?title\:\s*?(.*?)\n.*?---/is');
 define('MARKDOWN_TITLE_REGEX', '/^#\s*(.*)(?:\n|\s---)/');
 
 function fs_relative_to_noteplan_root(string $path, array $config): string {
@@ -50,15 +50,15 @@ function fs_read_note(array $config, SplFileInfo $file): array {
     $hasFrontmatter = $contents[0] !== '#';
 
     if ($hasFrontmatter) {
-        $title = preg_match(FRONTMATTER_REGEX, $contents, $matches)
+        $title = trim(preg_match(FRONTMATTER_REGEX, $contents, $matches)
             ? $matches[1]
-            : '';
-        $content = preg_replace(FRONTMATTER_REGEX, '', $contents);
+            : '');
+        $content = trim(preg_replace(FRONTMATTER_REGEX, '', $contents));
     } else {
-        $title = preg_match(MARKDOWN_TITLE_REGEX, $contents, $matches)
+        $title = trim(preg_match(MARKDOWN_TITLE_REGEX, $contents, $matches)
             ? $matches[1]
-            : '';
-        $content = preg_replace(MARKDOWN_TITLE_REGEX, '', $contents);
+            : '');
+        $content = trim(preg_replace(MARKDOWN_TITLE_REGEX, '', $contents));
     }
 
     if (! is_null($config['precache_modify_content'])) {
