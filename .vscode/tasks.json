@@ -4,24 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run search",
+            "label": "Run SQLite caching",
             "type": "shell",
-            "command": "time php search.php '22 bs'",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-            }
-        },
-        {
-            "label": "Cache with nodejs",
-            "type": "shell",
-            "command": "time node nodejs/index.js",
+            "command": "time php run-cache-sqlite.php",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         }
-
     ]
 }
