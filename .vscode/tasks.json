@@ -9,9 +9,18 @@
             "command": "time php run-cache-sqlite.php",
             "problemMatcher": [],
             "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "label": "Run WIP Noteplan SQLite cache usage",
+            "type": "shell",
+            "command": "time php wip-use-noteplan-cache-sqlite.php",
+            "problemMatcher": [],
+            "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        }        
     ]
 }
