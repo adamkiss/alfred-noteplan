@@ -27,8 +27,11 @@ try {
         db_insert($db, notes_process_note($config, $note));
     }
     
+    $db->close();
+
     printf("Done in %03.2fms", (hrtime(true) - $start) / 1e+6 /* nanoseconds to milliseconds */);
 } catch (\Throwable $th) {
     echo $th->getMessage();
+} finally {
+    $db->close();
 }
-

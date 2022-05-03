@@ -42,4 +42,6 @@ try {
     echo alfred_itemize($items);
 } catch (\Throwable $th) {
     echo alfred_return_error($th);
+} finally {
+    $db->close();
 }
