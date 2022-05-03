@@ -11,7 +11,6 @@ function fs_relative_to_noteplan_notes(string $path, array $config): string {
     return str_replace($config['noteplan_root'] . '/Notes/', '', $path);
 }
 
-
 function fs_read_directory($folder, array $config): array {
     $notes = [];
 
