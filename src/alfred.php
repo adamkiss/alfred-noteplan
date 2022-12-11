@@ -18,8 +18,8 @@ function alfred_query_to_sqlite(array $argv): array {
 
     // Remove everything except numbers, letters and spaces
     $sqliteQuery = preg_replace('/[^\p{L}\s\d]/', '', $originalQuery);
-    // compress spaces
-    $sqliteQuery = preg_replace('/\s+/', ' ', $sqliteQuery);
+    // compress spaces AND trim
+    $sqliteQuery = trim(preg_replace('/\s+/', ' ', $sqliteQuery));
     // modify each word => word*
     $sqliteQuery = str_replace(' ', '* ', $sqliteQuery). '*';
 
