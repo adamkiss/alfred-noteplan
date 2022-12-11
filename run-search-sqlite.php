@@ -6,6 +6,10 @@ $config = array_merge(
     require_once __DIR__ . '/src/defaults.php',
     require_once __DIR__ . '/_config.php'
 );
+$join_snippet_matches = sprintf(
+    '/\%s([\s\-\+\_\!\?\.\,]+?)\%s/i',
+    $config['snippet_match_end'], $config['snippet_match_start']
+);
 
 try {
     $db = db_connect();
@@ -16,9 +20,11 @@ try {
     $items = [];
     while($r = $result->fetchArray(SQLITE3_ASSOC)) {
         $snip = str_replace("\n", '↩', $r['snippet']); // replace newlines with ↩
+        $snip = preg_replace($join_snippet_matches, '$1', $snip);
+        $title = preg_replace($join_snippet_matches, '$1', $r['title']);
 
         $item = [
-            'title' => $r['title'],
+            'title' => $title,
             'subtitle' => $r['path']
                 ? "{$r['path']} • {$snip}"
                 : $snip,
