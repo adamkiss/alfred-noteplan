@@ -94,6 +94,16 @@ module.exports.refreshAction = function ($bin) {
 
             const path = type === 'note' ? `Notes/${note.filename}` : `Calendar/${note.filename}`;
 
+            // further body modification lifted from the original PHP version
+            body = body
+                .replace('/^#*\s*?/m', '') // remove markdown headers
+                .replace('/^\s*?\-{3,}\s*?$/m', '') // remove markdown hr
+                .replace('/^\s*?[\*>-]\s*?/m', '') // remove bullets & quotes
+                .replace('/^\s*?[*-]?\s*?\[.?\]\s*?/m', '') // remove tasks
+                .replace('/[*_]/m', '') // remove markdown styling
+                .replace('/\s+/', ' ') // collapse whitespace
+                .trim() // trim
+
             const callback = '';
 
             return {
