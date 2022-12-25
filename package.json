@@ -24,7 +24,8 @@
   "author": "Adam Kiss (https://adamkiss.com)",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^8.0.1"
+    "better-sqlite3": "^8.0.1",
+    "gray-matter": "^4.0.3"
   },
   "bin": "src/workflow.js",
   "pkg": {
