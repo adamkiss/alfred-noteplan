@@ -1,3 +1,4 @@
+const config = require('./config')
 const {refreshAction, refreshResponse} = require('./refresh')
 
 // 0 - bin, 1 - workflow, 2 - query

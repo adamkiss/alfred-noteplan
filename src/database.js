@@ -35,7 +35,6 @@ const getWorkflowDatabase = () => {
 const createWorkflowDatabase = () => {
     const db = getWorkflowDatabase();
     try {
-        db.pragma('journal_mode = wal');
         db.exec(`
             DROP TABLE IF EXISTS notes;
             DROP TABLE IF EXISTS metadata;
@@ -50,7 +49,7 @@ const createWorkflowDatabase = () => {
             );
             CREATE TABLE metadata (
                 key TEXT PRIMARY KEY,
-                value TEXT
+                value BLOB
             );
             INSERT INTO metadata VALUES ('last-run', 0);
         `);
