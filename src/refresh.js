@@ -30,7 +30,7 @@ module.exports.refreshAction = function ($bin) {
 
         const notes = np
             .prepare('SELECT filename, content, modified, note_type FROM metadata WHERE is_directory = 0 AND LENGTH(content) AND note_type < 2 AND modified > ?')
-            .all(lastRun * 1000);
+            .all(lastRun);
 
         const processed = notes.map(note => {
             let type, title, body;
