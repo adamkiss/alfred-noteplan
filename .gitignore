@@ -1,6 +1,5 @@
 .DS_Store
-db*.sqlite*
-_config.php
-nodejs/config.js
-nodejs/node_modules
-nodejs/dist
+node_modules
+workflow/prefs.plist
+workflow/alfred-noteplan-fts-*
+workflow/database.sqlite*

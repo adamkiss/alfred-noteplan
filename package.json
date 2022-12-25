@@ -1,0 +1,42 @@
+{
+  "name": "alfred-noteplan-fts",
+  "version": "2.0.0-alpha",
+  "description": "Alfred workflow for full-text searching noteplan notes",
+  "main": "src/workflow.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "// development scripts": "",
+    "link": "ln -s /Users/adam/Code/alfred-noteplan-fts2/workflow /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2",
+    "unlink": "rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2",
+    "// build scripts": "",
+    "start": "chokidar \"src/**.js\" -c \"npm run prod\"",
+    "prod": "pkg --out-path workflow ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "/Users/adam/Code/alfred-noteplan-fts"
+  },
+  "keywords": [
+    "alfred",
+    "noteplan",
+    "alfred-workflow"
+  ],
+  "author": "Adam Kiss (https://adamkiss.com)",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^8.0.1"
+  },
+  "bin": "src/workflow.js",
+  "pkg": {
+    "scripts": "src/workflow.js",
+    "targets": [
+      "node18-macos-x64",
+      "node18-macos-arm64"
+    ],
+    "outputPath": "dist"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "pkg": "^5.8.0"
+  }
+}

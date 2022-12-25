@@ -4,18 +4,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run SQLite caching",
+            "label": "Open the database",
             "type": "shell",
-            "command": "time php run-cache-sqlite.php",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build"
-            }
+            "command": "open ./workflow/database.sqlite3",
+            "problemMatcher": []
         },
         {
-            "label": "Run WIP Noteplan SQLite cache usage",
+            "label": "Build the executables",
             "type": "shell",
-            "command": "time php wip-use-noteplan-cache-sqlite.php",
+            "command": "nr prod",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
