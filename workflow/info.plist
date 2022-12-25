@@ -512,20 +512,20 @@ php run-create-note.php "${title}"</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp</string>
+				<string>~/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp</string>
+				<key>filtermode</key>
+				<integer>1</integer>
 				<key>placeholder</key>
 				<string></string>
 				<key>required</key>
-				<true/>
-				<key>trim</key>
 				<true/>
 			</dict>
 			<key>description</key>
 			<string>This is where the folder of your Noteplan library, so this workflow can find the Cache database, and link to the matched notes for quicklookurl.</string>
 			<key>label</key>
-			<string>Noteplan Database Root</string>
+			<string>Noteplan Data Root</string>
 			<key>type</key>
-			<string>textfield</string>
+			<string>filepicker</string>
 			<key>variable</key>
 			<string>user_np_root</string>
 		</dict>
@@ -549,13 +549,6 @@ php run-create-note.php "${title}"</string>
 			<string>user_arch</string>
 		</dict>
 	</array>
-	<key>variables</key>
-	<dict>
-		<key>arch</key>
-		<string>{var:user_arch}</string>
-		<key>np_root</key>
-		<string>{var:user_np_root}</string>
-	</dict>
 	<key>version</key>
 	<string>2.0.0-alpha</string>
 	<key>webaddress</key>
