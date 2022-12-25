@@ -18,6 +18,17 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }        
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "label": "npm: test",
+            "detail": "DEV='/Users/adam/Code/alfred-noteplan-fts2/workflow' node src/workflow.js --refresh"
+        }
     ]
 }

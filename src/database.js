@@ -1,12 +1,23 @@
 const Database = require("better-sqlite3");
+const config = require('./config')
 
-const getWorkflowDatabasePath = _ => `${process.cwd()}/database.sqlite3`
+/**
+ * Path for the cache database Noteplan has
+ * @returns string
+ */
+const getCacheDatabasePath = () => `${config.np_root}/Caches/sync-cache.db`
+
+/**
+ * Path for the full-text database
+ * @returns string
+ */
+const getWorkflowDatabasePath = () => `${config.cwd}/database.sqlite3`
 
 /**
  * Connects to the Noteplan cache database
  */
 const getCacheDatabase = () => {
-    // return new Database()
+    return new Database(getCacheDatabasePath())
 }
 
 /**
@@ -43,14 +54,14 @@ const createWorkflowDatabase = () => {
             );
             INSERT INTO metadata VALUES ('last-run', 0);
         `);
-        db.close();
+        return db;
     } catch (error) {
         console.log(error)
     }
 }
 
 module.exports = {
-    getWorkflowDatabasePath,
+    getCacheDatabasePath, getWorkflowDatabasePath,
     getCacheDatabase, getWorkflowDatabase,
     createWorkflowDatabase
 }
