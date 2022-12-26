@@ -1,7 +1,8 @@
 const {join} = require('path');
 const config = require('./config');
 const { noteEntry } = require('./create');
-const {getWorkflowDatabase} = require('./database')
+const {getWorkflowDatabase} = require('./database');
+const { createOpenNoteUrl, createCalendarNoteUrl } = require('./noteplan-urls');
 const respond = require('./respond')
 
 module.exports = function(query = '') {
@@ -33,7 +34,18 @@ module.exports = function(query = '') {
         subtitle: r.type === 'note'
             ? `${r.path} • ${r.snippet.replace(/\n/g, '↩')}`
             : r.snippet.replace(/\n/g, '↩'),
-        arg: r.callback,
+        arg: r.type === 'note'
+            ? createOpenNoteUrl(r.path)
+            : createCalendarNoteUrl(r.path),
+        mods: {
+            cmd: {
+                valid: true,
+                arg: r.type === 'note'
+                    ? createOpenNoteUrl(r.path)
+                    : createCalendarNoteUrl(r.path),
+                subtitle: 'Open the note in a new Noteplan window'
+            }
+        },
         icon: {path: `icons/icon-${r.type}.icns`},
         quicklookurl: join(config.np_root, r.type === 'note' ? 'Notes' : 'Calendar', r.path)
     }))
