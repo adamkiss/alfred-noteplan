@@ -3,7 +3,7 @@ const createUrl = (method = 'addNote', params = {}) => {
         'noteplan://x-callback-url/',
         method,
         '?',
-        ...Object.keys(params).map(k => `${k}=${params[k]}`)
+        Object.keys(params).map(k => `${k}=${encodeURIComponent(params[k])}`).join('&')
     ].join('')
     return encodeURI(url)
 }
