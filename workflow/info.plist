@@ -449,7 +449,9 @@ $BIN "${newquery}"</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string># Noteplan FTS &amp; Note creation for Alfred
+
+- write a readme.</string>
 	<key>uidata</key>
 	<dict>
 		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
@@ -601,7 +603,7 @@ $BIN "${newquery}"</string>
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-alpha</string>
+	<string>2.0.0-rc1</string>
 	<key>webaddress</key>
 	<string>https://adamkiss.com</string>
 </dict>
