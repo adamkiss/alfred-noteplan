@@ -39,7 +39,8 @@ const createAddNoteUrl = ({folder, body}) => {
     return createUrl('addNote', {
         text: body,
         folder,
-        useExistingSubWindow: 'yes'
+        useExistingSubWindow: 'yes',
+        openNote: 'yes'
     })
 }
 
