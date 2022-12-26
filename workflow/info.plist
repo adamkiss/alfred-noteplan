@@ -47,24 +47,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>47379398-D68E-4446-BA16-13B77DB1093D</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>47379398-D68E-4446-BA16-13B77DB1093D</string>
+				<string>9F25CC58-A873-42B2-A43F-175EEDDC29FE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -90,6 +77,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>A0AE8413-940E-4230-B20F-7674D6C73E58</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9F25CC58-A873-42B2-A43F-175EEDDC29FE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -395,22 +395,23 @@ $BIN "{query}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argument</key>
-				<string>{query}</string>
-				<key>passthroughargument</key>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^</string>
+				<key>regexcaseinsensitive</key>
 				<false/>
-				<key>variables</key>
-				<dict>
-					<key>query</key>
-					<string>--create {query}</string>
-				</dict>
+				<key>regexmultiline</key>
+				<false/>
+				<key>replacestring</key>
+				<string>New: </string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
+			<string>alfred.workflow.utility.replace</string>
 			<key>uid</key>
-			<string>47379398-D68E-4446-BA16-13B77DB1093D</string>
+			<string>9F25CC58-A873-42B2-A43F-175EEDDC29FE</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -448,17 +449,6 @@ $BIN "{query}"</string>
 			<key>ypos</key>
 			<real>370</real>
 		</dict>
-		<key>47379398-D68E-4446-BA16-13B77DB1093D</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>11</integer>
-			<key>note</key>
-			<string>Prepend '--create ' to query</string>
-			<key>xpos</key>
-			<real>345</real>
-			<key>ypos</key>
-			<real>400</real>
-		</dict>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<dict>
 			<key>colorindex</key>
@@ -478,6 +468,13 @@ $BIN "{query}"</string>
 			<real>195</real>
 			<key>ypos</key>
 			<real>160</real>
+		</dict>
+		<key>9F25CC58-A873-42B2-A43F-175EEDDC29FE</key>
+		<dict>
+			<key>xpos</key>
+			<real>370</real>
+			<key>ypos</key>
+			<real>400</real>
 		</dict>
 		<key>A0AE8413-940E-4230-B20F-7674D6C73E58</key>
 		<dict>
