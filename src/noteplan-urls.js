@@ -1,9 +1,12 @@
-const createUrl = (method = 'addNote', params = {}) => [
-    'noteplan://x-callback-url/',
-    method,
-    '?',
-    (new URLSearchParams(params)).toString()
-].join('')
+const createUrl = (method = 'addNote', params = {}) => {
+    const url = [
+        'noteplan://x-callback-url/',
+        method,
+        '?',
+        ...Object.keys(params).map(k => `${k}=${params[k]}`)
+    ].join('')
+    return encodeURI(url)
+}
 
 /**
  * Generates an openNote callback for the calendar type notes
