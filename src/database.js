@@ -1,3 +1,4 @@
+const {existsSync} = require('fs')
 const Database = require("better-sqlite3");
 const config = require('./config')
 
@@ -35,7 +36,7 @@ const getWorkflowDatabase = () => {
 const createWorkflowDatabase = () => {
     try {
         const db = getWorkflowDatabase();
-        
+
         db.exec(`
             DROP TABLE IF EXISTS notes;
             DROP TABLE IF EXISTS counter;
@@ -60,8 +61,13 @@ const createWorkflowDatabase = () => {
     }
 }
 
+const ensureWorkflowDatabaseExists = () => {
+    if (!existsSync(getWorkflowDatabasePath()))
+        createWorkflowDatabase()
+}
+
 module.exports = {
     getCacheDatabasePath, getWorkflowDatabasePath,
     getCacheDatabase, getWorkflowDatabase,
-    createWorkflowDatabase
+    ensureWorkflowDatabaseExists
 }

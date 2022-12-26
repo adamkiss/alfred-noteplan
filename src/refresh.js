@@ -1,9 +1,6 @@
-const {existsSync} = require('fs')
-
 const matter = require('gray-matter')
 
-const {createWorkflowDatabase, getWorkflowDatabase, getCacheDatabase, getWorkflowDatabasePath } = require('./database')
-const { createOpenNoteUrl } = require('./noteplan-urls')
+const {getWorkflowDatabase, getCacheDatabase} = require('./database')
 const respond = require('./respond')
 
 // Refresh response to 'n -r'
@@ -18,9 +15,7 @@ module.exports.refreshResponse = $bin => {
 // Refresh action, called by alfred as `$binary --refresh`
 module.exports.refreshAction = function ($bin) {
     const start = new Date().getTime()
-    const db = existsSync(getWorkflowDatabasePath())
-        ? getWorkflowDatabase()
-        : createWorkflowDatabase();
+    const db = getWorkflowDatabase()
     const np = getCacheDatabase();
 
     try {
