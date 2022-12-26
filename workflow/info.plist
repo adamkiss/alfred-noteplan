@@ -335,7 +335,7 @@ $BIN "{query}"</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>{query}</string>
+				<string></string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
@@ -366,6 +366,8 @@ $BIN "{query}"</string>
 				<integer>2</integer>
 				<key>escaping</key>
 				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:newquery}</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -383,15 +385,15 @@ else
 	BIN="./alfred-noteplan-fts-x64"
 fi
 
-$BIN "$newquery"</string>
+$BIN "${newquery}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>query: {query}</string>
+				<string>Will create a new note in selected folder</string>
 				<key>title</key>
-				<string>Create a new note…</string>
+				<string>Create note "{var:newquery}"</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -429,7 +431,7 @@ $BIN "$newquery"</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>{query}</string>
+				<string></string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
