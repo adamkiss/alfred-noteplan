@@ -29,10 +29,13 @@
   },
   "bin": "src/workflow.js",
   "pkg": {
+    "assets": [
+      "node_modules/better-sqlite3/build/Release/better_sqlite3.node"
+    ],
     "scripts": "src/workflow.js",
     "targets": [
-      "node18-macos-x64",
-      "node18-macos-arm64"
+      "node16-macos-x64",
+      "node16-macos-arm64"
     ],
     "outputPath": "dist"
   },

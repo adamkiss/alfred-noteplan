@@ -602,8 +602,10 @@ $BIN "${newquery}"</string>
 			<string>user_arch</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>2.0.0-rc1</string>
+	<string>2.0.0-rc2</string>
 	<key>webaddress</key>
 	<string>https://adamkiss.com</string>
 </dict>
