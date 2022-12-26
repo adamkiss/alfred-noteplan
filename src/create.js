@@ -1,4 +1,6 @@
+const { getCacheDatabase } = require("./database")
 const { createAddNoteUrl } = require("./noteplan-urls")
+const respond = require("./respond")
 
 const noteTemplate = title => `---
 title: ${title}
@@ -21,4 +23,16 @@ const createNoteInFolderEntry = (title, folder) => ({
     arg: createAddNoteUrl({title, folder, body: noteTemplate(title)})
 })
 
-module.exports = {noteTemplate, createNoteEntry, createNoteInFolderEntry}
+const getAllFolderEntries = (title) => {
+    const np = getCacheDatabase()
+
+    // is_directory marks directory, while note_type marks only note directories
+    // because also plugins and templates have directories in the cache db
+    const folders = np.prepare(`
+        SELECT filename FROM metadata WHERE is_directory = 1 AND note_type = 1
+    `).all();
+
+    return respond(folders.map(f => createNoteInFolderEntry(title, f)));
+}
+
+module.exports = {noteTemplate, createNoteEntry, createNoteInFolderEntry, getAllFolderEntries}

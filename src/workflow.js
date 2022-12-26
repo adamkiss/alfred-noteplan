@@ -1,4 +1,5 @@
 const config = require('./config')
+const { getAllFolderEntries } = require('./create')
 const { ensureWorkflowDatabaseExists } = require('./database')
 const {refreshAction, refreshResponse} = require('./refresh')
 const search = require('./search')
@@ -13,7 +14,7 @@ ensureWorkflowDatabaseExists()
 // Special cases
 if ($query === '-r') { refreshResponse($bin); }
 if ($query === '--refresh') { return refreshAction($bin); }
-if ($query.startsWith('New: ')) {}
+if ($query.startsWith('New: ')) { return getAllFolderEntries($query.split('New: ').pop())}
 
 // Else search
 search($query)
