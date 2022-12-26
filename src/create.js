@@ -32,7 +32,7 @@ const getAllFolderEntries = (title) => {
         SELECT filename FROM metadata WHERE is_directory = 1 AND note_type = 1
     `).all();
 
-    return respond(folders.map(f => createNoteInFolderEntry(title, f)));
+    return respond(folders.map(f => createNoteInFolderEntry(title, f.filename)));
 }
 
 module.exports = {noteTemplate, createNoteEntry, createNoteInFolderEntry, getAllFolderEntries}
