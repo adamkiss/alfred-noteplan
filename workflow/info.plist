@@ -488,7 +488,7 @@ $BIN "$newquery"</string>
 			<key>colorindex</key>
 			<integer>11</integer>
 			<key>xpos</key>
-			<real>575</real>
+			<real>545</real>
 			<key>ypos</key>
 			<real>370</real>
 		</dict>
