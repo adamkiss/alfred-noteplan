@@ -92,7 +92,7 @@ module.exports.refreshAction = function ($bin) {
                 break;
             }
 
-            const path = type === 'note' ? `Notes/${note.filename}` : `Calendar/${note.filename}`;
+            const path = note.filename;
 
             // further body modification lifted from the original PHP version
             body = body

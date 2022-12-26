@@ -1,3 +1,5 @@
+const {join} = require('path');
+const config = require('./config');
 const {getWorkflowDatabase} = require('./database')
 const respond = require('./respond')
 
@@ -27,9 +29,12 @@ module.exports = function(query = '') {
     
     const resultsFormatted = results.map(r => ({
         title: r.title,
-        subtitle: r.path ? `${r.path} • ${r.snippet.replace(/\n/g, '↩')}` : r.snippet.replace(/\n/g, '↩'),
+        subtitle: r.type === 'note'
+            ? `${r.path} • ${r.snippet.replace(/\n/g, '↩')}`
+            : r.snippet.replace(/\n/g, '↩'),
         arg: r.callback,
-        icon: {path: "icons/noteplan-calendar.png"}
+        icon: {path: "icons/noteplan-calendar.png"},
+        quicklookurl: join(config.np_root, r.type === 'note' ? 'Notes' : 'Calendar', r.path)
     }))
     
     respond(resultsFormatted)
