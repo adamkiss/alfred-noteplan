@@ -33,7 +33,7 @@ module.exports = function(query = '') {
             ? `${r.path} • ${r.snippet.replace(/\n/g, '↩')}`
             : r.snippet.replace(/\n/g, '↩'),
         arg: r.callback,
-        icon: {path: `icons/noteplan-${r.type}.icns`},
+        icon: {path: `icons/icon-${r.type}.icns`},
         quicklookurl: join(config.np_root, r.type === 'note' ? 'Notes' : 'Calendar', r.path)
     }))
     
