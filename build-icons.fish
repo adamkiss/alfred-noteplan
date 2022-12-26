@@ -1,5 +1,6 @@
 #!/usr/bin/env fish
 # Remove previous versions
+cd workflow/icons
 rm ./*.icns
 
 # Rename PNGs from Photoshop to iconsets
