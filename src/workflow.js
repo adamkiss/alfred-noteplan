@@ -13,7 +13,7 @@ ensureWorkflowDatabaseExists()
 // Special cases
 if ($query === '-r') { refreshResponse($bin); }
 if ($query === '--refresh') { return refreshAction($bin); }
-if ($query.startsWith('--create ')) {}
+if ($query.startsWith('New: ')) {}
 
 // Else search
 search($query)

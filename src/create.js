@@ -11,7 +11,7 @@ const createNoteEntry = title => ({
     title: `Create "${title}"`,
     subtitle: `Creates a new note • You'll be asked for location in the next step`,
     icon: {path: 'icons/icon-create.icns'},
-    arg: `--create ${title}`
+    arg: `New: ${title}`
 })
 
 const createNoteInFolderEntry = (title, folder) => ({
