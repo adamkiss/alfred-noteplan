@@ -1,6 +1,6 @@
 const {join} = require('path');
 const config = require('./config');
-const { noteEntry } = require('./create');
+const {createNoteEntry} = require('./create');
 const {getWorkflowDatabase} = require('./database');
 const { createOpenNoteUrl, createCalendarNoteUrl } = require('./noteplan-urls');
 const respond = require('./respond')
@@ -49,7 +49,7 @@ module.exports = function(query = '') {
         quicklookurl: join(config.np_root, r.type === 'note' ? 'Notes' : 'Calendar', r.path)
     }))
 
-    resultsFormatted.push(noteEntry(query))
+    resultsFormatted.push(createNoteEntry(query))
     
     respond(resultsFormatted)
 }

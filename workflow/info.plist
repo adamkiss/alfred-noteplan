@@ -47,7 +47,7 @@
 				<false/>
 			</dict>
 		</array>
-		<key>5103B7EA-A460-4610-AE9D-9706332F547B</key>
+		<key>47379398-D68E-4446-BA16-13B77DB1093D</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -64,7 +64,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>5103B7EA-A460-4610-AE9D-9706332F547B</string>
+				<string>47379398-D68E-4446-BA16-13B77DB1093D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -114,7 +114,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>5103B7EA-A460-4610-AE9D-9706332F547B</string>
+				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -321,27 +321,6 @@ $BIN "{query}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>jsnn</string>
-				<key>subtext</key>
-				<string>Create a note named "{query}"</string>
-				<key>text</key>
-				<string>Create a note</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -365,8 +344,13 @@ $BIN "{query}"</string>
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
-php run-create-note.php "${title}"</string>
+				<string>if [ "$user_arch" = "1" ]; then
+	BIN="./alfred-noteplan-fts-arm64"
+else
+	BIN="./alfred-noteplan-fts-x64"
+fi
+
+$BIN "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -390,20 +374,41 @@ php run-create-note.php "${title}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>jsnn</string>
+				<key>subtext</key>
+				<string>Create a note named "{query}"</string>
+				<key>text</key>
+				<string>Create a note</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
-				<string></string>
+				<string>{query}</string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>title</key>
-					<string>{query}</string>
+					<key>query</key>
+					<string>--create {query}</string>
 				</dict>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
-			<string>5103B7EA-A460-4610-AE9D-9706332F547B</string>
+			<string>47379398-D68E-4446-BA16-13B77DB1093D</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -443,14 +448,14 @@ php run-create-note.php "${title}"</string>
 			<key>ypos</key>
 			<real>370</real>
 		</dict>
-		<key>5103B7EA-A460-4610-AE9D-9706332F547B</key>
+		<key>47379398-D68E-4446-BA16-13B77DB1093D</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>11</integer>
 			<key>note</key>
-			<string>Capture title</string>
+			<string>Prepend '--create ' to query</string>
 			<key>xpos</key>
-			<real>480</real>
+			<real>345</real>
 			<key>ypos</key>
 			<real>400</real>
 		</dict>

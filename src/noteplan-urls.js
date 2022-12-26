@@ -14,7 +14,7 @@ const createUrl = (method = 'addNote', params = {}) => [
  */
 const createCalendarNoteUrl = (filename, sameWindow = true) => {
     return createUrl('openNote', {
-        noteDate: filename.split('.').pop(),
+        noteDate: filename.split('.').shift(),
         useExistingSubWindow: sameWindow ? 'yes' : 'no'
     })
 }
@@ -32,7 +32,13 @@ const createOpenNoteUrl = (filename, sameWindow = true) => {
         useExistingSubWindow: sameWindow ? 'yes' : 'no'
     })    
 }
-const createAddNoteUrl = (title, body) => {}
+const createAddNoteUrl = ({folder, body}) => {
+    return createUrl('addNote', {
+        text: body,
+        folder,
+        useExistingSubWindow: 'yes'
+    })
+}
 
 module.exports = {
     createUrl,
