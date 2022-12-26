@@ -3,6 +3,7 @@ const {existsSync} = require('fs')
 const matter = require('gray-matter')
 
 const {createWorkflowDatabase, getWorkflowDatabase, getCacheDatabase, getWorkflowDatabasePath } = require('./database')
+const { createOpenNoteUrl } = require('./noteplan-urls')
 const respond = require('./respond')
 
 // Refresh response to 'n -r'
@@ -104,15 +105,12 @@ module.exports.refreshAction = function ($bin) {
                 .replace('/\s+/', ' ') // collapse whitespace
                 .trim() // trim
 
-            const callback = '';
-
             return {
                 file: note.filename,
                 title,
                 body,
                 type,
                 path,
-                callback
             }
         });
 

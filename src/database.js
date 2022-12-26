@@ -44,7 +44,6 @@ const createWorkflowDatabase = () => {
                 body,
                 path UNINDEXED,
                 type UNINDEXED,
-                callback UNINDEXED,
                 prefix='2 3 4'
             );
             CREATE TABLE metadata (
