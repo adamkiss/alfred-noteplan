@@ -33,8 +33,7 @@
                 "isDefault": true
             },
             "problemMatcher": [],
-            "label": "npm: test",
-            "detail": "DEV='/Users/adam/Code/alfred-noteplan-fts2/workflow' node src/workflow.js --refresh"
+            "label": "npm: test"
         }
     ]
 }
