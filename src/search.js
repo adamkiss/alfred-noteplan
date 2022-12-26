@@ -1,5 +1,6 @@
 const {join} = require('path');
 const config = require('./config');
+const { noteEntry } = require('./create');
 const {getWorkflowDatabase} = require('./database')
 const respond = require('./respond')
 
@@ -36,6 +37,8 @@ module.exports = function(query = '') {
         icon: {path: `icons/icon-${r.type}.icns`},
         quicklookurl: join(config.np_root, r.type === 'note' ? 'Notes' : 'Calendar', r.path)
     }))
+
+    resultsFormatted.push(noteEntry(query))
     
     respond(resultsFormatted)
 }
