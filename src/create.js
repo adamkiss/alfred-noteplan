@@ -28,11 +28,16 @@ const getAllFolderEntries = (title) => {
 
     // is_directory marks directory, while note_type marks only note directories
     // because also plugins and templates have directories in the cache db
-    const folders = np.prepare(`
+    const allFolders = np.prepare(`
         SELECT filename FROM metadata WHERE is_directory = 1 AND note_type = 1
     `).all();
 
-    return respond(folders.map(f => createNoteInFolderEntry(title, f.filename)));
+    const folders = allFolders
+        .map(f => f.filename)
+        .filter(f => !f.startsWith('@')) // @Xyz are special Noteplan folders
+        .map(f => createNoteInFolderEntry(title, f))
+
+    return respond(folders);
 }
 
 module.exports = {noteTemplate, createNoteEntry, createNoteInFolderEntry, getAllFolderEntries}
