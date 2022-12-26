@@ -19,7 +19,6 @@ module.exports = function(query = '') {
         snippet(notes, 1, '›', '‹', '…', 20) as title,
         path,
         type,
-        callback,
         snippet(notes, 2, '›', '‹', '…', 5) as snippet
     FROM
         notes('title:${preparedQuery} OR body:${preparedQuery}')

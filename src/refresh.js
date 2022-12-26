@@ -116,9 +116,9 @@ module.exports.refreshAction = function ($bin) {
             `).run(...processed.map(p => p.file));
     
             const updateStmt = db.prepare(`
-                INSERT INTO notes (file, title, body, path, type, callback)
-                VALUES ${processed.map(f => '(?, ?, ?, ?, ?, ?)').join(', ')}
-            `).run(...processed.map(p => [p.file, p.title, p.body, p.path, p.type, p.callback]))
+                INSERT INTO notes (file, title, body, path, type)
+                VALUES ${processed.map(f => '(?, ?, ?, ?, ?)').join(', ')}
+            `).run(...processed.map(p => [p.file, p.title, p.body, p.path, p.type]))
         }
 
         db.prepare(`
