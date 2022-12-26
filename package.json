@@ -4,7 +4,7 @@
   "description": "Alfred workflow for full-text searching noteplan notes",
   "main": "src/workflow.js",
   "scripts": {
-    "test": "DEV='/Users/adam/Code/alfred-noteplan-fts2/workflow' node src/workflow.js 'What is love, man'",
+    "test": "DEV='/Users/adam/Code/alfred-noteplan-fts2/workflow' node src/workflow.js 'New: What is love, man'",
     "// development scripts": "",
     "link": "ln -s /Users/adam/Code/alfred-noteplan-fts2/workflow /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2",
     "unlink": "rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2",
