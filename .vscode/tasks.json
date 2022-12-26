@@ -10,6 +10,12 @@
             "problemMatcher": []
         },
         {
+            "label": "Open the Noteplan database",
+            "type": "shell",
+            "command": "open /Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application\\ Support/co.noteplan.NotePlan-setapp/Caches/sync-cache.db",
+            "problemMatcher": []
+        },
+        {
             "label": "Build the executables",
             "type": "shell",
             "command": "nr prod",
