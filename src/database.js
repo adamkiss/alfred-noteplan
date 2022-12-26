@@ -33,11 +33,12 @@ const getWorkflowDatabase = () => {
  * Creates the database for the workflow
  */
 const createWorkflowDatabase = () => {
-    const db = getWorkflowDatabase();
     try {
+        const db = getWorkflowDatabase();
+        
         db.exec(`
             DROP TABLE IF EXISTS notes;
-            DROP TABLE IF EXISTS metadata;
+            DROP TABLE IF EXISTS counter;
             CREATE VIRTUAL TABLE notes USING fts5(
                 file,
                 title,
@@ -46,12 +47,13 @@ const createWorkflowDatabase = () => {
                 type UNINDEXED,
                 prefix='2 3 4'
             );
-            CREATE TABLE metadata (
+            CREATE TABLE counter (
                 key TEXT PRIMARY KEY,
-                value BLOB
+                value INTEGER
             );
-            INSERT INTO metadata VALUES ('last-run', 0);
         `);
+        db.prepare(`INSERT INTO counter VALUES ('last-run', ?)`).run(0);
+
         return db;
     } catch (error) {
         console.log(error)

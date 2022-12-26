@@ -25,7 +25,7 @@ module.exports.refreshAction = function ($bin) {
 
     try {
         const lastRun = parseInt(
-            db.prepare('SELECT value FROM metadata WHERE key = ?').get('last-run').value,
+            db.prepare('SELECT value FROM counter WHERE key = ?').get('last-run').value,
             10
         );
 
@@ -127,7 +127,7 @@ module.exports.refreshAction = function ($bin) {
         }
 
         db.prepare(`
-            UPDATE metadata
+            UPDATE counter
             SET value = ?
             WHERE key = 'last-run'
         `).run(Math.floor(new Date().getTime()))
