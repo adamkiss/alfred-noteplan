@@ -7,10 +7,10 @@ const respond = require('./respond')
 
 module.exports = function(query = '') {
     const preparedQuery = query
-        .replace('/[^\p{L}\s\d]/', '') // Remove everything except numbers, letters and spaces
+        .replace(/[^\p{L}\s\d]/ug, '') // Remove everything except numbers, letters and spaces
         .replace('/\s+/', ' ') // compress spaces
         .trim()
-        .replace(' ', '* ') // word => word*
+        .replaceAll(' ', '* ') // word => word*
         + '*';
 
     const db = getWorkflowDatabase();
