@@ -1,3 +1,4 @@
 .DS_Store
 workflow/database.sqlite*
+workflow/prefs.plist
 dist/*.alfredworkflow

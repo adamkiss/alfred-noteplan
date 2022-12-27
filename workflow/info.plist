@@ -51,7 +51,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+				<string>EB3027F6-21DE-4946-BFF2-4D72E01B5AD7</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -99,6 +99,19 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>EB3027F6-21DE-4946-BFF2-4D72E01B5AD7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EB3027F6-21DE-4946-BFF2-4D72E01B5AD7</key>
+		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
@@ -327,7 +340,7 @@
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>php run-create.php "$query"</string>
+				<string>php run-create.php "$title"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -335,7 +348,7 @@
 				<key>subtext</key>
 				<string>Will create a new note in selected folder</string>
 				<key>title</key>
-				<string>Create note "{query}"</string>
+				<string>Create note "{var:title}"</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -366,6 +379,26 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>title</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>EB3027F6-21DE-4946-BFF2-4D72E01B5AD7</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -460,6 +493,17 @@
 			<key>ypos</key>
 			<real>210</real>
 		</dict>
+		<key>EB3027F6-21DE-4946-BFF2-4D72E01B5AD7</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>11</integer>
+			<key>note</key>
+			<string>query -&gt; title</string>
+			<key>xpos</key>
+			<real>455</real>
+			<key>ypos</key>
+			<real>425</real>
+		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array>
@@ -467,7 +511,7 @@
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>~/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp</string>
+				<string></string>
 				<key>filtermode</key>
 				<integer>1</integer>
 				<key>placeholder</key>
@@ -484,30 +528,9 @@
 			<key>variable</key>
 			<string>user_np_root</string>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<true/>
-				<key>required</key>
-				<false/>
-				<key>text</key>
-				<string>This is an m1 or m2 system</string>
-			</dict>
-			<key>description</key>
-			<string>If it's m1 (or m2), check this box. If it's an older Intel based Mac, leave it unchecked. This will make the workflow pick correct runtime</string>
-			<key>label</key>
-			<string>Your computer's architecture</string>
-			<key>type</key>
-			<string>checkbox</string>
-			<key>variable</key>
-			<string>user_arch</string>
-		</dict>
 	</array>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>2.0.0-rc3</string>
+	<string>2.0.0-rc2</string>
 	<key>webaddress</key>
 	<string>https://adamkiss.com</string>
 </dict>
