@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit7f89d242b25e678f991c772e6ebf96f6
 {
     public static $files = array (
-        '3cfc74f16a45e59d6fa490c948004c9d' => __DIR__ . '/../../..' . '/workflow/src/helpers.php',
+        'abe3d479778c555ae4e874952502e67c' => __DIR__ . '/../..' . '/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -20,7 +20,7 @@ class ComposerStaticInit7f89d242b25e678f991c772e6ebf96f6
     public static $prefixDirsPsr4 = array (
         'Adamkiss\\AlfredNoteplanFTS\\' => 
         array (
-            0 => __DIR__ . '/../../..' . '/workflow/src',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

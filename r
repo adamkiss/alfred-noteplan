@@ -11,6 +11,7 @@ unlink () {
 }
 
 dal () {
+    cd workflow;
     composer dump-autoload;
 }
 
