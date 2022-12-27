@@ -5,6 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Adamkiss\AlfredNoteplanFTS\Alfred;
 use Adamkiss\AlfredNoteplanFTS\CacheDatabase;
 use Adamkiss\AlfredNoteplanFTS\Database;
+use Adamkiss\AlfredNoteplanFTS\NoteplanCallback;
 
 // Get query or die trying
 $query = $argv[1] ?? exit();
@@ -45,8 +46,21 @@ try {
     /**
      * Get folders and return the addNote queries
      */
-    if (str_starts_with('New: ', $query)) {
-        // $folders = CacheDatabase;
+    if (str_starts_with($query, 'New: ')) {
+        $folders = CacheDatabase::getAllFolders();
+		array_unshift($folders, null);
+
+		$title = explode('New: ', $query)[1];
+
+		Alfred::exit(
+			array_map(fn($f) => Alfred::item(
+				uid: urlencode($f ?? "root_folder"),
+				title: $f ?? 'Notes root',
+				subtitle: "Create note '{$title}' in the folder '{$f}'",
+				icon: ['path'=>'icons/icon-folder.icns'],
+				arg: NoteplanCallback::add($title, $f)
+			), $folders)
+		);
     }
 
     /**

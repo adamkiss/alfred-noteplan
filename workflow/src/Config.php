@@ -23,6 +23,13 @@ class Config {
             'root' => dirname(__DIR__),
             'noteplan_root' => getenv('USER_NP_ROOT') ?: '/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp', // @todo remove after testing
 
+			'new_note_template' => <<<MD
+			---
+			title: %s
+			---
+
+			MD,
+
 			'sql_start' => '›',
 			'sql_end' => '‹',
 			'sql_more' => '…',

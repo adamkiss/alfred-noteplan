@@ -42,9 +42,7 @@ class NoteplanCallback {
             'text' => sprintf(Config::get('new_note_template'), $title),
             'openNote' => 'yes',
             'useExistingSubWindow' => 'yes',
-			'folder' => ($folder ?? false && $folder !== '/')
-				? $folder
-				: null
+			'folder' => $folder
         ]);
     }
 

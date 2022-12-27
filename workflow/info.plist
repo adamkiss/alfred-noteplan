@@ -373,13 +373,7 @@
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>if [ "$user_arch" = "1" ]; then
-	BIN="./alfred-noteplan-fts-arm64"
-else
-	BIN="./alfred-noteplan-fts-x64"
-fi
-
-$BIN "${newquery}"</string>
+				<string>php run.php "$newquery"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
