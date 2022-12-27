@@ -18,7 +18,7 @@
         {
             "label": "Run whatever",
             "type": "shell",
-            "command": "time php workflow/run.php",
+            "command": "time php workflow/run.php --refresh",
             "problemMatcher": [],
             "group": {
                 "kind": "test",

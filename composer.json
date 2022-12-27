@@ -1,0 +1,24 @@
+{
+    "name": "adamkiss/alfred-noteplan-fts",
+    "description": "Noteplan Fulltext Search Workflow for Alfed",
+    "type": "project",
+    "license": "MIT",
+    "config": {
+        "vendor-dir": "workflow/vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adamkiss\\AlfredNoteplanFTS\\": "workflow/src/"
+        },
+        "files": [
+            "workflow/src/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Adam Kiss",
+            "email": "iam@adamkiss.com"
+        }
+    ],
+    "require": {}
+}

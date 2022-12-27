@@ -1,60 +1,71 @@
 <?php
 
-require_once __DIR__ . '/noteplan.php';
+namespace Adamkiss\AlfredNoteplanFTS;
 
-function alfred_itemize(array $items): string {
-    return json_encode(['items' => $items]);
-}
+use Throwable;
 
-function alfred_return_error(Throwable $th): string {
-    return alfred_itemize([
-        ['title' => 'Error: ' . $th->getMessage(), 'arg' => $th->getMessage(), 'valid' => false]
-    ]);
-}
+class Alfred {
+    /**
+     * Exit the process with the encoded items encoded to json
+     *
+     * @param array $items - array of items to return to alfred
+     * @return void
+     */
+    static function exit(array $items)
+    {
+        $items = array_filter($items, fn($item) => $item);
+        
+        exit(json_encode(compact('items')));
+    }
 
-function alfred_query_to_sqlite(array $argv): array {
-    // $a[0] is the script name
-    $originalQuery = $argv[1]; 
+    /**
+     * Create an Alfred item
+     *
+     * @param string title
+     * @param string quicklookurl
+     * @return array
+     */
+    static function item(
+        string $title,
+        string $uid = null,
+        string $subtitle = null,
+        string|array $arg = null,
+        array $icon = null,
+        bool $valid = true,
+        string $match = null,
+        string $autocomplete = null,
+        string $type = 'default',
+        array $mods = null,
+        array $text = null,
+        string $quicklookurl = null,
+    ): ?array
+    {
+        $item = compact(
+            'uid', 'title', 'subtitle',
+            'arg', 'icon',
+            'valid', 'match',
+            'autocomplete', 'type',
+            'mods',
+            'text', 'quicklookurl'
+        );
 
-    // Remove everything except numbers, letters and spaces
-    $sqliteQuery = preg_replace('/[^\p{L}\s\d]/', '', $originalQuery);
-    // compress spaces AND trim
-    $sqliteQuery = trim(preg_replace('/\s+/', ' ', $sqliteQuery));
-    // modify each word => word*
-    $sqliteQuery = str_replace(' ', '* ', $sqliteQuery). '*';
+        return array_filter($item, fn($var) => $var);
+    }
 
-    return [
-        $originalQuery,
-        $sqliteQuery
-    ];
-}
-
-function alfred_query_to_rg_regex(array $argv): array {
-    // $argv[0] is the script name
-    $rawQuery = $argv[1]; 
-
-    // Remove everything except numbers, letters and spaces
-    $rawQuery = preg_replace('/[^\p{L}\s\d]/', '', $rawQuery);
-    // compress spaces
-    $rawQuery = preg_replace('/\s+/', ' ', $rawQuery);
-
-    $lookupParts = explode(' ', $rawQuery);
-    $last = array_pop($lookupParts);
-
-    // append suffix to each element: explode -> map -> implode 
-    return [
-        $rawQuery,
-        implode('', [...array_map(fn($l) => "{$l}(?s:(?!{$l}).)*?", $lookupParts), $last]),
-    ];
-}
-
-function alfred_create_note_item(string $title, array $config) {
-    return [
-        'title' => "Create '$title'",
-        'subtitle' => 'Create a new note',
-        'arg' => $title,
-        'icon' => [
-            'path' => __DIR__ . "/../icons/icon-create.icns",
-        ]
-    ];
+    /**
+     * Return ERROR
+     *
+     * @param Throwable $th
+     * @return void
+     */
+    static function error(Throwable $th)
+    {
+        Alfred::exit([
+            Alfred::item(
+                title: "Error: {$th->getMessage()}",
+                arg: $th->getMessage(),
+                valid: false
+            )
+        ]);
+    }
 }

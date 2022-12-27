@@ -1,39 +1,27 @@
 <?php
 
-namespace Adamkiss\NoteplanFTS;
+namespace Adamkiss\AlfredNoteplanFTS;
 
-class Config extends Obj {
-    static $singleton = null;
+class Config {
+    private static $data = [];
 
-    static function instance()
+    static function get(string $key): mixed
     {
-        if (is_null(self::$singleton)) {
-            self::$singleton = new Config();
-        }
+        if (empty(self::$data)) self::init();
 
-        return self::$singleton;
+        return self::$data[$key] ?? null;
     }
 
-    public function __construct() {
-        // Workflow root directory
-        $this->root = dirname(__DIR__);
-
-        // Noteplan root
-        $this->np_root = getenv('USER_NP_ROOT') ?: '~/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp';
-    }
-}
-
-if (! function_exists('config')) {
-    function config(string $key, mixed $value = null): mixed
+    static function set(string $key, $value)
     {
-        $key = strtolower($key);
+        self::$data[$key] = $value;
+    }
 
-        if (is_null($value)) {
-            return Config::instance()->{$key};
-        }
-
-        $instance = Config::instance();
-        $instance->{$key} = $value;
-        return $instance;
+    static function init()
+    {
+        self::$data = [
+            'root' => dirname(__DIR__),
+            'noteplan_root' => getenv('USER_NP_ROOT') ?: '/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp', // @todo remove after testing
+        ];
     }
 }
