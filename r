@@ -14,6 +14,13 @@ dal () {
     composer dump-autoload;
 }
 
+build () {
+    version=`defaults read $(pwd)/workflow/info version`
+    mkdir dist
+    cd workflow
+    zip -r "../dist/alfred-noteplan-fts-$version.alfredworkflow" . -x ./database.sqlite3
+}
+
 # fake npm scripts hahaha
 script=`shift 1`
 $script "$@"
