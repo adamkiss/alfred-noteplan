@@ -2,12 +2,12 @@
 
 link () {
     ln -s \
-        /Users/adam/Code/alfred-noteplan-fts2/workflow \
-        /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2;
+        /Users/adam/Code/alfred-noteplan-fts/workflow \
+        /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts;
 }
 
 unlink () {
-    rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2;
+    rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts;
 }
 
 dal () {
