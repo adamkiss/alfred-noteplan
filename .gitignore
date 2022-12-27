@@ -1,6 +1,2 @@
 .DS_Store
-db*.sqlite*
-_config.php
-nodejs/config.js
-nodejs/node_modules
-nodejs/dist
+workflow/database.sqlite*

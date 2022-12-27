@@ -4,12 +4,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run SQLite caching",
+            "label": "Open the database",
             "type": "shell",
-            "command": "time php run-cache-sqlite.php",
+            "command": "open ./workflow/database.sqlite3",
+            "problemMatcher": []
+        },
+        {
+            "label": "Open the Noteplan database",
+            "type": "shell",
+            "command": "open /Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application\\ Support/co.noteplan.NotePlan-setapp/Caches/sync-cache.db",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run whatever",
+            "type": "shell",
+            "command": "time php workflow/run.php",
             "problemMatcher": [],
             "group": {
-                "kind": "build"
+                "kind": "test",
+                "isDefault": true
             }
         },
         {
@@ -21,6 +34,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }        
+        }
     ]
 }
