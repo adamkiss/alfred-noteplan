@@ -28,7 +28,7 @@ class CacheNote {
 
     /**
      * Create a Noteplan metadata table record
-     * 
+     *
      * <code>
      * $data = [
      *  'filename' => 'folder/filename.md', // Full path relative to Calendar or Notes folder
@@ -43,8 +43,7 @@ class CacheNote {
     public function __construct(array $data) {
         $this->data = $data;
 
-        $pathinfo = pathinfo($data['filename']);
-        $this->path = $pathinfo['dirname'];
+        $this->pathinfo = pathinfo($data['filename']);
 
         // PARSE NOTE NOTES
         if ($data['note_type'] === 1) {
@@ -59,14 +58,14 @@ class CacheNote {
                 $this->title = trim($matches[1]); // 0 is the whole match
                 $this->content = simplifyContent($content);
 
-            // We got a markdown header    
+            // We got a markdown header
             } else if (preg_match('/^#\s*(.*)(?:\n|\s---)/', $content, $matches)) {
                 $this->title = trim($matches[1]);
                 $this->content = simplifyContent($content);
             } else {
-            
+
             // No clue. Let's use filename
-                $this->title = $pathinfo['filename'];
+                $this->title = $this->pathinfo['filename'];
                 $this->content = simplifyContent($content);
             }
 

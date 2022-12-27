@@ -34,19 +34,33 @@ try {
         Database::updateIndex($modified);
         Database::setLastRun(time());
 
-        printf("Done in %03.2fms", (hrtime(true) - $start) / 1e+6 /* nanoseconds to milliseconds */);
+        printf(
+			"Updated %d notes in %03.2fms",
+			count($modified),
+			(hrtime(true) - $start) / 1e+6 /* nanoseconds to milliseconds */
+		);
         exit();
     }
 
-    // // run & exit
-    // exit(match (true) {
-    //     $query === '-r' => Items::refreshItem(),
-    //     $query === '--refresh' => Database::getInstance()->refresh(),
-    //     str_starts_with($query, 'New: ') => '…',
-    //     default => Database::getInstance()->search($query)
-    // });
+    /**
+     * Get folders and return the addNote queries
+     */
+    if (str_starts_with('New: ', $query)) {
+        // $folders = CacheDatabase;
+    }
 
-
+    /**
+     * Search and exit
+     */
+    Alfred::exit([
+		...Database::search($query),
+		Alfred::item(
+			title: "Add note \"{$query}\"",
+			subtitle: "Creates a new note",
+			arg: "New: {$query}",
+			icon: ['path'=>'icons/icon-new.icns']
+		)
+	]);
 } catch (\Throwable $th) {
     Alfred::error($th);
 }

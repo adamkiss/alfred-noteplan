@@ -38,18 +38,18 @@ class Database {
                 DROP TABLE IF EXISTS counter;
                 CREATE VIRTUAL TABLE notes USING fts5(
                     file,
+                    type UNINDEXED,
+                    pathinfo UNINDEXED,
                     title,
                     body,
-                    path UNINDEXED,
-                    type UNINDEXED,
-                    prefix='2 3 4'
+                    prefix='3 4'
                 );
                 CREATE TABLE counter (
                     key TEXT PRIMARY KEY,
                     value INTEGER
                 );
             SQL);
-            
+
             // Reset "last-run" counter
             Database::setLastRun();
         }
@@ -104,18 +104,99 @@ class Database {
 
         // Insert new versions
         $insert = $db->prepare(
-            "INSERT INTO notes (file, title, body, path, type) VALUES " .
+            "INSERT INTO notes (file, type, pathinfo, title, body) VALUES " .
             implode(',', array_map(fn($n) => '(?, ?, ?, ?, ?)', $notes))
         );
         $values = array_reduce($notes, function($carry, $note) {
             return array_merge($carry, [
-                /*'file'  =>*/ $note->get('filename'),
-                /*'title' =>*/ $note->title,
-                /*'body'  =>*/ $note->content,
-                /*'path'  =>*/ $note->path,
-                /*'type'  =>*/ $note->getTypeString(),
+                /*'file'      =>*/ $note->get('filename'),
+                /*'type'      =>*/ $note->getTypeString(),
+                /*'pathinfo'  =>*/ serialize($note->pathinfo),
+                /*'title'     =>*/ $note->title,
+                /*'body'      =>*/ $note->content,
             ]);
         }, []);
         $insert->execute($values);
     }
+
+	static function search(string $query): array
+	{
+		// Remove everything except numbers, letters and spaces
+		$query = preg_replace('/[^\p{L}\s\d]/u', '', $query);
+		// trim, collapse spaces and append '*' to each word
+		$query = implode('* ', preg_split('/\s+/', trim($query))) . '*';
+
+		// prepare subfunctions
+		$c = fn($g) => Config::get($g);
+		$join_snippet_matches = sprintf(
+			'/\%s([\s\-\+\_\!\?\.\,]+?)\%s/i',
+			$c('sql_end'), $c('sql_start')
+		);
+
+		$db = self::getPDO();
+		$search = $db->query(<<<SQL
+			SELECT
+				file,
+				pathinfo,
+				type,
+				snippet(
+					notes, 3,
+					'{$c('sql_start')}', '{$c('sql_end')}',
+					'{$c('sql_more')}',
+					{$c('sql_title_tokens')}
+				) as title,
+				snippet(
+					notes, 4,
+					'{$c('sql_start')}', '{$c('sql_end')}',
+					'{$c('sql_more')}',
+					{$c('sql_snippet_tokens')}
+				) as snippet
+			FROM
+				notes('title: {$query} OR body: {$query}')
+			ORDER BY
+				rank
+			LIMIT
+				20
+		SQL);
+		$notes = $search->fetchAll(
+			PDO::FETCH_FUNC,
+			function(
+				string $file, string $pathinfo, string $type, string $title, string $snippet
+			) use ($join_snippet_matches) {
+				$pathinfo = unserialize($pathinfo);
+				$snippet = str_replace("\n", '↩', $snippet);
+				$snippet = preg_replace($join_snippet_matches, '$1', $snippet);
+				$title = preg_replace($join_snippet_matches, '$1', $title);
+
+				return Alfred::item(
+					title: $title,
+					subtitle: $type === 'note'
+						? "[{$pathinfo['dirname']}] {$snippet}"
+						: $snippet,
+					arg: $type === 'note'
+						? NoteplanCallback::openNote($file)
+						: NoteplanCallback::openCalendar($pathinfo['filename']),
+					mods: [
+						'cmd' => [
+							'valid' => true,
+							'arg' => $type === 'note'
+								? NoteplanCallback::openNote($file, false)
+								: NoteplanCallback::openCalendar($pathinfo['filename'], false),
+							'subtitle' => 'Open the note in a new Noteplan window'
+						]
+					],
+					icon: [
+						'path' => "icons/icon-{$type}.icns",
+					],
+					quicklookurl: implode('/', [
+						Config::get('noteplan_root'),
+						$type === 'note' ? 'Notes' : 'Calendar',
+						$file
+					])
+				);
+			}
+		);
+
+		return $notes;
+	}
 }

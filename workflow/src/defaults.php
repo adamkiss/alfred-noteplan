@@ -30,7 +30,7 @@ return [
     /**
      * Content cleaning function - receives an array of note properties
      * might be set to null to disable
-     * 
+     *
      * @param array $note
      * @return array
      */
@@ -49,7 +49,7 @@ return [
         $content = preg_replace('/\s+/', ' ', $content);
         // trim
         $content = trim($content);
-        
+
         return $content;
     },
 
@@ -59,16 +59,16 @@ return [
     'noteplan_new_note' => function(string $title) {
         return <<<MD
         ---
-        title: {$title}
+        title: %s
         ---
-        
+
         MD;
     },
 
     /**
      * SQLite snippet options
      * I have no idea what the "size" does _exactly_, this was trial and error
-     * 
+     *
      * @link https://www.sqlite.org/fts5.html#the_snippet_function
      */
     'snippet_match_start' => '›',

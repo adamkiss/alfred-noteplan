@@ -13,8 +13,8 @@ class Alfred {
      */
     static function exit(array $items)
     {
-        $items = array_filter($items, fn($item) => $item);
-        
+        $items = array_values(array_filter($items));
+
         exit(json_encode(compact('items')));
     }
 
@@ -63,6 +63,7 @@ class Alfred {
         Alfred::exit([
             Alfred::item(
                 title: "Error: {$th->getMessage()}",
+				subtitle: $th->getMessage(),
                 arg: $th->getMessage(),
                 valid: false
             )
