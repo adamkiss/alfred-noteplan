@@ -70,7 +70,7 @@ class Database {
      */
     public function __construct() {
         $root = config('root');
-        
+
         $this->pdo = new PDO("sqlite:{$root}/database.sqlite3");
     }
 }
