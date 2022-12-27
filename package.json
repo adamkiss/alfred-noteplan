@@ -10,7 +10,7 @@
     "unlink": "rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts2",
     "// build scripts": "",
     "start": "chokidar \"src/**.js\" -c \"npm run prod\"",
-    "prod": "pkg --out-path workflow ."
+    "prod": "pkg --out-path workflow . && mv workflow/alfred-noteplan-fts workflow/alfred-noteplan-fts-arm64"
   },
   "repository": {
     "type": "git",
@@ -30,11 +30,10 @@
   "bin": "src/workflow.js",
   "pkg": {
     "assets": [
-      "node_modules/better-sqlite3/build/Release/better_sqlite3.node"
+      "node_modules/better-sqlite3/build/Release/*"
     ],
     "scripts": "src/workflow.js",
     "targets": [
-      "node16-macos-x64",
       "node16-macos-arm64"
     ],
     "outputPath": "dist"
