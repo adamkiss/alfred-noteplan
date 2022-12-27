@@ -123,6 +123,9 @@ class Database {
 	{
 		// Remove everything except numbers, letters and spaces
 		$query = preg_replace('/[^\p{L}\s\d]/u', '', $query);
+
+		if (empty($query)) exit();
+
 		// trim, collapse spaces and append '*' to each word
 		$query = implode('* ', preg_split('/\s+/', trim($query))) . '*';
 
