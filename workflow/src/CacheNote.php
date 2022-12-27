@@ -41,8 +41,10 @@ class CacheNote {
      * @param array[string]string $data
      */
     public function __construct(array $data) {
-        $this->data = $data;
+		// It's not 100% that $data['note_type'] will be autocase to int
+		$data['note_type'] = intval($data['note_type']);
 
+        $this->data = $data;
         $this->pathinfo = pathinfo($data['filename']);
 
         // PARSE NOTE NOTES
