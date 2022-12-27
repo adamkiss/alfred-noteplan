@@ -133,7 +133,7 @@
 				<key>text</key>
 				<string>{query}</string>
 				<key>title</key>
-				<string>Noteplan Fulltext Search</string>
+				<string>Noteplan Full-text Search</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
@@ -181,7 +181,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>n2</string>
+				<string>n</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -354,7 +354,7 @@
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>n2n</string>
+				<string>nn</string>
 				<key>subtext</key>
 				<string>Creates a new note</string>
 				<key>text</key>
@@ -507,7 +507,7 @@
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.0.0-rc2</string>
+	<string>2.0.0-rc3</string>
 	<key>webaddress</key>
 	<string>https://adamkiss.com</string>
 </dict>
