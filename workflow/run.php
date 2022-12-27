@@ -1,4 +1,4 @@
-<?php $start = hrtime(true);
+<?php
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -14,6 +14,24 @@ try {
    // Ensure database existence
     Database::ensureExistence();
 
+	/**
+	 * List dash commands
+	 */
+	if ($query === '-') {
+		Alfred::exit([
+			Alfred::item(
+				title: '-r',
+				subtitle: 'Initiate a cache refresh',
+				autocomplete: '-r'
+			),
+			Alfred::item(
+				title: '-n',
+				subtitle: 'Create a new note',
+				autocomplete: '-n '
+			)
+		]);
+	}
+
     /**
      * Initiate the refresh (post-instal, mostly)
      */
@@ -22,45 +40,41 @@ try {
             Alfred::item(
                 title: "Refresh the database",
                 subtitle: "Includes a setup, if needed",
-                arg: '--refresh'
+                arg: '-refresh'
             )
         ]);
     }
 
     /**
-     * Run the refresh
+     * Return new note autocomplete
      */
-    if ($query === '--refresh') {
-        $modified = CacheDatabase::getNotesModifiedSince(Database::getLastRun());
-        Database::updateIndex($modified);
-        Database::setLastRun(time());
-
-        printf(
-			"Updated %d notes in %03.2fms",
-			count($modified),
-			(hrtime(true) - $start) / 1e+6 /* nanoseconds to milliseconds */
-		);
-        exit();
+    if ($query === '-n') {
+        Alfred::exit([
+			Alfred::item(
+				title: 'Add note…',
+				subtitle: 'Create a new note',
+				autocomplete: '-n '
+			)
+        ]);
     }
 
     /**
      * Get folders and return the addNote queries
      */
-    if (str_starts_with($query, 'New: ')) {
+    if (str_starts_with($query, '-n ')) {
         $folders = CacheDatabase::getAllFolders();
 		array_unshift($folders, null);
 
-		$title = explode('New: ', $query)[1];
+		$title = explode('-n ', $query)[1];
 
-		Alfred::exit(
-			array_map(fn($f) => Alfred::item(
-				uid: urlencode($f ?? "root_folder"),
-				title: $f ?? 'Notes root',
-				subtitle: "Create note '{$title}' in the folder '{$f}'",
-				icon: ['path'=>'icons/icon-folder.icns'],
-				arg: NoteplanCallback::add($title, $f)
-			), $folders)
-		);
+		Alfred::exit([
+			Alfred::item(
+				title: "Add note \"{$title}\"",
+				subtitle: "Creates a new note",
+				arg: $title,
+				icon: ['path'=>'icons/icon-new.icns']
+			)
+		]);
     }
 
     /**
@@ -71,7 +85,7 @@ try {
 		Alfred::item(
 			title: "Add note \"{$query}\"",
 			subtitle: "Creates a new note",
-			arg: "New: {$query}",
+			arg: "-n {$query}",
 			icon: ['path'=>'icons/icon-new.icns']
 		)
 	]);

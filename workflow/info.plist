@@ -34,19 +34,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>2A17AE8C-9458-4EA2-B049-F11C8621BD32</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
 		<array>
 			<dict>
@@ -64,7 +51,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>2A17AE8C-9458-4EA2-B049-F11C8621BD32</string>
+				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -98,19 +85,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>879E5864-FF1A-4A6F-BAAE-85EDD2A45986</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>A0AE8413-940E-4230-B20F-7674D6C73E58</key>
 		<array>
 			<dict>
@@ -127,7 +101,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>879E5864-FF1A-4A6F-BAAE-85EDD2A45986</string>
+				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -159,7 +133,7 @@
 				<key>text</key>
 				<string>{query}</string>
 				<key>title</key>
-				<string>Noteplan FTS: Re-caching</string>
+				<string>Noteplan Fulltext Search</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
@@ -176,7 +150,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>php run.php --refresh</string>
+				<string>php run-refresh.php</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -253,7 +227,7 @@
 						<key>matchmode</key>
 						<integer>4</integer>
 						<key>matchstring</key>
-						<string>--refresh</string>
+						<string>-refresh</string>
 						<key>outputlabel</key>
 						<string>Refresh</string>
 						<key>uid</key>
@@ -328,26 +302,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>newquery</key>
-					<string>{query}</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>879E5864-FF1A-4A6F-BAAE-85EDD2A45986</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -361,7 +315,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>{var:newquery}</string>
+				<string>list folders</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -373,7 +327,7 @@
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>php run.php "$newquery"</string>
+				<string>php run-create.php "$query"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -381,7 +335,7 @@
 				<key>subtext</key>
 				<string>Will create a new note in selected folder</string>
 				<key>title</key>
-				<string>Create note "{var:newquery}"</string>
+				<string>Create note "{query}"</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -402,9 +356,9 @@
 				<key>keyword</key>
 				<string>n2n</string>
 				<key>subtext</key>
-				<string>Create a note named "{query}"</string>
+				<string>Creates a new note</string>
 				<key>text</key>
-				<string>Create a note</string>
+				<string>Add note "{query}"</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -412,26 +366,6 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>newquery</key>
-					<string>New: {query}</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>2A17AE8C-9458-4EA2-B049-F11C8621BD32</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -458,31 +392,22 @@
 			<key>colorindex</key>
 			<integer>8</integer>
 			<key>note</key>
-			<string>call the refresh script</string>
+			<string>execute run-refresh.php</string>
 			<key>xpos</key>
 			<real>290</real>
 			<key>ypos</key>
 			<real>65</real>
 		</dict>
-		<key>2A17AE8C-9458-4EA2-B049-F11C8621BD32</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>11</integer>
-			<key>note</key>
-			<string>Set newquery to "New: {query}"</string>
-			<key>xpos</key>
-			<real>430</real>
-			<key>ypos</key>
-			<real>400</real>
-		</dict>
 		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>11</integer>
+			<key>note</key>
+			<string>execute run-create.php</string>
 			<key>xpos</key>
 			<real>545</real>
 			<key>ypos</key>
-			<real>370</real>
+			<real>395</real>
 		</dict>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<dict>
@@ -493,27 +418,16 @@
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>370</real>
+			<real>395</real>
 		</dict>
 		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<real>180</real>
+			<real>185</real>
 			<key>ypos</key>
 			<real>160</real>
-		</dict>
-		<key>879E5864-FF1A-4A6F-BAAE-85EDD2A45986</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>5</integer>
-			<key>note</key>
-			<string>query → newquery</string>
-			<key>xpos</key>
-			<real>430</real>
-			<key>ypos</key>
-			<real>325</real>
 		</dict>
 		<key>A0AE8413-940E-4230-B20F-7674D6C73E58</key>
 		<dict>
