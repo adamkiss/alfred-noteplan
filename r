@@ -18,7 +18,7 @@ build () {
     version=`defaults read $(pwd)/workflow/info version`
     mkdir dist
     cd workflow
-    zip -r "../dist/alfred-noteplan-fts-$version.alfredworkflow" . -x ./database.sqlite3
+    zip -r "../dist/alfred-noteplan-fts-$version.alfredworkflow" . -x ./database.sqlite3 -x ./prefs.plist
 }
 
 # fake npm scripts hahaha
