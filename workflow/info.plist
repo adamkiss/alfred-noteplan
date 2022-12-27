@@ -163,7 +163,11 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>php run-refresh.php</string>
+				<string>if [ -n $user_php_script ]; then
+	eval $user_php_script
+fi
+
+php run-refresh.php</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -206,7 +210,11 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>php run.php "{query}"</string>
+				<string>if [ -n $user_php_script ]; then
+	eval $user_php_script
+fi
+
+php run.php "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -340,7 +348,11 @@
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>php run-create.php "$title"</string>
+				<string>if [ -n $user_php_script ]; then
+	eval $user_php_script
+fi
+
+php run-create.php "$title"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -528,9 +540,30 @@
 			<key>variable</key>
 			<string>user_np_root</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+				<key>verticalsize</key>
+				<integer>0</integer>
+			</dict>
+			<key>description</key>
+			<string>If you don't have PHP widely available, you may use this field to help you load PHP</string>
+			<key>label</key>
+			<string>Shell script/command to load PHP</string>
+			<key>type</key>
+			<string>textarea</string>
+			<key>variable</key>
+			<string>user_php_script</string>
+		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-rc5</string>
+	<string>2.0.0-rc4</string>
 	<key>webaddress</key>
 	<string>https://adamkiss.com</string>
 </dict>
