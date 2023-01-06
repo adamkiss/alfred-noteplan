@@ -1,5 +1,14 @@
+# hihihi
 .DS_Store
-node_modules
+
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+# Workflow build data
+workflow/refresh-arm64
+
+# My workflow data
 workflow/prefs.plist
 workflow/alfred-noteplan-fts-*
 workflow/database.sqlite*

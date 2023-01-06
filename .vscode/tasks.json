@@ -16,9 +16,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Build the executables",
+            "label": "Build the executable",
             "type": "shell",
-            "command": "nr prod",
+            "command": "dart compile exe src/bin/refresh.dart -o workflow/refresh-arm64",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -26,14 +26,14 @@
             }
         },
         {
-            "type": "npm",
-            "script": "test",
+            "label": "Run the refresh script with dart",
+            "type": "shell",
+            "command": "time dart run src/bin/refresh.dart",
             "group": {
                 "kind": "test",
                 "isDefault": true
             },
             "problemMatcher": [],
-            "label": "npm: test"
         }
     ]
 }
