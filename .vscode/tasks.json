@@ -18,7 +18,7 @@
         {
             "label": "Build the executable",
             "type": "shell",
-            "command": "dart compile exe src/bin/refresh.dart -o workflow/refresh-arm64",
+            "command": "./r.sh build:dart",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
