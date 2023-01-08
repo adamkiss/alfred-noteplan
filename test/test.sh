@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# rebuild
+./r.sh build:dart
+
 # CWD is the root
 echo "RETURN HELP OPTIONS"
 zsh test/fake-run.sh !
