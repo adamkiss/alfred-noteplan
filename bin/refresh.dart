@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sqlite3/sqlite3.dart';
 
@@ -18,7 +20,6 @@ void main(List<String> arguments) {
 			file,
 			title,
 			content,
-			path UNINDEXED,
 			type UNINDEXED,
 			prefix='2 3 4'
 		);
@@ -50,14 +51,13 @@ void main(List<String> arguments) {
 
 	// Prepare massive update
 	db.prepare('''
-		INSERT INTO notes (file, title, content, path, type)
-		VALUES ${new_notes.map((_) => '(?, ?, ?, ?, ?)').join(',')}
+		INSERT INTO notes (file, title, content, type)
+		VALUES ${new_notes.map((_) => '(?, ?, ?, ?)').join(',')}
 	''').execute(
 		new_notes.map((e) => [
 			e.filename,
 			e.title,
 			e.content,
-			e.path,
 			e.type.toString()
 		]).expand((e) => e).toList(growable: false)
 	);

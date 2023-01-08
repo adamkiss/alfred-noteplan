@@ -1,19 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';
-
-enum NoteType {
-	note,
-	daily,
-	weekly,
-	monthly,
-	quarterly,
-	yearly
-}
 
 class Note {
 	static const String fmtDaily = 'dd.MM.y, EEEE'; // datetime
@@ -29,7 +21,7 @@ class Note {
 
 	late final String title;
 	late final String content;
-	late final String path;
+	Map<String, dynamic> data = {};
 
 	Note(Row record):
 		filename = record['filename'],
@@ -39,8 +31,6 @@ class Note {
 		final note_type = record['note_type'];
 		final bname = basenameWithoutExtension(filename);
 		var rmatch; // Re-assignable utility
-
-		path = dirname(filename);
 
 		/** NOTES */
 		if (note_type == 1) {
@@ -57,6 +47,7 @@ class Note {
 
 		/** CALENDAR */
 		content = _fts_clean(content_raw);
+
 		if (bname.contains('W')) { // Week
 			rmatch = RegExp(r'(\d+)-[A-Z](\d+)').firstMatch(bname);
 			title = fmtWeekly
