@@ -18,11 +18,11 @@ Search, open, and create Noteplan notes with Alfred.
 - `t … today` - today's note
 - `y … yesterday` - yesterday's note
 - `tom … tomorrow` - tomorrow's note
-- `[-+] [number] [dwm]` - relative date, number of days/weeks/months back and forward. spaces are optional
+- `[-+]? [number] [dwm]` - relative date, number of days/weeks/months back and forward. spaces are optional
 - `[wmq]` - this week's (month's, quarter's) note
-- `[wmq] [-+] [number]` - relative week's (month's, quarter's) note (spaces optional)
+- `[wmq] [-+]? [number]` - relative week's (month's, quarter's) note (spaces optional)
 - `yr|year` - this year's note
-- `yr|year [-+] [number]` - relative year (spaces optional)
+- `yr|year [-+]? [number]` - relative year (spaces optional)
 
 ## Installation
 1. Download and import the workflow
