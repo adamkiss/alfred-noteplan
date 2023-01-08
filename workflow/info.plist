@@ -219,8 +219,40 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>BIN="./noteplan_fts-$(uname -m)"
-$BIN $1</string>
+				<string>function info {
+cat &lt;&lt;- JSON
+{"items": [
+    {
+        "title": "!! - Debug",
+        "subtitle": "Show &amp; copy debugging information (versions, architecture)",
+        "valid": false,
+        "autocomplete": "!!"
+    },
+    {
+        "title": "!r - Refresh",
+        "subtitle": "Refresh the database (since the last update)",
+        "valid": false,
+        "autocomplete": "!r"
+    },
+    {
+        "title": "!rf - Refresh (Force)",
+        "subtitle": "Force full refresh of the database",
+        "valid": false,
+        "autocomplete": "!r"
+    }
+]}
+JSON
+}
+
+function debug {
+    $BIN debug
+}
+
+BIN="./noteplan_fts-$(uname -m)"
+
+# autocomplete: ! help
+[[ "$1" == "!" ]] &amp;&amp; info
+[[ "$1" == "!!" ]] &amp;&amp; debug</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -230,7 +262,7 @@ $BIN $1</string>
 				<key>title</key>
 				<string>Noteplan FTS</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>

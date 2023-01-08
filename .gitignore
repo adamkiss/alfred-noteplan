@@ -5,6 +5,9 @@
 .dart_tool/
 .packages
 
+# Backup
+info.plist.bak
+
 # Workflow build data
 workflow/noteplan_fts-*
 

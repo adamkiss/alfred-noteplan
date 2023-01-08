@@ -28,7 +28,7 @@
         {
             "label": "Run the refresh script with dart",
             "type": "shell",
-            "command": "time dart run bin/noteplan_fts.dart",
+            "command": "r test",
             "group": {
                 "kind": "test",
                 "isDefault": true
