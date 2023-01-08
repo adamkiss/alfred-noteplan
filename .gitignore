@@ -6,7 +6,7 @@
 .packages
 
 # Workflow build data
-workflow/refresh-arm64
+workflow/noteplan_fts-*
 
 # My workflow data
 workflow/prefs.plist
