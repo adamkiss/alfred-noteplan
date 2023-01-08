@@ -9,7 +9,7 @@ about () { #: show help & commands
 }
 
 build:dart () { #: Build the version for the current architecture
-    dart compile exe bin/refresh.dart -o "workflow/refresh-$(uname -m)"
+    dart compile exe bin/noteplan_fts.dart -o "workflow/noteplan_fts-$(uname -m)"
 }
 
 build:icons () { #: Build the icns file from iconsets

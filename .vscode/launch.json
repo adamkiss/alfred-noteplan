@@ -8,7 +8,8 @@
             "name": "alfred-noteplan-fts-dart",
             "request": "launch",
             "type": "dart",
-            "program": "bin/refresh.dart"
+            "program": "bin/noteplan_fts.dart",
+            "args": ["refresh"]
         }
     ]
 }

@@ -1,15 +1,15 @@
-import 'dart:convert';
+import 'dart:developer';
 
+import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 import 'package:alfred_noteplan_fts_refresh/note.dart';
 
-String _cache_database = '/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp/Caches/sync-cache.db';
-
-void main(List<String> arguments) {
+void refresh({bool force = false}) {
 	// print('Using sqlite3 ${sqlite3.version.libVersion}');
-	final cache = sqlite3.open(_cache_database);
+	inspect(Config.path_cache_db);
+	final cache = sqlite3.open(Config.path_cache_db);
 	final db    = sqlite3.open('database.sqlite3');
 
 	// Ensure existing notes database
