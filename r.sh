@@ -8,6 +8,10 @@ about () { #: show help & commands
     cat r.sh | sed -nr 's/^(.*) \(\).* #: (.*)$/  \1\t\2/p' | expand -20
 }
 
+build:licenses () { #: Get all the licenses from pubspec.lock
+    dart-pubspec-licenses-lite -i pubspec.lock | grep -v null > LICENSES
+}
+
 build:dart () { #: Build the version for the current architecture
     dart compile exe bin/noteplan_fts.dart -o "workflow/noteplan_fts-$(uname -m)"
 }
