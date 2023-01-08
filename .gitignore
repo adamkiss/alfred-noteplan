@@ -12,3 +12,6 @@ workflow/refresh-arm64
 workflow/prefs.plist
 workflow/alfred-noteplan-fts-*
 workflow/database.sqlite*
+
+# ignore database
+database.sqlite3
