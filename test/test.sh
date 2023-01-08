@@ -23,3 +23,8 @@ echo "REFRESH CHANGED (nothing)"
 zsh test/fake-run.sh !r
 echo
 echo
+
+echo "CREATE NOTE - folders"
+./workflow/noteplan_fts-arm64 create 'Ahoy there captain!'
+echo
+echo

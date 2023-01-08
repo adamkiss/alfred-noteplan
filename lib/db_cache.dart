@@ -20,4 +20,19 @@ class DbCache {
 			AND modified > ?
 		''', [since]);
 	}
+
+	List<String> select_folders() {
+		final folders = _db.select('''
+			SELECT filename
+			FROM metadata
+			WHERE
+				is_directory = 1
+			AND note_type = 1
+			AND filename NOT LIKE '@%'
+		''');
+
+		return folders
+			.map((e) => e['filename'].toString())
+			.toList(growable: false);
+	}
 }
