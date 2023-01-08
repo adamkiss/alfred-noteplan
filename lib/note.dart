@@ -30,7 +30,7 @@ class Note {
 	{
 		final note_type = record['note_type'];
 		final bname = basenameWithoutExtension(filename);
-		var rmatch; // Re-assignable utility
+		var  rmatch; // Re-assignable utility
 
 		/** NOTES */
 		if (note_type == 1) {
