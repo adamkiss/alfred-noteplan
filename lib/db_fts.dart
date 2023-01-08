@@ -54,12 +54,12 @@ class DbFts {
 		return _db.select('SELECT value FROM counter WHERE filename == "__last_refresh" limit 1;').first['value'];
 	}
 
-	void set_last_update(int? timestamp) {
+	void set_last_update({int? timestamp}) {
 		_db.prepare('''
 			INSERT INTO counter(filename, value)
 			VALUES('__last_refresh', ?)
 			ON CONFLICT(filename) DO
 			UPDATE SET value = excluded.value
-		''').execute([timestamp ?? DateTime.now().microsecondsSinceEpoch]);
+		''').execute([timestamp ?? DateTime.now().millisecondsSinceEpoch]);
 	}
 }
