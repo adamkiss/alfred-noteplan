@@ -17,14 +17,27 @@ void main (List<String> arguments) {
 	final int run_start = Config.ts();
 	Config.init();
 
-	final String query = (arguments.isEmpty ? '!!' : arguments.first).trim();
+	if (arguments.isEmpty) {
+		print(
+			'Usage: noteplan_fts-[arch] [command] [arguments]' '\n'
+			'Commands:' '\n'
+			' - debug' '\n'
+			' - refresh [force?]'  '\n'
+			' - search [query]' '\n'
+			' - date [query]' '\n'
+		);
+		exit(1);
+	}
 
-	final db    = DbFts(sqlite3.open(join(Config.workflow_root(), 'database.sqlite3')));
+	final String command = arguments.first;
+	final String query = arguments.sublist(1).join(' ').trim();
+
+	final db = DbFts(sqlite3.open(join(Config.workflow_root(), 'database.sqlite3')));
 	db.ensure_setup();
 
 	// Refresh & Exit
-	if (query == '!r' || query == '!rf') {
-		final int update_count = refresh(db, force: query == '!rf');
+	if (command == 'refresh') {
+		final int update_count = refresh(db, force: query == 'force');
 		print('Updated ${update_count} items in ${Config.ts() - run_start}ms');
 		exit(0);
 	}
@@ -32,12 +45,14 @@ void main (List<String> arguments) {
 	final List<Map> result = [];
 
 	// About
-	if (query == '!!') {
+	if (command == 'debug') {
 		final about = About();
 		print(alf_to_results([
-			alf_valid_item('Workflow information', 'Copy to clipboard', variables: {
-				'information': about.for_clipboard()
-			}),
+			alf_valid_item('Workflow information', 'Copy to clipboard', arg: about.for_clipboard(),
+			variables: {
+				'information':
+			}
+			),
 			alf_invalid_item(about.version, 'Workflow version', text: {'copy': about.version}),
 			alf_invalid_item(about.sqlite_version, 'SQLite3 version', text: {'copy': about.sqlite_version}),
 			alf_invalid_item(about.macos_version, 'macOS version', text: {'copy': about.macos_version}),

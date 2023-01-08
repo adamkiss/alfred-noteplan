@@ -1,3 +1,5 @@
+BIN="./noteplan_fts-$(uname -m)"
+
 function info {
 cat <<- JSON
 {"items": [
@@ -23,12 +25,17 @@ cat <<- JSON
 JSON
 }
 
-function debug {
-    $BIN debug
-}
-
-BIN="./noteplan_fts-$(uname -m)"
-
-# autocomplete: ! help
-[[ "$1" == "!" ]] && info
-[[ "$1" == "!!" ]] && debug
+case "$1" in
+    "!")
+        info
+        ;;
+    "!!")
+        $BIN debug
+        ;;
+    "!r")
+        $BIN refresh
+        ;;
+    "!rf")
+        $BIN refresh-force
+        ;;
+esac

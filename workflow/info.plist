@@ -219,7 +219,9 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>function info {
+				<string>BIN="./noteplan_fts-$(uname -m)"
+
+function info {
 cat &lt;&lt;- JSON
 {"items": [
     {
@@ -244,15 +246,20 @@ cat &lt;&lt;- JSON
 JSON
 }
 
-function debug {
-    $BIN debug
-}
-
-BIN="./noteplan_fts-$(uname -m)"
-
-# autocomplete: ! help
-[[ "$1" == "!" ]] &amp;&amp; info
-[[ "$1" == "!!" ]] &amp;&amp; debug</string>
+case $1 in
+    "!")
+        info
+        ;;
+    "!!")
+        $BIN debug
+        ;;
+    "!r")
+        $BIN refresh
+        ;;
+    "!rf")
+        $BIN refresh-force
+        ;;
+esac</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
