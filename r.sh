@@ -30,6 +30,20 @@ build () { #: Run the whole build
     build:workflow
 }
 
+version () { #: get the workflow version
+    defaults read "$(pwd)/workflow/info" version
+}
+
+dev:link () { #: link the WIP version to Alfred
+    ln -s \
+        /Users/adam/Code/alfred-noteplan-fts-dart/workflow \
+        /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts-dart;
+}
+
+dev:unlink () { #: remove the WIP version link from Alfred
+    rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts-dart;
+}
+
 if [[ $# > 0 ]]; then
     script=`shift 1`
     $script "$@"
