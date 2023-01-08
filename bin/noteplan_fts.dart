@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alfred_noteplan_fts_refresh/about.dart';
 import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
@@ -32,25 +33,17 @@ void main (List<String> arguments) {
 
 	// About
 	if (query == '!!') {
-		String workflow_version = Process.runSync('defaults', ['read', join(Config.workflow_root(), 'info'), 'version']).stdout.trim();
-		String macos_version = Process.runSync('sw_vers', ['-productVersion']).stdout.trim();
-		String macos_architecture = Process.runSync('uname', ['-m']).stdout.trim();
-
-		final copy_to_clipboard =
-			'Workflow version: ${workflow_version}\n'
-			'SQLite3 version: ${sqlite3.version.toString()}\n'
-			'macOS: ${macos_version} / ${macos_architecture}'
-		;
-
+		final about = About();
 		print(alf_to_results([
 			alf_valid_item('Workflow information', 'Copy to clipboard', variables: {
-				'information': copy_to_clipboard
+				'information': about.for_clipboard()
 			}),
-			alf_invalid_item(workflow_version, 'Workflow version', text: {'copy': workflow_version}),
-			alf_invalid_item(sqlite3.version.toString(), 'SQLite3 version', text: {'copy': sqlite3.version.toString()}),
-			alf_invalid_item(macos_version, 'macOS version', text: {'copy': macos_version}),
-			alf_invalid_item(macos_architecture, 'mac architecture', text: {'copy': macos_architecture}),
+			alf_invalid_item(about.version, 'Workflow version', text: {'copy': about.version}),
+			alf_invalid_item(about.sqlite_version, 'SQLite3 version', text: {'copy': about.sqlite_version}),
+			alf_invalid_item(about.macos_version, 'macOS version', text: {'copy': about.macos_version}),
+			alf_invalid_item(about.macos_arch, 'mac architecture', text: {'copy': about.macos_arch}),
 		]));
+		exit(0);
 	}
 
 	final int last_update = db.get_last_update();
@@ -58,6 +51,5 @@ void main (List<String> arguments) {
 
 	print('noop');
 
-	// print('Using sqlite3 ${sqlite3.version.libVersion}');
 	db.dispose();
 }
