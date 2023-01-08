@@ -12,6 +12,7 @@ Search, open, and create Noteplan notes with Alfred.
 - `n +[Title of the note]`, `nn [Title of the note]` - Creates a new note, in the folder of your choice
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
+- `n !!` - Show debug information
 
 ### Natural date parser
 - `t … today` - today's note
