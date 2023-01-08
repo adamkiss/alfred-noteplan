@@ -17,7 +17,7 @@ Map<String, dynamic> alf_valid_item (
 	String subtitle,
 	{
 		Map? icon,
-		Map? arg,
+		String? arg,
 		Map? mods,
 		Map? variables,
 		Map? text,
@@ -43,7 +43,7 @@ Map<String, dynamic> alf_invalid_item (
 	String subtitle,
 	{
 		Map? icon,
-		Map? arg,
+		String? arg,
 		Map? mods,
 		Map? variables,
 		Map? text,
