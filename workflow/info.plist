@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.adamkiss.alfred-noteplan-fts</string>
+	<string>com.adamkiss.alfred-noteplan-fts-dart</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -144,7 +144,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Noteplan FTS + Creation</string>
+	<string>(DART) Noteplan Full-text Search</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -207,7 +207,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>jsn</string>
+				<string>dn</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -219,15 +219,10 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>if [ "$user_arch" = "1" ]; then
-	BIN="./alfred-noteplan-fts-arm64"
-else
-	BIN="./alfred-noteplan-fts-x64"
-fi
-
-$BIN "{query}"</string>
+				<string>BIN="./noteplan_fts-$(uname -m)"
+$BIN $1</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
@@ -412,7 +407,7 @@ $BIN "${newquery}"</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>jsnn</string>
+				<string>dnn</string>
 				<key>subtext</key>
 				<string>Create a note named "{query}"</string>
 				<key>text</key>
