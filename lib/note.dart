@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -73,7 +74,7 @@ class Note {
 				int.parse(rmatch.group(1)!, radix: 10),
 				int.parse(rmatch.group(2)!, radix: 10)
 			);
-			title = DateFormat(fmtMonthly, 'en_GB').format(first_of);
+			title = DateFormat(fmtMonthly, Config.locale).format(first_of);
 			type = NoteType.monthly;
 			return;
 		}
@@ -94,7 +95,7 @@ class Note {
 			int.parse(rmatch.group(2)!, radix: 10),
 			int.parse(rmatch.group(3)!, radix: 10)
 		);
-		title = DateFormat(fmtDaily, 'en_GB').format(dt);
+		title = DateFormat(fmtDaily, Config.locale).format(dt);
 		type = NoteType.daily;
 	}
 

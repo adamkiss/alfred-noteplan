@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 
 class Config {
 	static String noteplan_root = '';
+	static String locale = 'en_GB';
 
 	static String path_cache_db = join(Config.noteplan_root, 'Caches', 'sync-cache.db');
 
@@ -17,6 +18,7 @@ class Config {
 		}
 
 		noteplan_root = Directory(Platform.environment['user_np_root']!).absolute.path;
+		locale = Platform.environment['user_locale'] ?? locale;
 	}
 
 	static void error(String err) {
