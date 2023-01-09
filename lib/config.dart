@@ -22,8 +22,13 @@ class Config {
 	}
 
 	static void error(String err) {
-		print(str_usage);
-		print('Error: ${err}');
+		print(alf_to_results([
+			alf_invalid_item(
+				err,
+				'There has been an error in the noteplan_fts binary',
+				icon: {'path': 'icons/icon-error.icns'}
+			)
+		]));
 		exit(1);
 	}
 
