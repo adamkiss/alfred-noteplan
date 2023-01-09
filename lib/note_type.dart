@@ -23,4 +23,16 @@ enum NoteType {
 			? 'Notes'
 			: 'Calendar';
 	}
+
+	static NoteType create_from_string(String from) {
+		switch (from) {
+			case 'note': return NoteType.note;
+			case 'daily': return NoteType.daily;
+			case 'weekly': return NoteType.weekly;
+			case 'monthly': return NoteType.monthly;
+			case 'quarterly': return NoteType.quarterly;
+			case 'yearly': return NoteType.yearly;
+			default: throw Exception("This doesn't make sense.");
+		}
+	}
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfred_noteplan_fts_refresh/note.dart';
 import 'package:alfred_noteplan_fts_refresh/note_match.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -48,7 +46,7 @@ class DbFts {
 				e.filename,
 				e.title,
 				e.content,
-				e.type.toString()
+				e.type.value
 			]).expand((e) => e).toList(growable: false)
 		);
 	}
@@ -90,11 +88,7 @@ class DbFts {
 			LIMIT
 				18
 		''');
-		for (var row in results) {
-			inspect(row);
-			print(row['title']);
-		}
-		print('');
+
 		return results.map((Row row) => NoteMatch(row)).toList(growable: false);
 	}
 }

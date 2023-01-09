@@ -16,7 +16,7 @@ class NoteMatch {
 		filename = result['filename'],
 		title = result['title'],
 		snippet = result['snippet'],
-		type = (result['type'] as NoteType)
+		type = NoteType.create_from_string(result['type'])
 	;
 
 	bool _is_note() => (type == NoteType.note);
