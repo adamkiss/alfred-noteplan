@@ -14,20 +14,28 @@ bool _last_update_more_than(int last_update, {int compare = 10}) {
 	return DateTime.now().millisecondsSinceEpoch > (last_update + compare);
 }
 
+String _usage = ''
+	'Usage: noteplan_fts-[arch] [command] [arguments] \n'
+	'Commands: \n'
+	' - refresh <force?> - force is optional \n'
+	' - debug \n'
+	' - create <title> - required\n'
+	' - date <query> - required, begins with ">"\n'
+	' - search <query> - required\n'
+;
+
+void error(String err) {
+	print(_usage);
+	print('\nError: ${err}');
+	exit(1);
+}
+
 void main (List<String> arguments) {
 	final int run_start = Config.ts();
 	Config.init();
 
 	if (arguments.isEmpty) {
-		print(
-			'Usage: noteplan_fts-[arch] [command] [arguments] \n'
-			'Commands: \n'
-			' - refresh [force?] \n'
-			' - debug \n'
-			' - create \n'
-			' - date [query] \n'
-			' - search [query] \n'
-		);
+		print(_usage);
 		exit(1);
 	}
 
@@ -64,6 +72,11 @@ void main (List<String> arguments) {
 		exit(0);
 	}
 
+	// From now on, we totally need query, so die if it's empty
+	if (query.isEmpty) {
+		error("Commands 'create', 'date' and 'search' require arguments.");
+	}
+
 	// Create new note
 	if (command == 'create') {
 		final cache = DbCache(sqlite3.open(Config.path_cache_db));
@@ -79,7 +92,10 @@ void main (List<String> arguments) {
 
 	// Date parsing
 	if (command == 'date') {
-
+		final String? to_parse = RegExp(r'^>\s*(.*?)$').stringMatch(query);
+		if (to_parse == null) {
+			error("Commands 'date' expects argument in the form '><\\s>*?<query>");
+		}
 	}
 
 	// Finally: Full-text search
