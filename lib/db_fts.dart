@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:alfred_noteplan_fts_refresh/note.dart';
+import 'package:alfred_noteplan_fts_refresh/note_match.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class DbFts {
@@ -61,5 +64,37 @@ class DbFts {
 			ON CONFLICT(filename) DO
 			UPDATE SET value = excluded.value
 		''').execute([timestamp ?? DateTime.now().millisecondsSinceEpoch]);
+	}
+
+	String _query_to_fts_query(String query) {
+		return '${query
+			.replaceAll(RegExp(r'[^\p{L}\s\d]', unicode: true), '')
+			.replaceAll(RegExp(r'\s+'), ' ')
+			.trim()
+			.replaceAll(' ', '* ')}'
+			'*';
+	}
+
+	List<NoteMatch> search(String query) {
+		final String preparedQuery = _query_to_fts_query(query);
+		final ResultSet results = _db.select('''
+			SELECT
+				filename,
+				title,
+				type,
+				snippet(notes, 2, '›', '‹', '…', 5) as snippet
+			FROM
+				notes('${preparedQuery}')
+			ORDER BY
+				rank
+			LIMIT
+				18
+		''');
+		for (var row in results) {
+			inspect(row);
+			print(row['title']);
+		}
+		print('');
+		return results.map((Row row) => NoteMatch(row)).toList(growable: false);
 	}
 }

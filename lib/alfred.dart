@@ -8,6 +8,8 @@
 
 import 'dart:convert';
 
+import 'package:alfred_noteplan_fts_refresh/strings.dart';
+
 String alf_to_results (List<Map> results) {
 	return jsonEncode({'items': results});
 }
@@ -63,3 +65,11 @@ Map<String, dynamic> alf_invalid_item (
 	if (quicklookurl != null) { result['quicklookurl'] = quicklookurl; }
 	return result;
 }
+
+Map<String, dynamic> alf_create_item(String query) => alf_valid_item(
+	'Create "${query}"',
+	str_create_result_subtitle,
+	icon: {'path': 'icons/icon-create.icns'},
+	arg: query,
+	variables: {'action': 'create'}
+);

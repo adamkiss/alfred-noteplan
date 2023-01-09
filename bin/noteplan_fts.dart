@@ -6,6 +6,7 @@ import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/db_cache.dart';
 import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
+import 'package:alfred_noteplan_fts_refresh/note_match.dart';
 import 'package:alfred_noteplan_fts_refresh/refresh.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -96,5 +97,14 @@ void main (List<String> arguments) {
 	}
 
 	// Finally: Full-text search
+	List<NoteMatch> found = db.search(query);
+	print(alf_to_results(
+		found
+			.map((e) => e.to_alfred_result())
+			.toList()
+			..add(alf_create_item(query))
+	));
+
+	// DISPOSE
 	db.dispose();
 }
