@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:alfred_noteplan_fts_refresh/about.dart';
@@ -8,6 +7,7 @@ import 'package:alfred_noteplan_fts_refresh/db_cache.dart';
 import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
 import 'package:alfred_noteplan_fts_refresh/note_match.dart';
 import 'package:alfred_noteplan_fts_refresh/refresh.dart';
+import 'package:alfred_noteplan_fts_refresh/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
@@ -15,28 +15,12 @@ bool _last_update_more_than(int last_update, {int compare = 10}) {
 	return DateTime.now().millisecondsSinceEpoch > (last_update + compare);
 }
 
-String _usage = ''
-	'Usage: noteplan_fts-[arch] [command] [arguments] \n'
-	'Commands: \n'
-	' - refresh <force?> - force is optional \n'
-	' - debug \n'
-	' - create <title> - required\n'
-	' - date <query> - required, begins with ">"\n'
-	' - search <query> - required\n'
-;
-
-void error(String err) {
-	print(_usage);
-	print('Error: ${err}');
-	exit(1);
-}
-
 void main (List<String> arguments) {
 	final int run_start = Config.ts();
 	Config.init();
 
 	if (arguments.isEmpty) {
-		error('Command required.');
+		Config.error(str_error_missing_command);
 	}
 
 	final String command = arguments.first;
@@ -72,7 +56,7 @@ void main (List<String> arguments) {
 
 	// From now on, we totally need query, so die if it's empty
 	if (query.isEmpty) {
-		error("Commands 'create', 'date' and 'search' require arguments.");
+		Config.error(str_error_missing_args);
 	}
 
 	// Create new note
@@ -92,7 +76,7 @@ void main (List<String> arguments) {
 	if (command == 'date') {
 		final String? to_parse = RegExp(r'^>\s*(.*?)$').stringMatch(query);
 		if (to_parse == null) {
-			error("Commands 'date' expects argument in the form '><\\s>*?<query>");
+			Config.error(str_error_date_unparsable);
 		}
 	}
 

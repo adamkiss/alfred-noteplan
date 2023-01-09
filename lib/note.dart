@@ -30,6 +30,7 @@ class Note {
 	{
 		final note_type = record['note_type'];
 		final bname = basenameWithoutExtension(filename);
+		// ignore: prefer_typing_uninitialized_variables
 		var  rmatch; // Re-assignable utility
 
 		/** NOTES */
