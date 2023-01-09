@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # rebuild
-# ./r.sh build:dart
+./r.sh build:dart
 
 # set test env variables
 user_np_root='/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp'
@@ -30,7 +30,7 @@ echo
 
 echo "CREATE NOTE - folders"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
-./workflow/noteplan_fts-arm64 create 'Ahoy there captain!' | jq -r '.items | map(.title)'
+./workflow/noteplan_fts-arm64 create 'Ahoy there captain!' | jq -r '.items | map(.title + ": "+ .arg)'
 echo
 
 echo "SEARCH - adam kiss (outputs: 19 [18 + create])"

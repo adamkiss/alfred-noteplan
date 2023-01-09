@@ -2,13 +2,9 @@ String _create_noteplan_url({
 	String method = 'addNote',
 	Map<String, dynamic>? params
 }) {
-	final url = Uri(
-		scheme: 'noteplan',
-		host: 'x-callback-url',
-		path: method,
-		queryParameters: params
-	);
-	return url.toString();
+	final String query_params = params?.keys.map((key) => '${key}=${params[key]}').join('&') ?? '';
+	final String url = 'noteplan://x-callback-url/${method}?${query_params}';
+	return Uri.encodeFull(url); // Fucking spaces again.
 }
 
 String calendar_url(String bname, {bool sameWindow = true}) {
