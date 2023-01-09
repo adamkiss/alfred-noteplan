@@ -1,7 +1,6 @@
 name: Build Dart binaries & package Alfred Workflow
 
 on:
-  push: [main]
   workflow_dispatch:
 
 jobs:
