@@ -23,7 +23,7 @@ jobs:
       - name: Capture the artifact name
         run: |
           artifact_name=`ls *.alfredworkflow | tr -d '\n'`
-          echo "$artifact_name" >> $GITHUB_ENV
+          echo "artifact_name=$artifact_name" >> $GITHUB_ENV
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
