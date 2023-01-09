@@ -1,54 +1,73 @@
-# Noteplan FTS for Alfred
+# Noteplan Full-text Search for Alfred 2
+
+⚠️ This is yet unreleased work in progress. For released v1, see [branch v1-archive](https://github.com/adamkiss/alfred-noteplan-fts/tree/v1-archive)
 
 ![OG Social image](social.jpg)
 
-Noteplan full-text search for Alfred - some assembly required. Work in progress, mostly working.
+Search, open, and create Noteplan notes with Alfred.
 
 ---
 
 ## Usage
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
-- `nn Title of the note` - Creates a new note, in the folder of your choice
-- `nref` - Refresh SQLite database
+- `n >[date phrase]` - Very simple natural date parser
+- `n +[Title of the note]`, `nn [Title of the note]` - Creates a new note, in the folder of your choice
+- `n !r` - Refresh note database
+- `n !rf` - Force refresh every note in the database
+- `n !!` - Show debug information
 
-## Requirements
-- PHP install available in CLI
-- SQLite with fts5 enabled (available by default in the SQLite "amalgamation" build bundled with Homebrew PHP)
+### Natural date parser
+- `t … today` - today's note
+- `y … yesterday` - yesterday's note
+- `tom … tomorrow` - tomorrow's note
+- `[-+]? [number] [dwm]` - relative date, number of days/weeks/months back and forward. spaces are optional
+- `[wmq]` - this week's (month's, quarter's) note
+- `[wmq] [-+]? [number]` - relative week's (month's, quarter's) note (spaces optional)
+- `yr|year` - this year's note
+- `yr|year [-+]? [number]` - relative year (spaces optional)
 
 ## Installation
-0. Ensure you have all the requirements (Homebrew, PHP) installed
-1. Clone this repository to your alfred workflows folder (or elsewhere and symlink it)
-2. Create `_config.php`, which at minimum contains absolute path to your noteplan document root
-	- You can find it in Settings: Settings → Sync → [Sync method] → Advanced → Open Local Database Folder
-	- "root" is the folder that containes all your things - Backups, Notes, Calendar items, templates. Everything.
-3. Run `nref` in the Alfred to generate your sqlite cache for the first time
-4. Run `nref` everytime you close the Noteplan app, or setup any kind of automation for a periodical run of the alred caching action. There are multiple options for this, and it depends on what you're the most comfortable with.
-	- `launchd`/`launchctl` script
-	- You can also use [Lingon](https://www.peterborgapps.com/lingon/)
-	- [Keyboard Maestro](https://www.keyboardmaestro.com/main/) script (example below)
+1. Download and import the workflow
+2. Configure it to your taste
+    - the most important and required part is the **Noteplan root folder**
+    - get it through `Noteplan Options` > `Sync` > `'Advanced' for your active Sync option` > `Open local database`
+    - this will open a Finder window
+    - in this window, with **nothing selected**, press <kbd>Command</kbd>+<kbd>Option</kbd>+<kbd>C</kbd> to copy the pathname 
+    - paste that into the workflow import window
+3. Run `n ` - macos will warn you that this app is unsigned and you can move it to bin or cancel
+4. Open **System Settings** > **Privacy & Security**, scroll down, and click "Allow Anyway"
+5. Run `n ` - macos will warn you that this app was downloaded from the internet nad might not be safe. Click 'open'
+6. Profit!
+7. You can now do a search, date query or add a new note
 
-## Minimal `_config.php` example:
-``` php
-<?php 
-return [
-  'noteplan_root' => '/absolute/path/to/noteplan/'
-];
-```
+### Why all the warnings?
+To have macos accept your app as safe, the developer needs to cryptographically sign it. That requires a $99/year Apple Developer Program, which I currently don't need for anything else.
 
-## Example periodic cache refresh with Keyboard Maestro
-For 500 notes, current runtime of the note import script is `~500ms`, which is fast enough to have it setup to run every time Noteplan window loses its focus. This is how I have it currently setup:
-
-![Keayboard Maestro setup](readme-keyboard-maestro.png)
-
-Edit: I've now updated the script to run _a minute_ after Noteplan was deactivated, with a bit of logic to cancel previous waiting runs of the keyboard maestro script, which is useful if you're transferring data between noteplan and other apps. You can find the macro to import in the `additional/` folder, just don't forget to edit the absolute path to the `run-cache-sqlite.php` file in your workflow folder. 
-
-## This repository also contains
-- experimental `ripgrep` version - databaseless version of full-text search: PHP parses input, prepares ripgrep search, and then formats the results. Available via command `nrg`, which will be removed in future updates. 
-- experimental `nodejs` version - this one is super dirty/simple testing version, where I tried if it would be possible to do the sqlite access/formatting via packaged, standalone nodejs script for users with no programming experience. It is possible, but due to requirements like codesigning (Apple Developer Program yearly licenses, etc.), will probably not be developed further. Rough testing search version available as `njs`.
+### Wasn't there a refresh command?
+There was. But with the new version, the workflow refreshes only changed notes since last update, and that's often a tiny number, so the databse is updated every time this workflow is run (with a timeout ~10 seconds, so when you're constructing your query, it runs only on the first letter).
 
 ## License
-MIT License
 
----
+Copyright (c) 2023 Adam Kiss
 
-© 2022 Adam Kiss
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Licenses for libraries used
+
+See [LICENSES](./LICENSES)

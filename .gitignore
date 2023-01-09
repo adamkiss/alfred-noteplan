@@ -1,6 +1,21 @@
+# hihihi
 .DS_Store
-db*.sqlite*
-_config.php
-nodejs/config.js
-nodejs/node_modules
-nodejs/dist
+
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+# Backup
+info.plist.bak
+/plist.txt
+
+# Workflow build data
+workflow/noteplan_fts-*
+
+# My workflow data
+workflow/prefs.plist
+workflow/alfred-noteplan-fts-*
+workflow/database.sqlite*
+
+# ignore database
+database.sqlite3

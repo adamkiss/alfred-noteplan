@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.adamkiss.alfred-noteplan-fts-dart</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>748CC6DD-431D-47CA-B2A7-F54387FE69FC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</key>
+		<array/>
+		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>FA26312F-4035-4B5D-A0AD-B1E785BCC8F6</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>649661E6-0AF9-41D7-AB20-6549D3B1095B</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Adam Kiss</string>
+	<key>description</key>
+	<string>Full text search for Noteplan, shortcuts for note creation, and other usefule Noteplan stuff</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>(DART) Noteplan Full-text Search</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:workflow_trigger_open}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Looking for {query}</string>
+				<key>script</key>
+				<string>BIN="./noteplan_fts-$(uname -m)"
+
+function info {
+cat &lt;&lt;- JSON
+{"items": [
+    {
+        "title": "!! - Debug",
+        "subtitle": "Show &amp; copy debugging information (versions, architecture)",
+        "valid": false,
+        "autocomplete": "!!"
+    },
+    {
+        "title": "!r - Refresh",
+        "subtitle": "Refresh the database (since the last update)",
+        "valid": false,
+        "autocomplete": "!r"
+    },
+    {
+        "title": "!rf - Refresh (Force)",
+        "subtitle": "Force full refresh of the database",
+        "valid": false,
+        "autocomplete": "!rf"
+    }
+]}
+JSON
+}
+
+case "$1" in
+    "!")
+        info
+        ;;
+    "!!")
+        $BIN debug
+        ;;
+    "!r")
+        $BIN refresh
+        ;;
+    "!rf")
+        $BIN refresh force
+        ;;
+    *)
+        if [[ "$1[0]" == "." ]]; then
+            $BIN date "$1"
+        else
+            $BIN search "$1"
+        fi
+        ;;
+esac</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Full-text search for Noteplan</string>
+				<key>title</key>
+				<string>Noteplan FTS</string>
+				<key>type</key>
+				<integer>5</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>053FDDB4-A265-4274-8F91-1BE7C16BC397</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:action}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>copy-to-clipboard</string>
+						<key>outputlabel</key>
+						<string>Copy to Clipboard</string>
+						<key>uid</key>
+						<string>FA26312F-4035-4B5D-A0AD-B1E785BCC8F6</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:action}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>open</string>
+						<key>outputlabel</key>
+						<string>Open</string>
+						<key>uid</key>
+						<string>649661E6-0AF9-41D7-AB20-6549D3B1095B</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:action}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>close</string>
+						<key>outputlabel</key>
+						<string>Close Alfred</string>
+						<key>uid</key>
+						<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>Create</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>748CC6DD-431D-47CA-B2A7-F54387FE69FC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:title}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Listing folders…</string>
+				<key>script</key>
+				<string>BIN="./noteplan_fts-$(uname -m)"
+$BIN create "$title"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Will create a new note in selected folder</string>
+				<key>title</key>
+				<string>Create note "{var:title}"</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:workflow_trigger_new}</string>
+				<key>subtext</key>
+				<string>Create a new note ✱ You'll be asked for location in the next step</string>
+				<key>text</key>
+				<string>Create "{query}"</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>title</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Noteplan FTS &amp; Note creation for Alfred
+
+- write a readme.</string>
+	<key>uidata</key>
+	<dict>
+		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>SEARCH/CREATE</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>190</real>
+		</dict>
+		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>11</integer>
+			<key>note</key>
+			<string>GET FOLDERS</string>
+			<key>xpos</key>
+			<real>485</real>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
+		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>11</integer>
+			<key>note</key>
+			<string>CREATE</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
+		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>11</integer>
+			<key>note</key>
+			<string>QUERY → TITLE</string>
+			<key>xpos</key>
+			<real>395</real>
+			<key>ypos</key>
+			<real>390</real>
+		</dict>
+		<key>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
+			<key>xpos</key>
+			<real>395</real>
+			<key>ypos</key>
+			<real>85</real>
+		</dict>
+		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<real>210</real>
+			<key>ypos</key>
+			<real>195</real>
+		</dict>
+		<key>8CD51E99-89FA-439A-A640-C4174B1D5C01</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>xpos</key>
+			<real>685</real>
+			<key>ypos</key>
+			<real>160</real>
+		</dict>
+		<key>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
+			<key>note</key>
+			<string>Opens a callback</string>
+			<key>xpos</key>
+			<real>685</real>
+			<key>ypos</key>
+			<real>280</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>~/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp</string>
+				<key>filtermode</key>
+				<integer>1</integer>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>This is where the folder of your Noteplan library, so this workflow can find the Cache database, and link to the matched notes for quicklookurl.</string>
+			<key>label</key>
+			<string>Noteplan Data Root</string>
+			<key>type</key>
+			<string>filepicker</string>
+			<key>variable</key>
+			<string>user_np_root</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>dn</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Workflow trigger to start the search</string>
+			<key>label</key>
+			<string>Trigger: Main workflow</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>workflow_trigger_open</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>dnn</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Workflow trigger to start the create new note process</string>
+			<key>label</key>
+			<string>Trigger: Create new note</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>workflow_trigger_new</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>en_GB</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>English (en_GB)</string>
+						<string>en_GB</string>
+					</array>
+					<array>
+						<string>English (en_US)</string>
+						<string>en_US</string>
+					</array>
+					<array>
+						<string>Deutsch</string>
+						<string>de_DE</string>
+					</array>
+					<array>
+						<string>Slovenčina</string>
+						<string>sk_SK</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>What locale/language should the workflow using when preparing data?</string>
+			<key>label</key>
+			<string>Locale / Language</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>user_locale</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>---
+title: TITLE
+---</string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<false/>
+				<key>verticalsize</key>
+				<integer>6</integer>
+			</dict>
+			<key>description</key>
+			<string>The template used when you create a new note through workflow</string>
+			<key>label</key>
+			<string>New note template</string>
+			<key>type</key>
+			<string>textarea</string>
+			<key>variable</key>
+			<string>user_new_note_template</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>2.0.0-rc7</string>
+	<key>webaddress</key>
+	<string>https://adamkiss.com</string>
+</dict>
+</plist>

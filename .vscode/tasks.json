@@ -4,23 +4,36 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run SQLite caching",
+            "label": "Open the database",
             "type": "shell",
-            "command": "time php run-cache-sqlite.php",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build"
-            }
+            "command": "open ./workflow/database.sqlite3",
+            "problemMatcher": []
         },
         {
-            "label": "Run WIP Noteplan SQLite cache usage",
+            "label": "Open the Noteplan database",
             "type": "shell",
-            "command": "time php wip-use-noteplan-cache-sqlite.php",
+            "command": "open /Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application\\ Support/co.noteplan.NotePlan-setapp/Caches/sync-cache.db",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build the executable",
+            "type": "shell",
+            "command": "./r.sh build:dart",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        }        
+        },
+        {
+            "label": "Run the refresh script with dart",
+            "type": "shell",
+            "command": "r test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+        }
     ]
 }
