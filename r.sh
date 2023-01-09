@@ -31,6 +31,7 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
 }
 
 build () { #: Run the whole build
+    build:licenses
     build:icons
     build:dart
     build:workflow

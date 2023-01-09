@@ -22,7 +22,7 @@ jobs:
         run: dart pub get
 
       - name: Compile the app
-        run: ./r.sh build
+        run: ./r.sh build:dart
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
