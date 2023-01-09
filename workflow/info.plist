@@ -38,6 +38,19 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
 				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -63,7 +76,19 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+				<string>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>649661E6-0AF9-41D7-AB20-6549D3B1095B</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -268,6 +293,56 @@ esac</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:title}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Listing folders…</string>
+				<key>script</key>
+				<string>BIN="./noteplan_fts-$(uname -m)"
+$BIN create "$title"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Will create a new note in selected folder</string>
+				<key>title</key>
+				<string>Create note "{var:title}"</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
@@ -289,52 +364,22 @@ esac</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<true/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>2</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>{var:newquery}</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Listing folders…</string>
-				<key>script</key>
-				<string>BIN="./noteplan_fts-$(uname -m)"
-$BIN create "$query"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
+				<key>argument</key>
 				<string></string>
-				<key>subtext</key>
-				<string>Will create a new note in selected folder</string>
-				<key>title</key>
-				<string>Create note "{var:newquery}"</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
+				<key>passthroughargument</key>
 				<false/>
+				<key>variables</key>
+				<dict>
+					<key>title</key>
+					<string>{query}</string>
+				</dict>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
+			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
-			<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
+			<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -350,18 +395,20 @@ $BIN create "$query"</string>
 			<key>note</key>
 			<string>SEARCH/CREATE</string>
 			<key>xpos</key>
-			<real>35</real>
+			<real>30</real>
 			<key>ypos</key>
-			<real>140</real>
+			<real>75</real>
 		</dict>
 		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>11</integer>
+			<key>note</key>
+			<string>GET FOLDERS</string>
 			<key>xpos</key>
-			<real>410</real>
+			<real>485</real>
 			<key>ypos</key>
-			<real>315</real>
+			<real>245</real>
 		</dict>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<dict>
@@ -370,27 +417,38 @@ $BIN create "$query"</string>
 			<key>note</key>
 			<string>CREATE</string>
 			<key>xpos</key>
-			<real>35</real>
+			<real>30</real>
 			<key>ypos</key>
-			<real>315</real>
+			<real>245</real>
+		</dict>
+		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>11</integer>
+			<key>note</key>
+			<string>QUERY → TITLE</string>
+			<key>xpos</key>
+			<real>395</real>
+			<key>ypos</key>
+			<real>275</real>
 		</dict>
 		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<real>195</real>
+			<real>210</real>
 			<key>ypos</key>
-			<real>160</real>
+			<real>80</real>
 		</dict>
 		<key>8CD51E99-89FA-439A-A640-C4174B1D5C01</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>xpos</key>
-			<real>720</real>
+			<real>685</real>
 			<key>ypos</key>
-			<real>25</real>
+			<real>45</real>
 		</dict>
 		<key>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</key>
 		<dict>
@@ -399,9 +457,9 @@ $BIN create "$query"</string>
 			<key>note</key>
 			<string>Opens a callback</string>
 			<key>xpos</key>
-			<real>720</real>
+			<real>685</real>
 			<key>ypos</key>
-			<real>170</real>
+			<real>165</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
