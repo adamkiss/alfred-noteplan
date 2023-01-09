@@ -165,7 +165,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>dn</string>
+				<string>{var:workflow_trigger_open}</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -382,7 +382,7 @@ $BIN create "$title"</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>dnn</string>
+				<string>{var:workflow_trigger_create}</string>
 				<key>subtext</key>
 				<string>Create a note named "{query}"</string>
 				<key>text</key>
@@ -534,12 +534,62 @@ $BIN create "$title"</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>en_EN</string>
+				<string>dn</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Workflow trigger to start the search</string>
+			<key>label</key>
+			<string>Trigger: Main workflow</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>workflow_trigger_open</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>dnn</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Workflow trigger to start the create new note process</string>
+			<key>label</key>
+			<string>Trigger: Create new note</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>workflow_trigger_new</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>en_GB</string>
 				<key>pairs</key>
 				<array>
 					<array>
-						<string>English</string>
-						<string>en_EN</string>
+						<string>English (en_GB)</string>
+						<string>en_GB</string>
+					</array>
+					<array>
+						<string>English (en_US)</string>
+						<string>en_US</string>
+					</array>
+					<array>
+						<string>Deutsch</string>
+						<string>de_DE</string>
 					</array>
 					<array>
 						<string>Slovenčina</string>
