@@ -489,20 +489,27 @@ $BIN create "$title"</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<true/>
-				<key>required</key>
-				<false/>
-				<key>text</key>
-				<string>This is an m1 or m2 system</string>
+				<string>en_EN</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>English</string>
+						<string>en_EN</string>
+					</array>
+					<array>
+						<string>Slovenčina</string>
+						<string>sk_SK</string>
+					</array>
+				</array>
 			</dict>
 			<key>description</key>
-			<string>If it's m1 (or m2), check this box. If it's an older Intel based Mac, leave it unchecked. This will make the workflow pick correct runtime</string>
+			<string>What locale/language should the workflow using when preparing data?</string>
 			<key>label</key>
-			<string>Your computer's architecture</string>
+			<string>Locale / Language</string>
 			<key>type</key>
-			<string>checkbox</string>
+			<string>popupbutton</string>
 			<key>variable</key>
-			<string>user_arch</string>
+			<string>user_locale</string>
 		</dict>
 	</array>
 	<key>version</key>
