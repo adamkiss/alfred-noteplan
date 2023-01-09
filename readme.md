@@ -1,5 +1,7 @@
 # Noteplan Full-text Search for Alfred 2
 
+⚠️ This is yet unreleased work in progress. For released v1, see [branch v1-archive](https://github.com/adamkiss/alfred-noteplan-fts/tree/v1-archive)
+
 ![OG Social image](social.jpg)
 
 Search, open, and create Noteplan notes with Alfred.
