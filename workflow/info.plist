@@ -157,7 +157,7 @@ cat &lt;&lt;- JSON
 JSON
 }
 
-case $1 in
+case "$1" in
     "!")
         info
         ;;
@@ -168,7 +168,14 @@ case $1 in
         $BIN refresh
         ;;
     "!rf")
-        $BIN refresh-force
+        $BIN refresh force
+        ;;
+    *)
+        if [[ "$1[0]" == "." ]]; then
+            $BIN date "$1"
+        else
+            $BIN search "$1"
+        fi
         ;;
 esac</string>
 				<key>scriptargtype</key>
@@ -261,6 +268,27 @@ esac</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>dnn</string>
+				<key>subtext</key>
+				<string>Create a note named "{query}"</string>
+				<key>text</key>
+				<string>Create a note</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -307,27 +335,6 @@ $BIN create "$query"</string>
 			<string>32184673-6E45-4E1E-A9A3-5E277249F059</string>
 			<key>version</key>
 			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>dnn</string>
-				<key>subtext</key>
-				<string>Create a note named "{query}"</string>
-				<key>text</key>
-				<string>Create a note</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>583FB278-5756-4AC2-A2BB-EA55CED6B10F</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
