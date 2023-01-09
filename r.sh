@@ -40,7 +40,6 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
 }
 
 prebuild () { #: Run the whole build - the local part
-    build:licenses
     build:icons
     build:dart-local
     build:script
@@ -48,6 +47,7 @@ prebuild () { #: Run the whole build - the local part
 
 build () { #: Run the build and packaging - on the runner
     build:dart
+    build:licenses
     build:workflow
 }
 

@@ -21,7 +21,11 @@ jobs:
         run: ./r.sh build
 
       - name: Capture the artifact name
-        run: artifact_name=`ls *.alfredworkflow | tr -d '\n'`
+        run: |
+          pwd
+          ls
+          artifact_name=`ls ./*.alfredworkflow | tr -d '\n'`
+          echo $artifact_name
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
