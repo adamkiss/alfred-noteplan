@@ -36,6 +36,6 @@ case "$1" in
         $BIN refresh
         ;;
     "!rf")
-        $BIN refresh-force
+        $BIN refresh force
         ;;
 esac

@@ -26,7 +26,7 @@ String _usage = ''
 
 void error(String err) {
 	print(_usage);
-	print('\nError: ${err}');
+	print('Error: ${err}');
 	exit(1);
 }
 
@@ -35,8 +35,7 @@ void main (List<String> arguments) {
 	Config.init();
 
 	if (arguments.isEmpty) {
-		print(_usage);
-		exit(1);
+		error('Command required.');
 	}
 
 	final String command = arguments.first;
@@ -51,8 +50,6 @@ void main (List<String> arguments) {
 		print('Updated ${update_count} items in ${Config.ts() - run_start}ms');
 		exit(0);
 	}
-
-	final List<Map> result = [];
 
 	// About
 	if (command == 'debug') {
