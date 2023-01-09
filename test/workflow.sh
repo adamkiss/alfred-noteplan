@@ -38,4 +38,11 @@ case "$1" in
     "!rf")
         $BIN refresh force
         ;;
+    *)
+        if [[ "$1[0]" == "." ]]; then
+            $BIN date "$1"
+        else
+            $BIN search "$1"
+        fi
+        ;;
 esac
