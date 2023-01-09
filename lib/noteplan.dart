@@ -24,3 +24,17 @@ String note_url(String filename, {bool sameWindow = true}) {
 		'useExistingSubWindow': sameWindow ? 'yes' : 'no'
 	});
 }
+
+String create_url(
+	String folder,
+	String body,
+	{bool sameWindow = true}
+) => _create_noteplan_url(
+	method: 'addNote',
+	params: {
+		'text': body,
+		'folder': folder,
+		'useExistingSubWindow': sameWindow ? 'yes' : 'no',
+		'openNote': 'yes'
+	}
+);

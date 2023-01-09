@@ -60,7 +60,11 @@ void main (List<String> arguments) {
 	// Create new note
 	if (command == 'create') {
 		final cache = DbCache(sqlite3.open(Config.path_cache_db));
-		print(cache.select_folders());
+		print(alf_to_results(
+			cache.select_folders(query)
+				.map((e) => e.to_alfred())
+				.toList(growable: false)
+		));
 
 		cache.dispose();
 		db.dispose();

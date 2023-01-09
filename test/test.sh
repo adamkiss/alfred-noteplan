@@ -30,7 +30,7 @@ echo
 
 echo "CREATE NOTE - folders"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
-./workflow/noteplan_fts-arm64 create 'Ahoy there captain!'
+./workflow/noteplan_fts-arm64 create 'Ahoy there captain!' | jq -r '.items | map(.title)'
 echo
 
 echo "SEARCH - adam kiss (outputs: 19 [18 + create])"

@@ -382,11 +382,11 @@ $BIN create "$title"</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>{var:workflow_trigger_create}</string>
+				<string>{var:workflow_trigger_new}</string>
 				<key>subtext</key>
-				<string>Create a note named "{query}"</string>
+				<string>Create a new note ✱ You'll be asked for location in the next step</string>
 				<key>text</key>
-				<string>Create a note</string>
+				<string>Create "{query}"</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -605,27 +605,6 @@ $BIN create "$title"</string>
 			<string>popupbutton</string>
 			<key>variable</key>
 			<string>user_locale</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<string></string>
-				<key>placeholder</key>
-				<string></string>
-				<key>required</key>
-				<false/>
-				<key>trim</key>
-				<true/>
-			</dict>
-			<key>description</key>
-			<string></string>
-			<key>label</key>
-			<string></string>
-			<key>type</key>
-			<string>textfield</string>
-			<key>variable</key>
-			<string></string>
 		</dict>
 		<dict>
 			<key>config</key>

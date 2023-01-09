@@ -16,4 +16,5 @@ const str_error_date_unparsable = "Command 'date' expects argument in the form '
 
 const str_update_subtitle = 'The database was refreshed. You can close this prompt.';
 const str_fts_result_arg_cmd_subtitle = 'Open the note in a new Noteplan window';
-const str_create_result_subtitle = 'Create a new note ✱ You''ll be asked for location in the next step';
+const str_create_result_subtitle = 'Create a new note ✱ You\'ll be asked for location in the next step';
+str_create_folder_result_subtitle(String f, String t) => 'Create note "${t}" in folder "${f}"';

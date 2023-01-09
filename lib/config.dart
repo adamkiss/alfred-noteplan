@@ -1,11 +1,18 @@
 import 'dart:io';
 
+import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/strings.dart';
 import 'package:path/path.dart';
 
 class Config {
 	static String noteplan_root = '';
 	static String locale = 'en_GB';
+	static String template = ''
+		'---''\n'
+		'title: TITLE''\n'
+		'---''\n'
+		'\n';
+
 
 	static String path_cache_db = join(Config.noteplan_root, 'Caches', 'sync-cache.db');
 
@@ -19,6 +26,7 @@ class Config {
 
 		noteplan_root = Directory(Platform.environment['user_np_root']!).absolute.path;
 		locale = Platform.environment['user_locale'] ?? locale;
+		template = Platform.environment['user_new_note_template'] ?? template;
 	}
 
 	static void error(String err) {

@@ -1,3 +1,4 @@
+import 'package:alfred_noteplan_fts_refresh/folder.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class DbCache {
@@ -21,7 +22,7 @@ class DbCache {
 		''', [since]);
 	}
 
-	List<String> select_folders() {
+	List<Folder> select_folders(String with_title) {
 		final folders = _db.select('''
 			SELECT filename
 			FROM metadata
@@ -32,7 +33,7 @@ class DbCache {
 		''');
 
 		return folders
-			.map((e) => e['filename'].toString())
+			.map((e) => Folder(e, with_title))
 			.toList(growable: false);
 	}
 }
