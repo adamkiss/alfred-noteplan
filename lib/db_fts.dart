@@ -13,7 +13,7 @@ class DbFts {
 	void ensure_setup() {
 		_db.execute('''
 			CREATE VIRTUAL TABLE IF NOT EXISTS notes USING fts5(
-				file,
+				filename,
 				title,
 				content,
 				type UNINDEXED,
@@ -32,13 +32,13 @@ class DbFts {
 	void delete_notes(Iterable<String> notes) {
 		_db.prepare('''
 			DELETE FROM notes
-			WHERE file IN (${List.filled(notes.length, '?').join(',')})
+			WHERE filename IN (${List.filled(notes.length, '?').join(',')})
 		''').execute(notes.toList(growable: false));
 	}
 
 	void insert_notes(List<Note> notes) {
 		_db.prepare('''
-			INSERT INTO notes (file, title, content, type)
+			INSERT INTO notes (filename, title, content, type)
 			VALUES ${notes.map((_) => '(?, ?, ?, ?)').join(',')}
 		''').execute(
 			notes.map((e) => [
