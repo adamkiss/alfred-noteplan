@@ -12,7 +12,7 @@ class Config {
 		'title: TITLE''\n'
 		'---''\n'
 		'\n';
-
+	static List<String> ignore = [];
 
 	static String path_cache_db = join(Config.noteplan_root, 'Caches', 'sync-cache.db');
 
@@ -27,6 +27,9 @@ class Config {
 		noteplan_root = Directory(Platform.environment['user_np_root']!).absolute.path;
 		locale = Platform.environment['user_locale'] ?? locale;
 		template = Platform.environment['user_new_note_template'] ?? template;
+		ignore = (Platform.environment['user_ignore_files'] ?? '')
+			.trim().split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty)
+			.toList(growable: false);
 	}
 
 	static void error(String err) {

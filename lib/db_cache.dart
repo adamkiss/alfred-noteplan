@@ -1,3 +1,4 @@
+import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/folder.dart';
 import 'package:sqlite3/sqlite3.dart';
 
@@ -11,6 +12,12 @@ class DbCache {
 	void dispose() => _db.dispose();
 
 	ResultSet select_updated({int since = 0}) {
+		final String ignore_condition = Config.ignore.isEmpty
+			? ''
+			: ' AND ${
+				Config.ignore.map((e) => 'filename NOT LIKE "${e}%"').join(' AND ')
+			}';
+
 		return _db.select('''
 			SELECT filename, content, modified, note_type
 			FROM metadata
@@ -18,7 +25,7 @@ class DbCache {
 				is_directory = 0
 			AND LENGTH(content)
 			AND note_type < 2
-			AND modified > ?
+			AND modified > ?${ignore_condition}
 		''', [since]);
 	}
 

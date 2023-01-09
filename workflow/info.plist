@@ -629,6 +629,27 @@ title: TITLE
 			<key>variable</key>
 			<string>user_new_note_template</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+				<key>verticalsize</key>
+				<integer>3</integer>
+			</dict>
+			<key>description</key>
+			<string>Enter path fragments you'd like to ignore, one fragment per line. Each fragment is matched from beginning of the path, so if you'd like to ignore 'Things' inside the 'Writing', write the ignore line as 'writing/things'. Matching is not case sensitive</string>
+			<key>label</key>
+			<string>Ignore files matching</string>
+			<key>type</key>
+			<string>textarea</string>
+			<key>variable</key>
+			<string>user_ignore_files</string>
+		</dict>
 	</array>
 	<key>version</key>
 	<string>2.0.0-rc7</string>
