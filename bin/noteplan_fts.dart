@@ -32,7 +32,14 @@ void main (List<String> arguments) {
 	// Refresh & Exit
 	if (command == 'refresh') {
 		final int update_count = refresh(db, force: query == 'force');
-		print('Updated ${update_count} items in ${Config.ts() - run_start}ms');
+		print(alf_to_results([
+			alf_valid_item(
+				"Updated ${update_count} items in ${Config.ts() - run_start}ms",
+				str_update_subtitle,
+				arg: '🎉',
+				variables: {'action': 'close'}
+			)
+		]));
 		exit(0);
 	}
 

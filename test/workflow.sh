@@ -19,7 +19,7 @@ cat <<- JSON
         "title": "!rf - Refresh (Force)",
         "subtitle": "Force full refresh of the database",
         "valid": false,
-        "autocomplete": "!r"
+        "autocomplete": "!rf"
     }
 ]}
 JSON

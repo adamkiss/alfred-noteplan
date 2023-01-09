@@ -60,8 +60,22 @@
 				<false/>
 			</dict>
 		</array>
+		<key>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</key>
+		<array/>
 		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
 		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 			<dict>
 				<key>destinationuid</key>
 				<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
@@ -108,6 +122,14 @@
 	<string>(DART) Noteplan Full-text Search</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -176,7 +198,7 @@ cat &lt;&lt;- JSON
         "title": "!rf - Refresh (Force)",
         "subtitle": "Force full refresh of the database",
         "valid": false,
-        "autocomplete": "!r"
+        "autocomplete": "!rf"
     }
 ]}
 JSON
@@ -255,6 +277,20 @@ esac</string>
 						<string>Open</string>
 						<key>uid</key>
 						<string>649661E6-0AF9-41D7-AB20-6549D3B1095B</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:action}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>close</string>
+						<key>outputlabel</key>
+						<string>Close Alfred</string>
+						<key>uid</key>
+						<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
 					</dict>
 				</array>
 				<key>elselabel</key>
@@ -397,7 +433,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>75</real>
+			<real>190</real>
 		</dict>
 		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
 		<dict>
@@ -408,7 +444,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>485</real>
 			<key>ypos</key>
-			<real>245</real>
+			<real>360</real>
 		</dict>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<dict>
@@ -419,7 +455,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>245</real>
+			<real>360</real>
 		</dict>
 		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
 		<dict>
@@ -430,7 +466,16 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>395</real>
 			<key>ypos</key>
-			<real>275</real>
+			<real>390</real>
+		</dict>
+		<key>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
+			<key>xpos</key>
+			<real>395</real>
+			<key>ypos</key>
+			<real>85</real>
 		</dict>
 		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
 		<dict>
@@ -439,7 +484,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>210</real>
 			<key>ypos</key>
-			<real>80</real>
+			<real>195</real>
 		</dict>
 		<key>8CD51E99-89FA-439A-A640-C4174B1D5C01</key>
 		<dict>
@@ -448,7 +493,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>685</real>
 			<key>ypos</key>
-			<real>45</real>
+			<real>160</real>
 		</dict>
 		<key>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</key>
 		<dict>
@@ -459,7 +504,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>685</real>
 			<key>ypos</key>
-			<real>165</real>
+			<real>280</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
