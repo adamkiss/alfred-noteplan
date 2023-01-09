@@ -34,7 +34,7 @@ void main (List<String> arguments) {
 		final int update_count = refresh(db, force: query == 'force');
 		print(alf_to_results([
 			alf_valid_item(
-				"Updated ${update_count} items in ${Config.ts() - run_start}ms",
+				"${query == 'force' ? 'Force updated' : 'Updated'} ${update_count} items in ${Config.ts() - run_start}ms",
 				str_update_subtitle,
 				arg: '🎉',
 				variables: {'action': 'close'}
