@@ -9,13 +9,14 @@
 info.plist.bak
 /plist.txt
 
-# Workflow build data
+# Workflow my & build data
 workflow/noteplan_fts-*
-
-# My workflow data
 workflow/prefs.plist
-workflow/alfred-noteplan-fts-*
 workflow/database.sqlite*
 
 # ignore database
 database.sqlite3
+
+# DIST
+workflow/LICENSES
+/alfred-noteplan*

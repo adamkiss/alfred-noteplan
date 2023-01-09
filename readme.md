@@ -70,4 +70,4 @@ SOFTWARE.
 
 ## Licenses for libraries used
 
-See [LICENSES](./LICENSES)
+See [LICENSES](./workflow/LICENSES)

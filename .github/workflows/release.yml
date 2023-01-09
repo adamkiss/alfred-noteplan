@@ -1,15 +1,12 @@
 name: Build Dart binaries & package Alfred Workflow
 
 on:
+  push: [main]
   workflow_dispatch:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [macos-11, macos-12]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-12
 
     steps:
       - name: Show the architecture
@@ -22,9 +19,13 @@ jobs:
         run: dart pub get
 
       - name: Compile the app
-        run: ./r.sh build:dart
+        run: ./r.sh build
+
+      - name: Capture the artifact name
+        run: artifact_name=`ls *.alfredworkflow | tr -d '\n'`
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: workflow/noteplan_fts*
+          name: ${{ env.artifact_name }}
+          path: ${{ env.artifact_name }}

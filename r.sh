@@ -9,11 +9,17 @@ about () { #: show help & commands
 }
 
 build:licenses () { #: Get all the licenses from pubspec.lock
-    dart-pubspec-licenses-lite -i pubspec.lock | grep -v null > LICENSES
+    cat LICENSE > workflow/LICENSES
+    echo "\n\n----------\n" >> workflow/LICENSES
+    dart-pubspec-licenses-lite -i pubspec.lock | grep -v null >> workflow/LICENSES
 }
 
 build:dart () { #: Build the version for the current architecture
     dart compile exe bin/noteplan_fts.dart -o "workflow/noteplan_fts-$(uname -m)"
+}
+
+build:dart-local () { #: Build the version in the version controlled space
+    dart compile exe bin/noteplan_fts.dart -o "bin-cache/noteplan_fts-$(uname -m)"
 }
 
 build:icons () { #: Build the icns file from iconsets
@@ -27,12 +33,20 @@ build:script () { #: Copy the script part from the workflow.sh into info.plist
 }
 
 build:workflow () { #: Zip the workflow folder into release/dist folder
-    echo "not implemented yet."
+    cd workflow
+    VERSION=`/usr/libexec/PlistBuddy -c "Print :version" info.plist`
+    BUILD=`git rev-parse --short HEAD`
+    zip "../alfred-noteplan-fts-$VERSION-$BUILD.alfredworkflow" icons info.plist icon.png LICENSES
 }
 
-build () { #: Run the whole build
+prebuild () { #: Run the whole build - the local part
     build:licenses
     build:icons
+    build:dart-local
+    build:script
+}
+
+build () { #: Run the build and packaging - on the runner
     build:dart
     build:workflow
 }
