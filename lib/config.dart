@@ -16,7 +16,7 @@ class Config {
 			Config.error(str_error_missing_root);
 		}
 
-		noteplan_root = Platform.environment['user_np_root']!;
+		noteplan_root = Directory(Platform.environment['user_np_root']!).absolute.path;
 	}
 
 	static void error(String err) {

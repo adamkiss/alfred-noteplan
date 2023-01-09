@@ -39,16 +39,7 @@ void main (List<String> arguments) {
 	// About
 	if (command == 'debug') {
 		final about = About();
-		print(alf_to_results([
-			alf_valid_item(
-				'Workflow information', 'Copy to clipboard',
-				arg: about.for_clipboard(),	variables: {'action':'copy-to-clipboard'}
-			),
-			alf_invalid_item(about.version, 'Workflow version', text: {'copy': about.version}),
-			alf_invalid_item(about.sqlite_version, 'SQLite3 version', text: {'copy': about.sqlite_version}),
-			alf_invalid_item(about.macos_version, 'macOS version', text: {'copy': about.macos_version}),
-			alf_invalid_item(about.macos_arch, 'mac architecture', text: {'copy': about.macos_arch}),
-		]));
+		print(about.to_alfred());
 
 		db.dispose();
 		exit(0);
