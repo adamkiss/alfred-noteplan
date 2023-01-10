@@ -61,7 +61,7 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
     cd workflow
     VERSION=`/usr/libexec/PlistBuddy -c "Print :version" info.plist`
     BUILD=`git rev-parse --short HEAD`
-    zip "../alfred-noteplan-fts-$VERSION-$BUILD.alfredworkflow" icons info.plist icon.png LICENSES noteplan_fts-arm64 noteplan_fts-x86_64
+    zip -r "../alfred-noteplan-fts-$VERSION-$BUILD.alfredworkflow" icons/ info.plist icon.png LICENSES noteplan_fts-arm64 noteplan_fts-x86_64
 }
 
 prebuild () { #: Run the whole build - the local part
@@ -83,12 +83,12 @@ version () { #: get the workflow version
 
 dev:link () { #: link the WIP version to Alfred
     ln -s \
-        /Users/adam/Code/alfred-noteplan-fts-dart/workflow \
-        /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts-dart;
+        /Users/adam/Code/alfred-noteplan-fts/workflow \
+        /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts;
 }
 
 dev:unlink () { #: remove the WIP version link from Alfred
-    rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts-dart;
+    rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan-fts;
 }
 
 dev:dumplist () { #: dump the info.plist into plist.txt
