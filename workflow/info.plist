@@ -5,7 +5,7 @@
 	<key>bundleid</key>
 	<string>com.adamkiss.alfred-noteplan-fts-dart</string>
 	<key>category</key>
-	<string>Productivity</string>
+	<string>Apps Control</string>
 	<key>connections</key>
 	<dict>
 		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
