@@ -54,7 +54,7 @@ build:icons () { #: Build the icns file from iconsets
 build:script () { #: Copy the script part from the workflow.sh into info.plist
     cp workflow/info.plist workflow/info.plist.bak
     SCRIPT=`cat test/workflow.sh | sed -e 's/"/\\\\"/g'`
-    /usr/libexec/PlistBuddy -c "Set :objects:1:config:script $SCRIPT" workflow/info.plist
+    /usr/libexec/PlistBuddy -c "Set :objects:2:config:script $SCRIPT" workflow/info.plist
 }
 
 build:workflow () { #: Zip the workflow folder into release/dist folder
