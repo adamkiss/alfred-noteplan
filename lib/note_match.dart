@@ -35,6 +35,7 @@ class NoteMatch {
 		return alf_item(
 			title, _subtitle(),
 			arg: _arg(),
+			variables: {'action': 'open'},
 			mods: {
 				'cmd': {
 					'valid': true,
@@ -43,7 +44,7 @@ class NoteMatch {
 				}
 			},
 			icon: {'path': 'icons/icon-${type.value}.icns'},
-			quicklookurl: join(Config.noteplan_root, type.np_folder, filename)
+			quicklookurl: join(Config.noteplan_root, type.np_folder, filename),
 		);
 	}
 }

@@ -20,6 +20,7 @@ class Folder {
 		_basename(),
 		str_create_folder_result_subtitle(filename, note_title),
 		icon: {'path': 'icons/icon-create.icns'},
-		arg: create_url(filename, Config.template.replaceAll('TITLE', note_title))
+		arg: create_url(filename, Config.template.replaceAll('TITLE', note_title)),
+		variables: {'action': 'create'}
 	);
 }

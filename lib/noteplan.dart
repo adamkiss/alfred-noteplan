@@ -1,5 +1,5 @@
 String _create_noteplan_url({
-	String method = 'addNote',
+	String method = 'openNote',
 	Map<String, dynamic>? params
 }) {
 	final String query_params = params?.keys.map((key) => '${key}=${params[key]}').join('&') ?? '';
@@ -15,10 +15,12 @@ String calendar_url(String bname, {bool sameWindow = true}) {
 }
 
 String note_url(String filename, {bool sameWindow = true}) {
-	return _create_noteplan_url(params: {
-		'filename': filename,
-		'useExistingSubWindow': sameWindow ? 'yes' : 'no'
-	});
+	return _create_noteplan_url(
+		params: {
+			'filename': filename,
+			'useExistingSubWindow': sameWindow ? 'yes' : 'no'
+		}
+	);
 }
 
 String create_url(
