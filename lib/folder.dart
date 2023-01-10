@@ -19,7 +19,7 @@ class Folder {
 	Map<String, dynamic> to_alfred() => alf_item(
 		_basename(),
 		str_create_folder_result_subtitle(filename, note_title),
-		icon: {'path': 'icons/icon-create.icns'},
+		icon: {'path': 'icons/icon-folder.icns'},
 		arg: create_url(filename, Config.template.replaceAll('TITLE', note_title)),
 		variables: {'action': 'create'}
 	);
