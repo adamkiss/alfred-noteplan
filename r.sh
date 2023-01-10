@@ -1,12 +1,5 @@
 #!/usr/bin/env zsh
-# fake npm scripts hahaha
-
-about () { #: show help & commands
-    NAME='alfred-noteplan-fts'
-    echo "$NAME script runner"
-    echo "Commands:"
-    cat r.sh | sed -nr 's/^(.*) \(\).* #: (.*)$/  \1\t\2/p' | expand -20
-}
+# shellcheck shell=bash
 
 build:licenses () { #: Get all the licenses from pubspec.lock
     cat LICENSE > workflow/LICENSES
@@ -27,6 +20,7 @@ build:icons () { #: Build the icns file from iconsets
     rm workflow/icons/*.icns
     mkdir icons/iconsets
     rm -fr icons/iconsets/**
+    # shellcheck disable=all
     for I (create folder note daily weekly monthly quarterly yearly); do
         mkdir icons/iconsets/icon-$I.iconset
     
@@ -99,9 +93,27 @@ test () { #: run tests
     zsh test/test.sh
 }
 
-if [[ $# > 0 ]]; then
-    script=`shift 1`
-    $script "$@"
+#
+# BOILERPLATE
+#
+r='./r.sh'
+NAME='alfred-noteplan-fts'
+
+about () { #: show help & commands
+    echo "$NAME script runner"
+    echo "Commands:"
+    sed -nr 's/^(.*) \(\).* #: (.*)$/  \1	\2/p' $r | expand -20
+}
+
+if [[ $# -gt 0 ]]; then
+    command="$1"
+    shift 1
+    if type "$command" 2>/dev/null | grep -q 'function'; then
+        $command "$@"
+    else
+        about
+        echo "No command '$command'."
+    fi;
 else
     about
 fi
