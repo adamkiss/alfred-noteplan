@@ -32,7 +32,7 @@ class NoteMatch {
 
 
 	Map<String, dynamic> to_alfred_result() {
-		return alf_valid_item(
+		return alf_item(
 			title, _subtitle(),
 			arg: _arg(),
 			mods: {

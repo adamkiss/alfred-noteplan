@@ -34,9 +34,10 @@ class Config {
 
 	static void error(String err) {
 		print(alf_to_results([
-			alf_invalid_item(
+			alf_item(
 				err,
 				'There has been an error in the noteplan_fts binary',
+				valid: false,
 				icon: {'path': 'icons/icon-error.icns'}
 			)
 		]));

@@ -16,7 +16,7 @@ class Folder {
 
 	String _basename() => basename(filename);
 
-	Map<String, dynamic> to_alfred() => alf_valid_item(
+	Map<String, dynamic> to_alfred() => alf_item(
 		_basename(),
 		str_create_folder_result_subtitle(filename, note_title),
 		icon: {'path': 'icons/icon-create.icns'},

@@ -33,7 +33,7 @@ void main (List<String> arguments) {
 	if (command == 'refresh') {
 		final int update_count = refresh(db, force: query == 'force');
 		print(alf_to_results([
-			alf_valid_item(
+			alf_item(
 				"${query == 'force' ? 'Force updated' : 'Updated'} ${update_count} items in ${Config.ts() - run_start}ms",
 				str_update_subtitle,
 				arg: '🎉',

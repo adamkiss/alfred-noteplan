@@ -29,14 +29,29 @@ class About {
 		'macOS: ${macos_version} / ${macos_arch}';
 
 	String to_alfred() => alf_to_results([
-			alf_valid_item(
+			alf_item(
 				'Workflow information', 'Copy to clipboard',
 				arg: for_clipboard(),	variables: {'action':'copy-to-clipboard'}
 			),
-			alf_invalid_item(version, 'Workflow version', text: {'copy': version}),
-			alf_invalid_item(sqlite_version, 'SQLite3 version', text: {'copy': sqlite_version}),
-			alf_invalid_item(macos_version, 'macOS version', text: {'copy': macos_version}),
-			alf_invalid_item(macos_arch, 'mac architecture', text: {'copy': macos_arch}),
-			alf_invalid_item(Config.noteplan_root, 'NotePlan root directory', text: {'copy': Config.noteplan_root}),
+			alf_item(
+				version, 'Workflow version',
+				valid: false, text: {'copy': version}
+			),
+			alf_item(
+				sqlite_version, 'SQLite3 version',
+				valid: false, text: {'copy': sqlite_version}
+			),
+			alf_item(
+				macos_version, 'macOS version',
+				valid: false, text: {'copy': macos_version}
+			),
+			alf_item(
+				macos_arch, 'mac architecture',
+				valid: false, text: {'copy': macos_arch}
+			),
+			alf_item(
+				Config.noteplan_root, 'NotePlan root directory',
+				valid: false, text: {'copy': Config.noteplan_root}
+			),
 	]);
 }
