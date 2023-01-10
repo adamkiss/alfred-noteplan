@@ -61,7 +61,7 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
     cd workflow
     VERSION=`/usr/libexec/PlistBuddy -c "Print :version" info.plist`
     BUILD=`git rev-parse --short HEAD`
-    zip "../alfred-noteplan-fts-$VERSION-$BUILD.alfredworkflow" icons info.plist icon.png LICENSES
+    zip "../alfred-noteplan-fts-$VERSION-$BUILD.alfredworkflow" icons info.plist icon.png LICENSES noteplan_fts-arm64 noteplan_fts-x86_64
 }
 
 prebuild () { #: Run the whole build - the local part
@@ -72,6 +72,7 @@ prebuild () { #: Run the whole build - the local part
 
 build () { #: Run the build and packaging - on the runner
     build:dart
+    cp bin-cache/noteplan_fts-arm64 workflow/ # GA doesn't run on arm64 arch
     build:licenses
     build:workflow
 }
