@@ -57,16 +57,16 @@ extension DateUtils on DateTime {
 	}
 
 	/// Get a Noteplan note name ([String]) from a [DateTime] and options shift by [int]
-	String toNoteplanFilename (NoteType type, {int shift = 0}) {
+	String toNoteplanDateString (NoteType type, {int shift = 0}) {
 		if (type == NoteType.note) {
-			throw ArgumentError('DateTime.toNoteplanFilename: can\'t convert ${type} to filename.');
+			throw ArgumentError('DateTime.toNoteplanDateString: can\'t convert ${type} to filename.');
 		}
 
 		switch (type) {
 			case NoteType.daily:
 				return '';
 			default:
-				return toTuple3(type).toNoteplanFilename();
+				return toTuple3(type).toNoteplanDateString();
 		}
 	}
 }
@@ -90,18 +90,18 @@ extension Tuple3Utils on Tuple3<NoteType, int, int> {
 	}
 
 	/// Get a Noteplan note name from [Tuple3<type, year, ??>]
-	String toNoteplanFilename() {
+	String toNoteplanDateString() {
 		if ([NoteType.daily, NoteType.note].contains(item1)) {
 			throw ArgumentError(
-				'Tuple3.toNoteplanFilename: wrong NoteType in Tuple3<${item1}, ${item2}, ${item3}>'
+				'Tuple3.toNoteplanDateString: wrong NoteType in Tuple3<${item1}, ${item2}, ${item3}>'
 			);
 		}
 
 		switch (item1) {
-			case NoteType.weekly: return '${item2}-W${item3}.md';
-			case NoteType.monthly: return '${item2}-${item3}.md';
-			case NoteType.quarterly: return '${item2}-Q${item3}.md';
-			default: return '${item2}.md';
+			case NoteType.weekly: return '${item2.toString().padLeft(4, '0')}-W${item3.toString().padLeft(2, '0')}';
+			case NoteType.monthly: return '${item2.toString().padLeft(4, '0')}-${item3.toString().padLeft(2, '0')}';
+			case NoteType.quarterly: return '${item2.toString().padLeft(4, '0')}-Q${item3}';
+			default: return item2.toString().padLeft(4, '0');
 		}
 	}
 

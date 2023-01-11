@@ -2,6 +2,7 @@ import 'package:alfred_noteplan_fts_refresh/date_utils.dart';
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:intl/intl.dart';
 import 'package:test/test.dart';
+import 'package:tuple/tuple.dart';
 
 
 void main() {
@@ -82,4 +83,109 @@ void main() {
 		});
 	});
 
+	group('Tuple date movement', () {
+		test('Fails for weekly', () {
+			Tuple3<NoteType, int, int> t = Tuple3(NoteType.weekly, 2023, 1);
+			expect(() => t.shift(10), throwsStateError);
+			expect(() => t.shift(-10), throwsStateError);
+			expect(() => t.shift(0), throwsStateError);
+		});
+		test('Monthly', () {
+			Tuple3<NoteType, int, int> t = Tuple3(NoteType.monthly, 2023, 1);
+			expect(t.shift(5).item3, 6);
+
+			expect(t.shift(12).item3, 1);
+			expect(t.shift(12).item2, 2024);
+
+			expect(t.shift(-2).item3, 11);
+			expect(t.shift(-2).item2, 2022);
+
+			expect(t.shift(-23).item3, 2);
+			expect(t.shift(-23).item2, 2021);
+		});
+
+		test('Quarterly', () {
+			Tuple3<NoteType, int, int> t = Tuple3(NoteType.quarterly, 2023, 1);
+			expect(t.shift(5).item3, 2);
+
+			expect(t.shift(12).item3, 1);
+			expect(t.shift(12).item2, 2026);
+
+			expect(t.shift(-2).item3, 3);
+			expect(t.shift(-2).item2, 2022);
+
+			expect(t.shift(-23).item3, 2);
+			expect(t.shift(-23).item2, 2017);
+		});
+
+		test('Yearly', () {
+			Tuple3<NoteType, int, int> t = Tuple3(NoteType.yearly, 2023, 1);
+			expect(t.shift(5).item2, 2028);
+
+			expect(t.shift(12).item3, 1);
+			expect(t.shift(12).item2, 2035);
+
+			expect(t.shift(-2).item3, 1);
+			expect(t.shift(-2).item2, 2021);
+
+			expect(t.shift(-23).item3, 1);
+			expect(t.shift(-23).item2, 2000);
+		});
+	});
+
+	group('Noteplan: naming + movement', () {
+		DateTime now = DateTime(2023, 1, 11);
+
+		test('Fails correctly', () {
+			expect(() => Tuple3(NoteType.note, 2023, 1).toNoteplanDateString(), throwsArgumentError);
+			expect(() => Tuple3(NoteType.daily, 2023, 1).toNoteplanDateString(), throwsArgumentError);
+			expect(() => now.toNoteplanDateString(NoteType.note), throwsArgumentError);
+		});
+
+		test('Daily', () {
+			expect(now.toNoteplanDateString(NoteType.daily),              '20230111');
+			expect(now.toNoteplanDateString(NoteType.daily, shift:  -20), '20221222');
+			expect(now.toNoteplanDateString(NoteType.daily, shift: -200), '20220625');
+			expect(now.toNoteplanDateString(NoteType.daily, shift:   20), '20230131');
+			expect(now.toNoteplanDateString(NoteType.daily, shift:   21), '20230201');
+			expect(now.toNoteplanDateString(NoteType.daily, shift:  200), '20230730');
+		});
+		test('Weekly (Monday)', () {
+			expect(now.toNoteplanDateString(NoteType.weekly),              '2023-W02');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:  -20), '2022-W32');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift: -200), '2019-W05');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:   20), '2023-W22');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:   21), '2023-W23');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:  200), '2026-W21');
+		});
+		test('Weekly (Sunday)', () {
+			expect(now.toNoteplanDateString(NoteType.weekly),              '2023-W02');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:  -20), '2022-W32');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift: -200), '2019-W05');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:   20), '2023-W22');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:   21), '2023-W23');
+			expect(now.toNoteplanDateString(NoteType.weekly, shift:  200), '2026-W21');
+		});
+		test('Monthly', () {
+			expect(now.toNoteplanDateString(NoteType.monthly),              '2023-01');
+			expect(now.toNoteplanDateString(NoteType.monthly, shift:  -20), '2021-05');
+			expect(now.toNoteplanDateString(NoteType.monthly, shift: -200), '2006-09');
+			expect(now.toNoteplanDateString(NoteType.monthly, shift:   20), '2024-09');
+			expect(now.toNoteplanDateString(NoteType.monthly, shift:   21), '2024-10');
+			expect(now.toNoteplanDateString(NoteType.monthly, shift:  200), '2039-09');
+		});
+		test('Quarterly', () {
+			expect(now.toNoteplanDateString(NoteType.quarterly),              '2023-Q1');
+			expect(now.toNoteplanDateString(NoteType.quarterly, shift:   2), '2023-Q3');
+			expect(now.toNoteplanDateString(NoteType.quarterly, shift:  -2), '2022-Q3');
+			expect(now.toNoteplanDateString(NoteType.quarterly, shift:  20), '2018-Q1');
+			expect(now.toNoteplanDateString(NoteType.quarterly, shift: -20), '2028-Q1');
+		});
+		test('Yearly', () {
+			expect(now.toNoteplanDateString(NoteType.yearly),                 '2023');
+			expect(now.toNoteplanDateString(NoteType.yearly, shift:  2),    '2025');
+			expect(now.toNoteplanDateString(NoteType.yearly, shift: -2),    '2021');
+			expect(now.toNoteplanDateString(NoteType.yearly, shift: -2020), '0003');
+		});
+	});
 }
