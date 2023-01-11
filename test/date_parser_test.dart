@@ -1,4 +1,6 @@
 import 'package:alfred_noteplan_fts_refresh/date_parser.dart';
+import 'package:alfred_noteplan_fts_refresh/date_utils.dart';
+import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:test/test.dart';
@@ -25,28 +27,6 @@ Tuple2<int, int> shift_quarter(Tuple2<int, int> year_quarter, {int change = 0}) 
 		if (month < 1) { month += 4; year -= 1; }
 	}
 	return Tuple2(year, month);
-}
-
-String to_weekly ({int change = 0}) {
-	// final DateTime dt = _now.copyWith(day: 1);
-	// @todo Dart doesn't understand weeks of year
-	// add code, e.g.: https://stackoverflow.com/a/51122613/240239
-	return '';
-}
-String to_monthly ({int change = 0}) {
-	final DateTime dt = _now.copyWith(day: 1);
-	final d = shift_month(Tuple2(dt.year, dt.month), change: change);
-	return '${d.item1}-${d.item2}.md';
-}
-String to_quarterly ({int change = 0}) {
-	final DateTime dt = _now.copyWith(day: 1);
-	final d = shift_quarter(Tuple2(dt.year, (dt.month / 4).ceil()), change: change);
-	return '${d.item1}-${d.item2}.md';
-}
-String to_yearly ({int change = 0}) {
-	final DateTime dt = _now.copyWith(day: 1);
-	int year = dt.year + change;
-	return '${year}.md';
 }
 
 final DateTime _now = DateTime.now();
@@ -87,27 +67,27 @@ void main() {
 
 	group('daily: exact', () {
 		test('Ymd', () {
-			expect(dpfn('20221211'),    date_to_daily(DateTime(2022, 12, 11)));
-			expect(dpfn('20220711'),    date_to_daily(DateTime(2022, 07, 11)));
-			expect(dpfn('20230101'),    date_to_daily(DateTime(2023, 01, 01)));
-			expect(dpfn('20200209'),    date_to_daily(DateTime(2020, 02, 29)));
+			expect(dpfn('20221211'),    DateTime(2022, 12, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('20220711'),    DateTime(2022, 07, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('20230101'),    DateTime(2023, 01, 01).noteplan_filename(NoteType.daily));
+			expect(dpfn('20200209'),    DateTime(2020, 02, 29).noteplan_filename(NoteType.daily));
 			expect(() => dpfn('20230229'),    throwsArgumentError);
 			expect(() => dpfn('20220229'),    throwsArgumentError);
 			expect(() => dpfn('20230432'),    throwsArgumentError);
 		});
 		test('short Ymd', () {
-			expect(dpfn('221211'),    date_to_daily(DateTime(2022, 12, 11)));
-			expect(dpfn('220611'),    date_to_daily(DateTime(2022, 06, 11)));
-			expect(dpfn('230101'),    date_to_daily(DateTime(2023, 01, 01)));
-			expect(dpfn('200209'),    date_to_daily(DateTime(2020, 02, 29)));
+			expect(dpfn('221211'),    DateTime(2022, 12, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('220611'),    DateTime(2022, 06, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('230101'),    DateTime(2023, 01, 01).noteplan_filename(NoteType.daily));
+			expect(dpfn('200209'),    DateTime(2020, 02, 29).noteplan_filename(NoteType.daily));
 			expect(() => dpfn('230229'),    throwsArgumentError);
 			expect(() => dpfn('220229'),    throwsArgumentError);
 			expect(() => dpfn('210432'),    throwsArgumentError);
 		});
 		test('month/day only', () {
-			expect(dpfn('1211'),    date_to_daily(DateTime(2023, 12, 11)));
-			expect(dpfn('0411'),    date_to_daily(DateTime(2023, 04, 11)));
-			expect(dpfn('0101'),    date_to_daily(DateTime(2023, 01, 01)));
+			expect(dpfn('1211'),    DateTime(2023, 12, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('0411'),    DateTime(2023, 04, 11).noteplan_filename(NoteType.daily));
+			expect(dpfn('0101'),    DateTime(2023, 01, 01).noteplan_filename(NoteType.daily));
 			expect(() => dpfn('0229'),    throwsArgumentError);
 			expect(() => dpfn('0432'),    throwsArgumentError);
 		});
@@ -115,74 +95,98 @@ void main() {
 
 	group('daily: movement', () {
 		test('days', () {
-			expect(dpfn('+2d'),      date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('+ 2d'),     date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('2d'),       date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('+2 d'),     date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('+ 2 d'),    date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('2 d'),      date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn(' 2 d'),     date_to_daily(_now.add(Duration(days: 2))));
-			expect(dpfn('+ 14 d'),   date_to_daily(_now.add(Duration(days: 14))));
-			expect(dpfn('+12 d'),    date_to_daily(_now.add(Duration(days: 12))));
-			expect(dpfn('-3d'),      date_to_daily(_now.subtract(Duration(days: 3))));
-			expect(dpfn('- 1d'),     date_to_daily(_now.subtract(Duration(days: 1))));
-			expect(dpfn('- 4 d'),    date_to_daily(_now.subtract(Duration(days: 4))));
-			expect(dpfn('-2 d'),     date_to_daily(_now.subtract(Duration(days: 2))));
-			expect(dpfn('- 10d'),    date_to_daily(_now.subtract(Duration(days: 10))));
+			expect(dpfn('+2d'),      _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+ 2d'),     _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('2d'),       _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+2 d'),     _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+ 2 d'),    _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('2 d'),      _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn(' 2 d'),     _now.add(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+ 14 d'),   _now.add(Duration(days: 14)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+12 d'),    _now.add(Duration(days: 12)).noteplan_filename(NoteType.daily));
+			expect(dpfn('-3d'),      _now.subtract(Duration(days: 3)).noteplan_filename(NoteType.daily));
+			expect(dpfn('- 1d'),     _now.subtract(Duration(days: 1)).noteplan_filename(NoteType.daily));
+			expect(dpfn('- 4 d'),    _now.subtract(Duration(days: 4)).noteplan_filename(NoteType.daily));
+			expect(dpfn('-2 d'),     _now.subtract(Duration(days: 2)).noteplan_filename(NoteType.daily));
+			expect(dpfn('- 10d'),    _now.subtract(Duration(days: 10)).noteplan_filename(NoteType.daily));
 		});
 		test('weeks', () {
-			expect(dpfn('+2w'),      date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('+ 2w'),     date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('2w'),       date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('+2wk'),     date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('+ 2wk'),    date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('2wk'),      date_to_daily(_now.add(Duration(days: 2 * 7))));
-			expect(dpfn('-3w'),      date_to_daily(_now.subtract(Duration(days: 3 * 7))));
-			expect(dpfn('- 1w'),     date_to_daily(_now.subtract(Duration(days: 1 * 7))));
-			expect(dpfn('-4wk'),     date_to_daily(_now.subtract(Duration(days: 4 * 7))));
-			expect(dpfn('- 2wk'),    date_to_daily(_now.subtract(Duration(days: 2 * 7))));
+			expect(dpfn('+2w'),      _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+ 2w'),     _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('2w'),       _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+2wk'),     _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('+ 2wk'),    _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('2wk'),      _now.add(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('-3w'),      _now.subtract(Duration(days: 3 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('- 1w'),     _now.subtract(Duration(days: 1 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('-4wk'),     _now.subtract(Duration(days: 4 * 7)).noteplan_filename(NoteType.daily));
+			expect(dpfn('- 2wk'),    _now.subtract(Duration(days: 2 * 7)).noteplan_filename(NoteType.daily));
 		});
 	});
 
 	group('other', () {
-		// test('week', () {
-		// 	expect(dpfn('w'),      to_weekly());
-		// 	expect(dpfn('wk'),      to_weekly());
-		// 	expect(dpfn('week'),      to_weekly());
-		// });
+		test('week', () {
+			expect(dpfn('w'),      	  _now.noteplan_filename(NoteType.weekly));
+			expect(dpfn('wk'),        _now.noteplan_filename(NoteType.weekly));
+			expect(dpfn('week'),      _now.noteplan_filename(NoteType.weekly));
+			expect(dpfn('w +'),        _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('w +1'),       _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('w + 2'),      _now.noteplan_filename(NoteType.weekly, change: 2));
+			expect(dpfn('w+ 23'),      _now.noteplan_filename(NoteType.weekly, change: 23));
+			expect(dpfn('w-'),         _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('w -1'),       _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('w - 2'),      _now.noteplan_filename(NoteType.weekly, change: -2));
+			expect(dpfn('w- 23'),      _now.noteplan_filename(NoteType.weekly, change: -23));
+			expect(dpfn('wk +'),        _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('wk +1'),       _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('wk + 2'),      _now.noteplan_filename(NoteType.weekly, change: 2));
+			expect(dpfn('wk+ 23'),      _now.noteplan_filename(NoteType.weekly, change: 23));
+			expect(dpfn('wk-'),         _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('wk -1'),       _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('wk - 2'),      _now.noteplan_filename(NoteType.weekly, change: -2));
+			expect(dpfn('wk- 23'),      _now.noteplan_filename(NoteType.weekly, change: -23));
+			expect(dpfn('week +'),        _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('week +1'),       _now.noteplan_filename(NoteType.weekly, change: 1));
+			expect(dpfn('week + 2'),      _now.noteplan_filename(NoteType.weekly, change: 2));
+			expect(dpfn('week+ 23'),      _now.noteplan_filename(NoteType.weekly, change: 23));
+			expect(dpfn('week-'),         _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('week -1'),       _now.noteplan_filename(NoteType.weekly, change: -1));
+			expect(dpfn('week - 2'),      _now.noteplan_filename(NoteType.weekly, change: -2));
+			expect(dpfn('week- 23'),      _now.noteplan_filename(NoteType.weekly, change: -23));
+		});
 		test('month', () {
-			expect(dpfn('m'),      to_monthly());
-			expect(dpfn('m +'),      to_monthly(change: 1));
-			expect(dpfn('m +1'),      to_monthly(change: 1));
-			expect(dpfn('m + 2'),      to_monthly(change: 2));
-			expect(dpfn('m+ 23'),      to_monthly(change: 23));
-			expect(dpfn('m-'),      to_monthly(change: -1));
-			expect(dpfn('m -1'),      to_monthly(change: -1));
-			expect(dpfn('m - 2'),      to_monthly(change: -2));
-			expect(dpfn('m- 23'),      to_monthly(change: -23));
+			expect(dpfn('m'),          _now.noteplan_filename(NoteType.monthly));
+			expect(dpfn('m +'),        _now.noteplan_filename(NoteType.monthly, change: 1));
+			expect(dpfn('m +1'),       _now.noteplan_filename(NoteType.monthly, change: 1));
+			expect(dpfn('m + 2'),      _now.noteplan_filename(NoteType.monthly, change: 2));
+			expect(dpfn('m+ 23'),      _now.noteplan_filename(NoteType.monthly, change: 23));
+			expect(dpfn('m-'),         _now.noteplan_filename(NoteType.monthly, change: -1));
+			expect(dpfn('m -1'),       _now.noteplan_filename(NoteType.monthly, change: -1));
+			expect(dpfn('m - 2'),      _now.noteplan_filename(NoteType.monthly, change: -2));
+			expect(dpfn('m- 23'),      _now.noteplan_filename(NoteType.monthly, change: -23));
 		});
 		test('quarter', () {
-			expect(dpfn('q'),      to_quarterly());
-			expect(dpfn('q +'),      to_quarterly(change: 1));
-			expect(dpfn('q +1'),      to_quarterly(change: 1));
-			expect(dpfn('q + 2'),      to_quarterly(change: 2));
-			expect(dpfn('q+ 23 '),      to_quarterly(change: 23));
-			expect(dpfn('q -'),      to_quarterly(change: -1));
-			expect(dpfn('q -1'),      to_quarterly(change: -1));
-			expect(dpfn('q - 2'),      to_quarterly(change: -2));
-			expect(dpfn('q- 23 '),      to_quarterly(change: -23));
+			expect(dpfn('q'),           _now.noteplan_filename(NoteType.quarterly));
+			expect(dpfn('q +'),         _now.noteplan_filename(NoteType.quarterly, change: 1));
+			expect(dpfn('q +1'),        _now.noteplan_filename(NoteType.quarterly, change: 1));
+			expect(dpfn('q + 2'),       _now.noteplan_filename(NoteType.quarterly, change: 2));
+			expect(dpfn('q+ 23 '),      _now.noteplan_filename(NoteType.quarterly, change: 23));
+			expect(dpfn('q -'),         _now.noteplan_filename(NoteType.quarterly, change: -1));
+			expect(dpfn('q -1'),        _now.noteplan_filename(NoteType.quarterly, change: -1));
+			expect(dpfn('q - 2'),       _now.noteplan_filename(NoteType.quarterly, change: -2));
+			expect(dpfn('q- 23 '),      _now.noteplan_filename(NoteType.quarterly, change: -23));
 		});
 		test('year', () {
-			expect(dpfn('yr'),      to_yearly());
-			expect(dpfn('year'),     to_yearly());
-			expect(dpfn('yr+'),     to_yearly(change: 1));
-			expect(dpfn('yr +1'),     to_yearly(change: 1));
-			expect(dpfn('yr + 2'),     to_yearly(change: 2));
-			expect(dpfn('yr+ 23'),     to_yearly(change: 23));
-			expect(dpfn('yr-'),     to_yearly(change: -1));
-			expect(dpfn('yr -1'),     to_yearly(change: -1));
-			expect(dpfn('yr - 2'),     to_yearly(change: -2));
-			expect(dpfn('yr- 23'),     to_yearly(change: -23));
+			expect(dpfn('yr'),         _now.noteplan_filename(NoteType.yearly));
+			expect(dpfn('year'),       _now.noteplan_filename(NoteType.yearly));
+			expect(dpfn('yr+'),        _now.noteplan_filename(NoteType.yearly, change: 1));
+			expect(dpfn('yr +1'),      _now.noteplan_filename(NoteType.yearly, change: 1));
+			expect(dpfn('yr + 2'),     _now.noteplan_filename(NoteType.yearly, change: 2));
+			expect(dpfn('yr+ 23'),     _now.noteplan_filename(NoteType.yearly, change: 23));
+			expect(dpfn('yr-'),        _now.noteplan_filename(NoteType.yearly, change: -1));
+			expect(dpfn('yr -1'),      _now.noteplan_filename(NoteType.yearly, change: -1));
+			expect(dpfn('yr - 2'),     _now.noteplan_filename(NoteType.yearly, change: -2));
+			expect(dpfn('yr- 23'),     _now.noteplan_filename(NoteType.yearly, change: -23));
 		});
 	});
 
