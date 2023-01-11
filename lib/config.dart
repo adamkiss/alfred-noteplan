@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/strings.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:path/path.dart';
 
 class Config {
@@ -30,6 +31,8 @@ class Config {
 		ignore = (Platform.environment['user_ignore_files'] ?? '')
 			.trim().split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty)
 			.toList(growable: false);
+
+		initializeDateFormatting(locale, null);
 	}
 
 	static void error(String err) {
