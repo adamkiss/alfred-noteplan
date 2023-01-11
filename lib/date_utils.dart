@@ -1,5 +1,7 @@
 
+import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
+import 'package:alfred_noteplan_fts_refresh/int_padding.dart';
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
@@ -64,9 +66,22 @@ extension DateUtils on DateTime {
 
 		switch (type) {
 			case NoteType.daily:
-				return '';
+				DateTime actual = add(Duration(days: shift));
+				return [
+					actual.year.padLeft(4),
+					actual.month.padLeft(2),
+					actual.day.padLeft(2)
+				].join();
+			case NoteType.weekly:
+				DateTime actual = add(Duration(days: shift * 7));
+				int week = actual.adjustedWeekOfYear(Config.week_starts_on);
+				int year = actual.year;
+				if (actual.month == 1 && week > 50) { year -= 1; }
+				if (actual.month == 12 && week < 3) { year += 1;}
+
+				return Tuple3(type, year, week).toNoteplanDateString();
 			default:
-				return toTuple3(type).toNoteplanDateString();
+				return toTuple3(type).shift(shift).toNoteplanDateString();
 		}
 	}
 }
@@ -98,10 +113,10 @@ extension Tuple3Utils on Tuple3<NoteType, int, int> {
 		}
 
 		switch (item1) {
-			case NoteType.weekly: return '${item2.toString().padLeft(4, '0')}-W${item3.toString().padLeft(2, '0')}';
-			case NoteType.monthly: return '${item2.toString().padLeft(4, '0')}-${item3.toString().padLeft(2, '0')}';
-			case NoteType.quarterly: return '${item2.toString().padLeft(4, '0')}-Q${item3}';
-			default: return item2.toString().padLeft(4, '0');
+			case NoteType.weekly: return '${item2.padLeft(4)}-W${item3.padLeft(2)}';
+			case NoteType.monthly: return '${item2.padLeft(4)}-${item3.padLeft(2)}';
+			case NoteType.quarterly: return '${item2.padLeft(4)}-Q${item3}';
+			default: return item2.padLeft(4);
 		}
 	}
 
