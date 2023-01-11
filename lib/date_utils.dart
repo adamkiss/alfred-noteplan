@@ -4,69 +4,104 @@ import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 extension DateUtils on DateTime {
-	/// Shift a [Tuple2<year, x>] forward or backward
-	/// Universal private method used by shift_month and shift_quarter
-	static Tuple2<int, int> _shift(
-		Tuple2<int, int> year_x, int max_x,
-		{int change = 0}
-	) {
-		int y = year_x.item1;
-		int x = year_x.item2 + change;
-		while (x > max_x) { x -= max_x; y += 1; }
-		while (x < 1)     { x += max_x; y -= 1; }
-		return Tuple2(y, x);
-	}
-
 	int get quarter => int.parse(DateFormat('Q').format(this), radix: 10);
 	int get dayOfYear => int.parse(DateFormat('D').format(this), radix: 10);
-	int get weekOfYear => ((dayOfYear - day + 10) / 7).floor();
 
-	/// Convert [DateTime] to [Tuple2<year, ??>] based on [NoteType]
-	Tuple2<int, int> toTuple2(NoteType type) {
-		if ([NoteType.daily, NoteType.note].contains(type)) {
-			throw ArgumentError('DateTime.toTuple2: can\'t convert ${type} to Tuple2');
+	/// Shift actual weekday to fake weekday based on "week starts on"
+	///
+	/// ```
+	/// Example: Week starts on sunday
+	/// shifter: WEEK_START - MONDAY (so monday has no change)
+	/// shifted = weekday - shifter
+	/// ensure positive by (shifted + 7) % 7       => 1 2 3 4 5 6 0 repeated
+	/// decrease before modulo by 1 to shift range => 0 1 2 3 4 5 6 repeated
+	/// increase after to correspond with weekday r=> 1 2 3 4 5 6 7 repeated
+	/// ```
+	int _weekdayShift ([int weekStartsOn = DateTime.monday]) {
+		int shiftWeek = weekStartsOn - 1; // how much we shift week against ISO 8601
+		return ((weekday - shiftWeek + (7-1)) % 7) + 1;
+	}
+	int _weekOfYearBase([int weekStartsOn = DateTime.monday]) => (
+		(dayOfYear - _weekdayShift(weekStartsOn) + 10)
+	/ 7).floor();
+	int _calculateWeekOfYear([int weekStartsOn = DateTime.monday]) {
+		int woy = _weekOfYearBase(weekStartsOn);
+		if (woy < 1) { return DateUtils.numberOfWeeks(year - 1, weekStartsOn); }
+		if (woy > DateUtils.numberOfWeeks(year, weekStartsOn)) { return 1; }
+		return woy;
+	}
+
+	static int numberOfWeeks(
+		int year,
+		[int weekStartsOn = DateTime.monday]
+	) => DateTime(year, 12, 28)._weekOfYearBase(weekStartsOn);
+
+	int get yearWeeks => DateUtils.numberOfWeeks(year);
+	int adjustedYearWeeks(int weekStartsOn) => DateUtils.numberOfWeeks(year, weekStartsOn);
+
+	int get weekOfYear => _calculateWeekOfYear();
+	int adjustedWeekOfYear(int weekStartsOn) => _calculateWeekOfYear(weekStartsOn);
+
+	/// Convert [DateTime] to [Tuple3<type, year, ??>] based on [NoteType]
+	Tuple3<NoteType, int, int> toTuple3(NoteType type, {int weekStartsWith = DateTime.monday}) {
+		if (! NoteType.convertableToTuple3.contains(type)) {
+			throw ArgumentError('DateTime.toTuple3: can\'t convert ${type} to Tuple3');
 		}
 
 		switch (type) {
-			case NoteType.weekly: return Tuple2(year, weekOfYear);
-			case NoteType.monthly: return Tuple2(year, month);
-			case NoteType.quarterly: return Tuple2(year, quarter);
-			default: return Tuple2(year, 1);
+			case NoteType.weekly: return Tuple3(type, year, adjustedWeekOfYear(weekStartsWith));
+			case NoteType.monthly: return Tuple3(type, year, month);
+			case NoteType.quarterly: return Tuple3(type, year, quarter);
+			default: return Tuple3(type, year, 1);
 		}
 	}
 
-	/// Get a Noteplan note name ([String]) from a [DateTime]
-	String noteplan_filename (NoteType type, {int change = 0}) {
+	/// Get a Noteplan note name ([String]) from a [DateTime] and options shift by [int]
+	String toNoteplanFilename (NoteType type, {int shift = 0}) {
 		if (type == NoteType.note) {
-			throw ArgumentError('DateTime.noteplan_filename: can\'t convert ${type} to filename.');
+			throw ArgumentError('DateTime.toNoteplanFilename: can\'t convert ${type} to filename.');
 		}
 
 		switch (type) {
 			case NoteType.daily:
 				return '';
-			default: /// NoteType.yearly
-				return '';
+			default:
+				return toTuple3(type).toNoteplanFilename();
 		}
 	}
 }
 
-extension Tuple2Utils on Tuple2 {
+extension Tuple3Utils on Tuple3<NoteType, int, int> {
+	/// shift the 'month/quarter/year' by [int] units
+	Tuple3<NoteType, int, int> shift(int change) {
+		if (! NoteType.shiftable.contains(item1)) {
+			throw StateError('Tuple3.shift unsupported for NoteType.weekly');
+		}
+		int max = {
+			NoteType.monthly: 12,
+			NoteType.quarterly: 4,
+			NoteType.yearly: 1
+		}[item1]!;
+		int y = item2;
+		int x = item3 + change;
+		while (x > max) { x -= max; y += 1; }
+		while (x < 1)     { x += max; y -= 1; }
+		return Tuple3(item1, y, x);
+	}
 
-	/// Get a Noteplan note name from [Tuple2<year, ??>]
-	String noteplan_filename(NoteType type) {
-		if ([NoteType.daily, NoteType.note].contains(type)) {
+	/// Get a Noteplan note name from [Tuple3<type, year, ??>]
+	String toNoteplanFilename() {
+		if ([NoteType.daily, NoteType.note].contains(item1)) {
 			throw ArgumentError(
-				'Tuple2.noteplan_filename: '
-				'can\'t create ${type} from a '
-				'Tuple2<${item1}, ${item2}>.'
+				'Tuple3.toNoteplanFilename: wrong NoteType in Tuple3<${item1}, ${item2}, ${item3}>'
 			);
 		}
 
-		switch (type) {
-			case NoteType.weekly: return '${item1}-W${item2}.md';
-			case NoteType.monthly: return '${item1}-${item2}.md';
-			case NoteType.quarterly: return '${item1}-Q${item2}.md';
-			default: return '${item1}.md';
+		switch (item1) {
+			case NoteType.weekly: return '${item2}-W${item3}.md';
+			case NoteType.monthly: return '${item2}-${item3}.md';
+			case NoteType.quarterly: return '${item2}-Q${item3}.md';
+			default: return '${item2}.md';
 		}
 	}
 

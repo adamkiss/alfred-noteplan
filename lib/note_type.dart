@@ -6,6 +6,18 @@ enum NoteType {
 	quarterly ,
 	yearly    ;
 
+	static List<NoteType> shiftable = [
+		NoteType.monthly,
+		NoteType.quarterly,
+		NoteType.yearly
+	];
+	static List<NoteType> convertableToTuple3 = [
+		NoteType.weekly,
+		NoteType.monthly,
+		NoteType.quarterly,
+		NoteType.yearly
+	];
+
 	String get value {
 		switch (this) {
 			case NoteType.note: return 'note';
