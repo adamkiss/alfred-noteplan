@@ -10,7 +10,7 @@ Search, open, and create Noteplan notes with Alfred.
 
 ## Usage
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
-- `n >[date phrase]` - Very simple exact date parser
+- `n >[date phrase]`, `n :[date phrase]` - Very simple exact date parser
 - `nn [Title of the note]` - Creates a new note, in the folder of your choice
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
