@@ -1,6 +1,10 @@
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+// https://github.com/xantiagoma/dart_date/tree/master
+// MIT License
+// Copyright (c) 2020 Santiago Montoya Angarita (@xantiagoma)
+
 class Interval {
   late final DateTime _start;
   late final Duration _duration;
@@ -361,7 +365,8 @@ extension Date on DateTime {
       if (difference.isNegative) {
         for (var i = 0; i < days; i++) {
           yield current;
-          current = current.nextDay;
+          current = current.previousDay;
+		  // @fixed: https://github.com/xantiagoma/dart_date/issues/18
         }
       } else {
         for (var i = 0; i < days; i++) {
@@ -643,7 +648,8 @@ extension Date on DateTime {
   bool get isUTC => isUtc;
 
   /// Return true if this [DateTime] is a saturday or a sunday
-  bool get isWeekend => day == DateTime.saturday || day == DateTime.sunday;
+  bool get isWeekend => weekday == DateTime.saturday || day == DateTime.sunday;
+	// @fixed: https://github.com/xantiagoma/dart_date/issues/19#issuecomment-1268342376
 
   /// Checks if a [DateTime] is within a Rage (two dates that makes an [Interval])
   bool isWithinRange(DateTime startDate, DateTime endDate) =>
