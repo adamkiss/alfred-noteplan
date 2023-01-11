@@ -14,6 +14,7 @@ class Config {
 		'---''\n'
 		'\n';
 	static List<String> ignore = [];
+	static int week_starts_on = DateTime.monday;
 
 	static String path_cache_db = join(Config.noteplan_root, 'Caches', 'sync-cache.db');
 
@@ -31,6 +32,7 @@ class Config {
 		ignore = (Platform.environment['user_ignore_files'] ?? '')
 			.trim().split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty)
 			.toList(growable: false);
+		week_starts_on = int.tryParse(Platform.environment['user_week_starts_on'] ?? '1', radix: 10) ?? week_starts_on;
 
 		initializeDateFormatting(locale, null);
 	}
