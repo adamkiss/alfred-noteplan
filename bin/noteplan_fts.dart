@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:alfred_noteplan_fts_refresh/about.dart';
 import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/config.dart';
+import 'package:alfred_noteplan_fts_refresh/date_parser.dart';
 import 'package:alfred_noteplan_fts_refresh/db_cache.dart';
 import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
 import 'package:alfred_noteplan_fts_refresh/note_match.dart';
@@ -76,9 +77,16 @@ void main (List<String> arguments) {
 
 	// Date parsing
 	if (command == 'date') {
-		final String? to_parse = RegExp(r'^>\s*(.*?)$').stringMatch(query);
-		if (to_parse == null) {
-			Config.error(str_error_date_unparsable);
+		try {
+			final date_parser = DateParser(query);
+
+			alf_exit([
+				alf_item(date_parser.to_filename(),'wip')
+			]);
+		} catch (e) {
+			alf_exit([
+				alf_item(e.toString(), 'There has been an error', valid: false)
+			]);
 		}
 	}
 

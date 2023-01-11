@@ -30,10 +30,27 @@
             "type": "shell",
             "command": "r test",
             "group": {
+                "kind": "test"
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "Run actual dart tests",
+            "type": "shell",
+            "command": "dart test",
+            "group": {
                 "kind": "test",
                 "isDefault": true
             },
             "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
         }
     ]
 }
