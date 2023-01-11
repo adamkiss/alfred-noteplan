@@ -39,7 +39,7 @@ case "$1" in
         $BIN refresh force
         ;;
     *)
-        if [[ "$1[0]" == "." ]]; then
+        if [[ $1 == ':'* || $1 == '>'* ]]; then
             $BIN date "$1"
         else
             $BIN search "$1"
