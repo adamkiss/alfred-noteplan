@@ -81,7 +81,7 @@ void main (List<String> arguments) {
 			final date_parser = DateParser(query);
 
 			alf_exit([
-				alf_item(date_parser.to_filename(),'wip')
+				alf_item(date_parser.toFilename(), 'wip')
 			]);
 		} catch (e) {
 			alf_exit([

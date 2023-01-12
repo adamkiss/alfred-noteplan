@@ -37,7 +37,7 @@
         {
             "label": "Run actual dart tests",
             "type": "shell",
-            "command": "dart test test/date_utils_test.dart",
+            "command": "dart test",
             "group": {
                 "kind": "test",
                 "isDefault": true

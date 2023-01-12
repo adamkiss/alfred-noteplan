@@ -119,5 +119,4 @@ extension Tuple3Utils on Tuple3<NoteType, int, int> {
 			default: return item2.padLeft(4);
 		}
 	}
-
 }
