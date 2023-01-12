@@ -1,9 +1,11 @@
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:alfred_noteplan_fts_refresh/date_utils.dart';
+import 'package:tuple/tuple.dart';
 
 class DateParser {
 	late final String query;
-	late final NoteType type;
+	late final NoteType? type;
+	late final DateTime? dt;
 
 	DateParser(String q) {
 		RegExp query_check = RegExp(r'^[:>]\s*?(.*)$');
@@ -13,21 +15,20 @@ class DateParser {
 
 		// hasMatch before means… it has match and one matched group
 		query = query_check.firstMatch(q)!.group(1)!.trim();
-	}
 
-	String toDateString() {
 		for (var matcher in _matchers) {
 			if (matcher.matches(query)) {
-				return matcher.process(query);
+				type = matcher.t;
+				dt = matcher.process(query);
 			}
 		}
 
-		throw ArgumentError('Date query "${query}" invalid.');
+		if (dt == null) {
+			throw ArgumentError('Date query "${query}" invalid.');
+		}
 	}
 
-	String toFilename() {
-		return '${toDateString()}.md';
-	}
+	Tuple2<String, String> toNoteplan() => dt!.toNoteplan(type!);
 
 	static int _maybeParse(String? parseMatch, int defaultValue) {
 		return int.tryParse(parseMatch ?? '', radix: 10) ?? defaultValue;
@@ -177,5 +178,5 @@ class DateParserMatcher {
 
 	bool matches(String input) => re.hasMatch(input);
 
-	String process(String input) => (func(re.firstMatch(input)!) as DateTime).toNoteplanDateString(t);
+	DateTime process(String input) => func(re.firstMatch(input)!);
 }

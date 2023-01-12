@@ -7,10 +7,12 @@ import 'package:alfred_noteplan_fts_refresh/date_parser.dart';
 import 'package:alfred_noteplan_fts_refresh/db_cache.dart';
 import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
 import 'package:alfred_noteplan_fts_refresh/note_match.dart';
+import 'package:alfred_noteplan_fts_refresh/noteplan.dart';
 import 'package:alfred_noteplan_fts_refresh/refresh.dart';
 import 'package:alfred_noteplan_fts_refresh/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:tuple/tuple.dart';
 
 bool _last_update_more_than(int last_update, {int compare = 10}) {
 	return DateTime.now().millisecondsSinceEpoch > (last_update + compare);
@@ -78,14 +80,25 @@ void main (List<String> arguments) {
 	// Date parsing
 	if (command == 'date') {
 		try {
-			final date_parser = DateParser(query);
+			final Tuple2 parsed = DateParser(query).toNoteplan();
 
 			alf_exit([
-				alf_item(date_parser.toFilename(), 'wip')
+				alf_item(
+					parsed.item1,
+					Noteplan.openCalendarUrl(parsed.item2),
+					valid: true,
+					variables: {'action':'open'},
+					mods: {
+						'cmd': {
+							'subtitle': str_fts_result_arg_cmd_subtitle,
+							'arg': Noteplan.openCalendarUrl(parsed.item2, sameWindow: false)
+						}
+					}
+				)
 			]);
 		} catch (e) {
 			alf_exit([
-				alf_item(e.toString(), 'There has been an error', valid: false)
+				alf_item(e.toString(), 'Error parsing date query.', valid: false)
 			]);
 		}
 	}
