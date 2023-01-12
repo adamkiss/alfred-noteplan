@@ -142,21 +142,23 @@ void main() {
 			expect(() => now.toNoteplanDateString(NoteType.note), throwsArgumentError);
 		});
 
+		DateTime dt;
 		test('Daily', () {
 			expect(now.toNoteplanDateString(NoteType.daily),              '20230111');
-			expect(now.toNoteplanDateString(NoteType.daily, shift:  -20), '20221222');
-			expect(now.toNoteplanDateString(NoteType.daily, shift: -200), '20220625');
-			expect(now.toNoteplanDateString(NoteType.daily, shift:   20), '20230131');
-			expect(now.toNoteplanDateString(NoteType.daily, shift:   21), '20230201');
-			expect(now.toNoteplanDateString(NoteType.daily, shift:  200), '20230730');
+			dt = now.subtract(Duration(days: 20));
+			expect(dt.toNoteplanDateString(NoteType.daily), '20221222');
+			expect(dt.toNoteplanDateString(NoteType.daily, shift: -200), '20220625');
+			expect(dt.toNoteplanDateString(NoteType.daily, shift:   20), '20230131');
+			expect(dt.toNoteplanDateString(NoteType.daily, shift:   21), '20230201');
+			expect(dt.toNoteplanDateString(NoteType.daily, shift:  200), '20230730');
 		});
 		test('Weekly (Monday)', () {
 			expect(now.toNoteplanDateString(NoteType.weekly),             '2023-W02');
-			expect(now.toNoteplanDateString(NoteType.weekly, shift: -20), '2022-W34');
-			expect(now.toNoteplanDateString(NoteType.weekly, shift: -47), '2022-W07');
-			expect(now.toNoteplanDateString(NoteType.weekly, shift:  20), '2023-W22');
-			expect(now.toNoteplanDateString(NoteType.weekly, shift:  21), '2023-W23');
-			expect(now.toNoteplanDateString(NoteType.weekly, shift:  67), '2024-W17');
+			expect(dt.toNoteplanDateString(NoteType.weekly, shift: -20), '2022-W34');
+			expect(dt.toNoteplanDateString(NoteType.weekly, shift: -47), '2022-W07');
+			expect(dt.toNoteplanDateString(NoteType.weekly, shift:  20), '2023-W22');
+			expect(dt.toNoteplanDateString(NoteType.weekly, shift:  21), '2023-W23');
+			expect(dt.toNoteplanDateString(NoteType.weekly, shift:  67), '2024-W17');
 		});
 		test('Weekly (Sunday)', () {
 			expect(now.toNoteplanDateString(NoteType.weekly),             '2023-W02');
@@ -175,6 +177,7 @@ void main() {
 			expect(now.toNoteplanDateString(NoteType.monthly, shift:  200), '2039-09');
 		});
 		test('Quarterly', () {
+
 			expect(now.toNoteplanDateString(NoteType.quarterly),             '2023-Q1');
 			expect(now.toNoteplanDateString(NoteType.quarterly, shift:   2), '2023-Q3');
 			expect(now.toNoteplanDateString(NoteType.quarterly, shift:  -2), '2022-Q3');
