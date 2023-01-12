@@ -27,8 +27,8 @@ class NoteMatch {
 		? '${_path()} ✱ ${snippet}'
 		: snippet;
 	String _arg({bool sameWindow = true}) => _is_note()
-		? note_url(filename, sameWindow: sameWindow)
-		: calendar_url(_basename(), sameWindow: sameWindow);
+		? Noteplan.openNoteUrl(filename, sameWindow: sameWindow)
+		: Noteplan.openCalendarUrl(_basename(), sameWindow: sameWindow);
 
 
 	Map<String, dynamic> to_alfred_result() {
