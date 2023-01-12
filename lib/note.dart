@@ -9,12 +9,6 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';
 
 class Note {
-	static const String fmtDaily = 'dd.MM.y, EEEE'; // datetime
-	static const String fmtWeekly = 'Week %w %y';
-	static const String fmtMonthly = 'MMMM y'; // datetime
-	static const String fmtQuarterly = "Q%q %y";
-	static const String fmtYearly = '%y';
-
 	final String filename;
 	final String content_raw;
 	final int modified;
@@ -31,8 +25,6 @@ class Note {
 	{
 		final note_type = record['note_type'];
 		final bname = basenameWithoutExtension(filename);
-		// ignore: prefer_typing_uninitialized_variables
-		var  rmatch; // Re-assignable utility
 
 		/** NOTES */
 		if (note_type == 1) {
@@ -51,52 +43,23 @@ class Note {
 		content = _fts_clean(content_raw);
 
 		if (bname.contains('W')) { // Week
-			rmatch = RegExp(r'(\d+)-[A-Z](\d+)').firstMatch(bname);
-			title = fmtWeekly
-				.replaceAll('%w', rmatch.group(2)!)
-				.replaceAll('%y', rmatch.group(1)!);
 			type = NoteType.weekly;
-			return;
-		}
-		if (bname.contains('Q')) { // Quarter
-			rmatch = RegExp(r'(\d+)-[A-Z](\d+)').firstMatch(bname);
-			title = fmtQuarterly
-				.replaceAll('%q', rmatch.group(2)!)
-				.replaceAll('%y', rmatch.group(1)!);
+
+		} else if (bname.contains('Q')) { // Quarter
 			type = NoteType.quarterly;
-			return;
-		}
 
-		RegExp match_month = RegExp(r'^(\d{4})-(\d{2})$');
-		if (match_month.hasMatch(bname)) { // Month
-			rmatch = match_month.firstMatch(bname);
-			var first_of = DateTime(
-				int.parse(rmatch.group(1)!, radix: 10),
-				int.parse(rmatch.group(2)!, radix: 10)
-			);
-			title = DateFormat(fmtMonthly, Config.locale).format(first_of);
+		} else if (RegExp(r'^(\d{4})-(\d{2})$').hasMatch(bname)) { // Month
 			type = NoteType.monthly;
-			return;
-		}
 
-		RegExp match_year = RegExp(r'^(\d{4})$');
-		if (match_year.hasMatch(bname)) { // Week
-			rmatch = match_year.firstMatch(bname);
-			title = fmtYearly.replaceAll('%y', rmatch.group(1)!);
+		} else if (RegExp(r'^(\d{4})$').hasMatch(bname)) { // Week
 			type = NoteType.yearly;
-			return;
+
+		} else {
+			type = NoteType.daily;
 		}
 
-		// Now it's a dailynote
-		rmatch = RegExp(r'^(\d{4})(\d{2})(\d{2})').firstMatch(bname);
-		inspect(bname);
-		var dt = DateTime(
-			int.parse(rmatch.group(1)!, radix: 10),
-			int.parse(rmatch.group(2)!, radix: 10),
-			int.parse(rmatch.group(3)!, radix: 10)
-		);
-		title = DateFormat(fmtDaily, Config.locale).format(dt);
-		type = NoteType.daily;
+		title = type.formatBasename(bname);
+
 	}
 
 	Tuple2 _parse_frontmatter(String raw) {

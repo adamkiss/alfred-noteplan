@@ -20,6 +20,12 @@ class Config {
 
 	static int ts() => DateTime.now().millisecondsSinceEpoch;
 
+	static const String titleFormatDaily = 'dd.MM.y, EEEE'; // datetime
+	static const String titleFormatWeekly = 'Week %w %y';
+	static const String titleFormatMonthly = 'MMMM y'; // datetime
+	static const String titleFormatQuarterly = "Q%q %y";
+	static const String titleFormatYearly = '%y';
+
 	static void init() {
 		// runtime dependencies
 		if (!Platform.environment.containsKey('user_np_root')) {
