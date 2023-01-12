@@ -51,38 +51,68 @@ extension DateUtils on DateTime {
 		}
 
 		switch (type) {
-			case NoteType.weekly: return Tuple3(type, year, adjustedWeekOfYear(weekStartsWith));
+			case NoteType.weekly:
+				final int rweek = adjustedWeekOfYear(weekStartsWith);
+				int ryear = year;
+				if (month == 1 && rweek > 50) { ryear -= 1; }
+				if (month == 12 && rweek < 3) { ryear += 1;}
+				return Tuple3(type, ryear, rweek);
 			case NoteType.monthly: return Tuple3(type, year, month);
 			case NoteType.quarterly: return Tuple3(type, year, quarter);
 			default: return Tuple3(type, year, 1);
 		}
 	}
 
-	/// Get a Noteplan note name ([String]) from a [DateTime] and options shift by [int]
-	String toNoteplanDateString (NoteType type, {int shift = 0}) {
+	/// Get a Noteplan note name ([String]) from a [DateTime]
+	String toNoteplanDateString (NoteType type) {
 		if (type == NoteType.note) {
 			throw ArgumentError('DateTime.toNoteplanDateString: can\'t convert ${type} to filename.');
 		}
 
 		switch (type) {
 			case NoteType.daily:
-				DateTime actual = add(Duration(days: shift));
 				return [
-					actual.year.padLeft(4),
-					actual.month.padLeft(2),
-					actual.day.padLeft(2)
+					year.padLeft(4),
+					month.padLeft(2),
+					day.padLeft(2)
 				].join();
-			case NoteType.weekly:
-				DateTime actual = add(Duration(days: shift * 7));
-				int week = actual.adjustedWeekOfYear(Config.week_starts_on);
-				int year = actual.year;
-				if (actual.month == 1 && week > 50) { year -= 1; }
-				if (actual.month == 12 && week < 3) { year += 1;}
-
-				return Tuple3(type, year, week).toNoteplanDateString();
 			default:
-				return toTuple3(type).shift(shift).toNoteplanDateString();
+				return toTuple3(type).toNoteplanDateString();
 		}
+	}
+
+	/// Convert to a user-formatted note title
+	String toNoteplanTitle (NoteType type) {
+		switch (type) {
+			case NoteType.daily:
+				return DateFormat(Config.titleFormatDaily, Config.locale).format(this);
+			case NoteType.monthly:
+				return DateFormat(Config.titleFormatMonthly, Config.locale).format(this);
+			case NoteType.weekly:
+				final t = toTuple3(type);
+				return Config.titleFormatWeekly
+					.replaceAll('%w', t.item3.toString())
+					.replaceAll('%y', t.item2.toString());
+			case NoteType.quarterly:
+				final t = toTuple3(type);
+				return Config.titleFormatWeekly
+					.replaceAll('%q', t.item3.toString())
+					.replaceAll('%y', t.item2.toString());
+			case NoteType.yearly:
+				final t = toTuple3(type);
+				return Config.titleFormatWeekly
+					.replaceAll('%y', t.item2.toString());
+		  	default:
+		  		throw ArgumentError('DateTime.toNoteplanTitle: can\'t convert ${type} to filename.');
+		}
+	}
+
+	/// Returns a [Tuple2<title, datestring>] for a given date
+	Tuple2<String, String> toNoteplan(NoteType type) {
+		return Tuple2(
+			toNoteplanTitle(type),
+			toNoteplanDateString(type)
+		);
 	}
 }
 
