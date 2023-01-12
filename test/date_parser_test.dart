@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 
 final DateTime _now = DateTime.now();
 
-String dpfn(String query, {bool raw = false}) => DateParser(raw ? query : '> ${query}').toDateString();
+String dpfn(String query, {bool raw = false}) => DateParser(raw ? query : '> ${query}').toNoteplan().item2;
 
 void main() {
 	initializeDateFormatting('en_GB', null);

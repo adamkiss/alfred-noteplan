@@ -4,8 +4,8 @@ import 'package:tuple/tuple.dart';
 
 class DateParser {
 	late final String query;
-	late final NoteType? type;
-	late final DateTime? dt;
+	NoteType? type;
+	DateTime? dt;
 
 	DateParser(String q) {
 		RegExp query_check = RegExp(r'^[:>]\s*?(.*)$');
