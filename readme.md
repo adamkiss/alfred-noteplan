@@ -22,6 +22,8 @@ Search, open, and create Noteplan notes with Alfred.
 - `tom … tomorrow` - tomorrow's note
 - `[20]?220401` - exact date in Ymd format, where the initial 20 is optional
 - `0401` - exact day, current year (month first)
+- `4/1` - exact day, current year (month first, leading zero optional)
+- `1.4` - exact day, current year (day first, leading zero optional)
 - `[-+]? [number] [dw]` - relative date, number of days or weeks back and forward. spaces are optional
 - `[wmq]` - this week's (month's, quarter's) note
 - `[wmq] [-+]? [number]` - relative week's (month's, quarter's) note (spaces optional)

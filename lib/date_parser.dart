@@ -95,6 +95,17 @@ class DateParser {
 			NoteType.daily
 		),
 
+		// exact md
+		DateParserMatcher(
+			RegExp(r'^(\d{1,2})([/\.])(\d{1,2})$'),
+			(RegExpMatch m) => DateTime(
+				DateTime.now().year,
+				int.parse(m.group(m.group(2)! == '/' ? 1 : 3)!, radix: 10),
+				int.parse(m.group(m.group(2)! == '/' ? 3 : 1)!, radix: 10)
+			),
+			NoteType.daily
+		),
+
 		// daily shift: days
 		DateParserMatcher(
 			RegExp(r'^([-+]?)\s*?(\d*)\s*?d$'),

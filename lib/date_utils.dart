@@ -95,12 +95,12 @@ extension DateUtils on DateTime {
 					.replaceAll('%y', t.item2.toString());
 			case NoteType.quarterly:
 				final t = toTuple3(type);
-				return Config.titleFormatWeekly
+				return Config.titleFormatQuarterly
 					.replaceAll('%q', t.item3.toString())
 					.replaceAll('%y', t.item2.toString());
 			case NoteType.yearly:
 				final t = toTuple3(type);
-				return Config.titleFormatWeekly
+				return Config.titleFormatYearly
 					.replaceAll('%y', t.item2.toString());
 		  	default:
 		  		throw ArgumentError('DateTime.toNoteplanTitle: can\'t convert ${type} to filename.');

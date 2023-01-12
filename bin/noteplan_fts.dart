@@ -80,25 +80,27 @@ void main (List<String> arguments) {
 	// Date parsing
 	if (command == 'date') {
 		try {
-			final Tuple2 parsed = DateParser(query).toNoteplan();
+			final DateParser parsed = DateParser(query);
+			final Tuple2 np = parsed.toNoteplan();
 
 			alf_exit([
 				alf_item(
-					parsed.item1,
-					Noteplan.openCalendarUrl(parsed.item2),
+					np.item1,
+					'Open or create a ${parsed.type!.value} note named "${np.item2}.md"',
+					arg: Noteplan.openCalendarUrl(np.item2),
 					valid: true,
 					variables: {'action':'open'},
 					mods: {
 						'cmd': {
 							'subtitle': str_fts_result_arg_cmd_subtitle,
-							'arg': Noteplan.openCalendarUrl(parsed.item2, sameWindow: false)
+							'arg': Noteplan.openCalendarUrl(np.item2, sameWindow: false)
 						}
 					}
 				)
 			]);
 		} catch (e) {
 			alf_exit([
-				alf_item(e.toString(), 'Error parsing date query.', valid: false)
+				alf_item('…', 'Waiting for a valid query', valid: false)
 			]);
 		}
 	}

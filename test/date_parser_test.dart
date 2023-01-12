@@ -66,6 +66,16 @@ void main() {
 			expect(dpfn('0229'),    DateTime(DateTime.now().year, 02, 29).toNoteplanDateString(NoteType.daily));
 			expect(dpfn('0432'),    DateTime(DateTime.now().year, 05, 02).toNoteplanDateString(NoteType.daily));
 		});
+		test('month/day with a symbol', () {
+			expect(dpfn('1/1'),    DateTime(DateTime.now().year, 1, 1).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('1.1'),    DateTime(DateTime.now().year, 1, 1).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('01.1'),    DateTime(DateTime.now().year, 1, 1).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('11.1'),    DateTime(DateTime.now().year, 1, 11).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('1.11'),    DateTime(DateTime.now().year, 11, 1).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('11/1'),    DateTime(DateTime.now().year, 11, 1).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('1/11'),    DateTime(DateTime.now().year, 1, 11).toNoteplanDateString(NoteType.daily));
+		});
+
 	});
 
 	group('daily: movement', () {
