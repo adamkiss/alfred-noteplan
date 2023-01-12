@@ -1,8 +1,5 @@
-import 'dart:collection';
-
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:alfred_noteplan_fts_refresh/date_utils.dart';
-import 'package:intl/intl.dart';
 
 class DateParser {
 	late final String query;
