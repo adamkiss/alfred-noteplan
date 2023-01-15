@@ -4,14 +4,11 @@ import 'package:alfred_noteplan_fts_refresh/about.dart';
 import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/date_parser.dart';
-import 'package:alfred_noteplan_fts_refresh/db_cache.dart';
-import 'package:alfred_noteplan_fts_refresh/db_fts.dart';
+import 'package:alfred_noteplan_fts_refresh/dbs.dart';
 import 'package:alfred_noteplan_fts_refresh/note_match.dart';
 import 'package:alfred_noteplan_fts_refresh/noteplan.dart';
 import 'package:alfred_noteplan_fts_refresh/refresh.dart';
 import 'package:alfred_noteplan_fts_refresh/strings.dart';
-import 'package:path/path.dart';
-import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';
 
 bool _last_update_more_than(int last_update, {int compare = 10}) {
@@ -22,6 +19,25 @@ void main (List<String> arguments) {
 	final int run_start = Config.ts();
 	Config.init();
 
+	// initializeDateFormatting('sk_SK');
+	// print(DateFormat('M', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MM', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MMM', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MMMM', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('Md y', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MMd y', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MMMd y', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('MMMMd y', 'sk_SK').format(DateTime.now()));
+	// print(DateFormat('M', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MM', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MMM', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MMMM', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('M y', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MM y', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MMM y', 'en_GB').format(DateTime.now()));
+	// print(DateFormat('MMMM y', 'en_GB').format(DateTime.now()));
+	// exit(0);
+
 	if (arguments.isEmpty) {
 		Config.error(str_error_missing_command);
 	}
@@ -29,8 +45,7 @@ void main (List<String> arguments) {
 	final String command = arguments.first;
 	final String query = arguments.sublist(1).join(' ').trim();
 
-	final db = DbFts(sqlite3.open(join(Config.workflow_root(), 'database.sqlite3')));
-	db.ensure_setup();
+	final db = Dbs();
 
 	// Refresh & Exit
 	if (command == 'refresh') {
@@ -62,14 +77,12 @@ void main (List<String> arguments) {
 
 	// Create new note
 	if (command == 'create') {
-		final cache = DbCache(sqlite3.open(Config.path_cache_db));
 		print(alf_to_results(
-			cache.select_folders(query)
+			db.cache_list_folders(query)
 				.map((e) => e.to_alfred())
 				.toList(growable: false)
 		));
 
-		cache.dispose();
 		db.dispose();
 		exit(0);
 	}
