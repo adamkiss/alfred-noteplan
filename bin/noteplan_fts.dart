@@ -19,25 +19,6 @@ void main (List<String> arguments) {
 	final int run_start = Config.ts();
 	Config.init();
 
-	// initializeDateFormatting('sk_SK');
-	// print(DateFormat('M', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MM', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MMM', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MMMM', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('Md y', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MMd y', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MMMd y', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('MMMMd y', 'sk_SK').format(DateTime.now()));
-	// print(DateFormat('M', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MM', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MMM', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MMMM', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('M y', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MM y', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MMM y', 'en_GB').format(DateTime.now()));
-	// print(DateFormat('MMMM y', 'en_GB').format(DateTime.now()));
-	// exit(0);
-
 	if (arguments.isEmpty) {
 		Config.error(str_error_missing_command);
 	}

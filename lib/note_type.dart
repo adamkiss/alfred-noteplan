@@ -1,5 +1,7 @@
 import 'package:alfred_noteplan_fts_refresh/config.dart';
+import 'package:alfred_noteplan_fts_refresh/strings.dart';
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 enum NoteType {
 	note      ,
@@ -63,30 +65,57 @@ enum NoteType {
 					int.parse(rmatch.group(2)!, radix: 10),
 					int.parse(rmatch.group(3)!, radix: 10)
 				);
-				return DateFormat(Config.titleFormatDaily, Config.locale).format(dt);
+				return formatTitleDate(dt);
 			case NoteType.weekly:
 				rmatch = RegExp(r'(\d+)-[A-Z](\d+)').firstMatch(bname);
-				return Config.titleFormatWeekly
-					.replaceAll('%w', rmatch.group(2)!)
-					.replaceAll('%y', rmatch.group(1)!);
+				return formatTitleWithValues(rmatch.group(1)!, rmatch.group(2)!);
 			case NoteType.monthly:
 				rmatch = RegExp(r'^(\d{4})-(\d{2})$').firstMatch(bname);
 				var dt = DateTime(
 					int.parse(rmatch.group(1)!, radix: 10),
 					int.parse(rmatch.group(2)!, radix: 10)
 				);
-				return DateFormat(Config.titleFormatMonthly, Config.locale).format(dt);
+				return formatTitleDate(dt);
 			case NoteType.quarterly:
 				rmatch = RegExp(r'(\d+)-[A-Z](\d+)').firstMatch(bname);
-				return Config.titleFormatQuarterly
-					.replaceAll('%q', rmatch.group(2)!)
-					.replaceAll('%y', rmatch.group(1)!);
+				return formatTitleWithValues(rmatch.group(1)!, rmatch.group(2)!);
 			case NoteType.yearly:
 				rmatch = RegExp(r'^(\d{4})$').firstMatch(bname);
-				return Config.titleFormatYearly.replaceAll('%y', rmatch.group(1)!);
-
+				return formatTitleWithValues('%y', rmatch.group(1)!);
 
 			default: throw StateError("NoteType: Can't reformat 'note' type of note.");
 		}
 	}
+
+	/// Format [DateTime] based on Config.titleFormat<type> for this [NoteType]
+	String formatTitleDate(DateTime dt) {
+		switch(this) {
+			case NoteType.daily: return Config.titleFormatDaily.splitFormatAndCapitalize(dt);
+			case NoteType.monthly: return Config.titleFormatMonthly.splitFormatAndCapitalize(dt);
+			default: throw StateError("NoteType: Can't format date with for ${this}.");
+		}
+	}
+
+	/// Format pair of values as [NoteType] based on Config.titleFormat<type>
+	String formatTitleWithValues(dynamic year, dynamic other) {
+		switch (this) {
+			case NoteType.weekly:
+				return '${Config.wordWeek[Config.locale] ?? "Week"} ${
+					Config.titleFormatWeekly
+						.replaceAll('%_', other.toString())
+						.replaceAll('%y', year.toString())
+				}';
+			case NoteType.quarterly:
+				return Config.titleFormatQuarterly
+					.replaceAll('%_', other.toString())
+					.replaceAll('%y', year.toString());
+			case NoteType.yearly:
+				return Config.titleFormatYearly.replaceAll('%y', year.toString());
+
+			default: throw StateError("NoteType: Can't reformat 'note' type of note.");
+		}
+	}
+
+	/// Format [Tuple2<int, int>] or [Tuple2<String, String>] based on Config.titleFormat<type> for this [NoteType]
+	String formatTitleTuple2(Tuple2 t) => formatTitleWithValues(t.item1, t.item2);
 }

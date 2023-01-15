@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:alfred_noteplan_fts_refresh/alfred.dart';
 import 'package:alfred_noteplan_fts_refresh/strings.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 
 class Config {
@@ -21,10 +22,14 @@ class Config {
 
 	static int ts() => DateTime.now().millisecondsSinceEpoch;
 
+	static const Map<String, String> wordWeek = {
+		'sk_SK': 'Týždeň',
+		'de_DE': 'Die Woche',
+	};
 	static const String titleFormatDaily = 'dd.MM.y, EEEE'; // datetime
-	static const String titleFormatWeekly = 'Week %w %y';
 	static const String titleFormatMonthly = 'MMMM y'; // datetime
-	static const String titleFormatQuarterly = "Q%q %y";
+	static const String titleFormatWeekly = 'W%_ %y';
+	static const String titleFormatQuarterly = "Q%_ %y";
 	static const String titleFormatYearly = '%y';
 
 	static void init() {

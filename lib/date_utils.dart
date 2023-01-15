@@ -1,5 +1,3 @@
-
-import 'package:alfred_noteplan_fts_refresh/config.dart';
 import 'package:alfred_noteplan_fts_refresh/note_type.dart';
 import 'package:alfred_noteplan_fts_refresh/int_padding.dart';
 import 'package:intl/intl.dart';
@@ -93,23 +91,13 @@ extension DateUtils on DateTime {
 	String toNoteplanTitle (NoteType type) {
 		switch (type) {
 			case NoteType.daily:
-				return DateFormat(Config.titleFormatDaily, Config.locale).format(this);
 			case NoteType.monthly:
-				return DateFormat(Config.titleFormatMonthly, Config.locale).format(this);
+				return type.formatTitleDate(this);
 			case NoteType.weekly:
-				final t = toTuple3(type);
-				return Config.titleFormatWeekly
-					.replaceAll('%w', t.item3.toString())
-					.replaceAll('%y', t.item2.toString());
 			case NoteType.quarterly:
-				final t = toTuple3(type);
-				return Config.titleFormatQuarterly
-					.replaceAll('%q', t.item3.toString())
-					.replaceAll('%y', t.item2.toString());
 			case NoteType.yearly:
-				final t = toTuple3(type);
-				return Config.titleFormatYearly
-					.replaceAll('%y', t.item2.toString());
+				final t3 = toTuple3(type);
+				return type.formatTitleWithValues(t3.item2, t3.item3);
 		  	default:
 		  		throw ArgumentError('DateTime.toNoteplanTitle: can\'t convert ${type} to filename.');
 		}
