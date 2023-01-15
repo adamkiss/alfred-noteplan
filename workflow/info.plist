@@ -520,9 +520,83 @@ $BIN create "$title"</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string># Noteplan FTS &amp; Note creation for Alfred
+	<string># Noteplan Full-text Search for Alfred 2
 
-- write a readme.</string>
+Search, open, and create Noteplan notes with Alfred.
+
+---
+
+## Options when importing
+
+There's help under each field, but here are some additional notes / help
+
+### Noteplan root (required)
+- Go to Noteplan &gt; Preferences &gt; Sync &gt; Advanced &gt; "Open local database folder", which opens the Finder
+- Ensure you have no item in this folder selected
+- Hit "Cmd"+"Option"+C
+- Paste this path as the Noteplan root
+
+### Workflow triggers
+- **Main workflow** is used to invoke full text search (`n &lt;query&gt;`) and exact date parser (`n. &lt;query&gt;`)
+- **Create new note** invokes new note creation (`nn &lt;title&gt;`)
+
+### New note template
+The all caps `TITLE` is replaced with the title you've chosen, helping Noteplan to name the file. If you've got more complicated template, keep this one simple, and upon creation of a new note use the Noteplan's templates and "Import a template" feature.
+
+### Ignore files
+- this applies only to "Note" notes, not the calendar ones
+- each matcher should go to a separate line
+- files are matched from the beginning, so `archive` will match every note in a folder archive, while `archive/ignored` will match only those in subfolder of archive called ignored.
+- if you have two folders "archive/ignored" and "archived/ignored-not-really", "archive/ignored" will match both. Use "archive/ignored/" with a trailing slash to ensure only the files you want ignored are ignored.
+
+
+---
+
+
+## Usage
+- `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
+- `n. [date phrase]` - Very simple exact/relative date parser
+- `nn [Title of the note]` - Creates a new note, in the folder of your choice
+- `n !r` - Refresh note database
+- `n !rf` - Force refresh every note in the database
+- `n !!` - Show debug information
+
+The commands `n` and `nn` are configurable, the command `n. ` is the configured command `n` + `.` (selected because there's a macOS settings that translates double space to full stop and space, which (I think) `on` by default)
+
+### Date parser
+- `t … today` - today's note
+- `y … yesterday` - yesterday's note
+- `tom … tomorrow` - tomorrow's note
+- `[20]?220401` - exact date in Ymd format, where the initial 20 is optional
+- `0401` - exact day, current year (month first)
+- `4/1` - exact day, current year (month first, leading zero optional)
+- `1.4` - exact day, current year (day first, leading zero optional)
+- `1 4` - exact day, current year (leading zero optional, d/m order configurable)
+- `[-+]? [number] [dw]` - relative date, number of days or weeks back and forward. spaces are optional
+- `[wmq]` - this week's (month's, quarter's) note
+- `[wmq] [number]` -  weekly (monthly, quarterly) note of w/m/q X
+- `[wmq] -|+ [number]` - relative week's (month's, quarter's) note (spaces optional)
+- `yr|year` - this year's note
+- `y|yr|year [XY]` - note of the year 20XY
+- `y|yr|year -|+ [number]` - relative year (spaces optional)
+
+## Installation
+1. Download and import the workflow
+2. Configure it to your taste
+    - the most important and required part is the **Noteplan root folder**
+    - get it through `Noteplan Options` &gt; `Sync` &gt; `'Advanced' for your active Sync option` &gt; `Open local database`
+    - this will open a Finder window
+    - in this window, with **nothing selected**, press &lt;kbd&gt;Command&lt;/kbd&gt;+&lt;kbd&gt;Option&lt;/kbd&gt;+&lt;kbd&gt;C&lt;/kbd&gt; to copy the pathname 
+    - paste that into the workflow import window
+3. Run `n ` - macos will warn you that this app is unsigned and you can move it to bin or cancel
+4. Open **System Settings** &gt; **Privacy &amp; Security**, scroll down, and click "Allow Anyway"
+5. Run `n ` - macos will warn you that this app was downloaded from the internet nad might not be safe. Click 'open'
+6. Profit!
+7. You can now do a search, date query or add a new note
+
+## License
+
+Copyright (c) 2023 Adam Kiss, MIT License</string>
 	<key>uidata</key>
 	<dict>
 		<key>053FDDB4-A265-4274-8F91-1BE7C16BC397</key>
