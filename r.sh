@@ -47,8 +47,10 @@ build:icons () { #: Build the icns file from iconsets
 
 build:script () { #: Copy the script part from the workflow.sh into info.plist
     cp workflow/info.plist workflow/info.plist.bak
-    SCRIPT=`cat test/workflow.sh | sed -E 's/(["'\''])/\\\\\1/g'`
-    /usr/libexec/PlistBuddy -c "Set :objects:2:config:script $SCRIPT" workflow/info.plist
+    SCRIPT=`cat test/workflow-search.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    /usr/libexec/PlistBuddy -c "Set :objects:0:config:script $SCRIPT" workflow/info.plist
+    SCRIPT=`cat test/workflow-date.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    /usr/libexec/PlistBuddy -c "Set :objects:3:config:script $SCRIPT" workflow/info.plist
 }
 
 build:workflow () { #: Zip the workflow folder into release/dist folder
@@ -87,6 +89,14 @@ dev:unlink () { #: remove the WIP version link from Alfred
 
 dev:dumplist () { #: dump the info.plist into plist.txt
     /usr/libexec/PlistBuddy -c 'print: ":name"' workflow/info.plist > plist.txt
+}
+
+dev:plisttest () { #: dumps the objects "prebuild" tries update with scripts in test/workflow-*.sh
+    # should return: 
+    # "Full-text search for Noteplan" in line 1
+    # "Opens exact Calendar note" in line 2
+    /usr/libexec/PlistBuddy -c "Print :objects:0:config:subtext" workflow/info.plist
+    /usr/libexec/PlistBuddy -c "Print :objects:3:config:subtext" workflow/info.plist
 }
 
 test () { #: run tests

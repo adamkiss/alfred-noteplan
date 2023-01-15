@@ -15,6 +15,7 @@ class Config {
 		'\n';
 	static List<String> ignore = [];
 	static int week_starts_on = DateTime.monday;
+	static bool parse_exact_date_with_space_with_day_first = false;
 
 	static String path_cache_db = join(Config.noteplan_root, 'Caches', 'sync-cache.db');
 
@@ -39,6 +40,7 @@ class Config {
 			.trim().split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty)
 			.toList(growable: false);
 		week_starts_on = int.tryParse(Platform.environment['user_week_starts_on'] ?? '1', radix: 10) ?? week_starts_on;
+		parse_exact_date_with_space_with_day_first = int.tryParse(Platform.environment['user_exact_day_first'] ?? '0', radix: 10) == 1;
 
 		initializeDateFormatting(locale, null);
 	}

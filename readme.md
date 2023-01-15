@@ -10,11 +10,13 @@ Search, open, and create Noteplan notes with Alfred.
 
 ## Usage
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
-- `n >[date phrase]`, `n :[date phrase]` - Very simple exact date parser
+- `n. [date phrase]` - Very simple exact/relative date parser
 - `nn [Title of the note]` - Creates a new note, in the folder of your choice
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
 - `n !!` - Show debug information
+
+The commands `n` and `nn` are configurable, the command `n. ` is the configured command `n` + `.` (selected because there's a macOS settings that translates double space to full stop and space, which (I think) `on` by default)
 
 ### Date parser
 - `t … today` - today's note
@@ -24,11 +26,14 @@ Search, open, and create Noteplan notes with Alfred.
 - `0401` - exact day, current year (month first)
 - `4/1` - exact day, current year (month first, leading zero optional)
 - `1.4` - exact day, current year (day first, leading zero optional)
+- `1 4` - exact day, current year (leading zero optional, d/m order configurable)
 - `[-+]? [number] [dw]` - relative date, number of days or weeks back and forward. spaces are optional
 - `[wmq]` - this week's (month's, quarter's) note
-- `[wmq] [-+]? [number]` - relative week's (month's, quarter's) note (spaces optional)
+- `[wmq] [number]` -  weekly (monthly, quarterly) note of w/m/q X
+- `[wmq] -|+ [number]` - relative week's (month's, quarter's) note (spaces optional)
 - `yr|year` - this year's note
-- `yr|year [-+]? [number]` - relative year (spaces optional)
+- `y|yr|year [XY]` - note of the year 20XY
+- `y|yr|year -|+ [number]` - relative year (spaces optional)
 
 ## Installation
 1. Download and import the workflow

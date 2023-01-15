@@ -44,6 +44,14 @@ extension DateUtils on DateTime {
 	int get weekOfYear => _calculateWeekOfYear();
 	int adjustedWeekOfYear(int weekStartsOn) => _calculateWeekOfYear(weekStartsOn);
 
+	static DateTime firstWeekStart(int year, [int weekStartsOn = DateTime.monday]) {
+		DateTime d = DateTime(year, 1, 1);
+		while (d.adjustedWeekOfYear(weekStartsOn) == 1 || d.adjustedWeekOfYear(weekStartsOn) > 50) {
+			d = d.add(Duration(days: 1));
+		} // repeat until adjusted week is a first day of week 2
+		return d.subtract(Duration(days: 7)); // return the "previous week" first day
+	}
+
 	/// Convert [DateTime] to [Tuple3<type, year, ??>] based on [NoteType]
 	Tuple3<NoteType, int, int> toTuple3(NoteType type, {int weekStartsWith = DateTime.monday}) {
 		if (! NoteType.convertableToTuple3.contains(type)) {

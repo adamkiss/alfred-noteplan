@@ -66,18 +66,6 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>sourceoutputuid</key>
-				<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
 				<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -102,7 +90,32 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
+				<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>CCC4816B-5B6A-4259-A5D4-019CE258611D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>98B6F5C9-30A7-49D0-813C-ECF85C399CCA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>748CC6DD-431D-47CA-B2A7-F54387FE69FC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -122,33 +135,6 @@
 	<string>Noteplan Full-text Search</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.hidealfred</string>
-			<key>uid</key>
-			<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -248,6 +234,25 @@ esac</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>8CD51E99-89FA-439A-A640-C4174B1D5C01</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>conditions</key>
 				<array>
 					<dict>
@@ -308,6 +313,98 @@ esac</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:workflow_trigger_open}.</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Matching {query}</string>
+				<key>script</key>
+				<string>BIN="./noteplan_fts-$(uname -m)"
+
+function info {
+cat &lt;&lt;- JSON
+{"items": [
+    {
+        "title": "!! - Debug",
+        "subtitle": "Show &amp; copy debugging information (versions, architecture)",
+        "valid": false,
+        "autocomplete": "!!"
+    },
+    {
+        "title": "!r - Refresh",
+        "subtitle": "Refresh the database (since the last update)",
+        "valid": false,
+        "autocomplete": "!r"
+    },
+    {
+        "title": "!rf - Refresh (Force)",
+        "subtitle": "Force full refresh of the database",
+        "valid": false,
+        "autocomplete": "!rf"
+    }
+]}
+JSON
+}
+
+case "$1" in
+    "!")
+        info
+        ;;
+    "!!")
+        $BIN debug
+        ;;
+    "!r")
+        $BIN refresh
+        ;;
+    "!rf")
+        $BIN refresh force
+        ;;
+    *)
+        $BIN date "$1"
+        ;;
+esac</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Opens exact Calendar note</string>
+				<key>title</key>
+				<string>Noteplan FTS: Exact note</string>
+				<key>type</key>
+				<integer>5</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>98B6F5C9-30A7-49D0-813C-ECF85C399CCA</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>skipqueryencode</key>
@@ -323,6 +420,14 @@ esac</string>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
 			<string>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -433,7 +538,7 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>190</real>
+			<real>60</real>
 		</dict>
 		<key>32184673-6E45-4E1E-A9A3-5E277249F059</key>
 		<dict>
@@ -442,7 +547,7 @@ $BIN create "$title"</string>
 			<key>note</key>
 			<string>GET FOLDERS</string>
 			<key>xpos</key>
-			<real>485</real>
+			<real>510</real>
 			<key>ypos</key>
 			<real>360</real>
 		</dict>
@@ -464,7 +569,7 @@ $BIN create "$title"</string>
 			<key>note</key>
 			<string>QUERY → TITLE</string>
 			<key>xpos</key>
-			<real>395</real>
+			<real>425</real>
 			<key>ypos</key>
 			<real>390</real>
 		</dict>
@@ -472,19 +577,21 @@ $BIN create "$title"</string>
 		<dict>
 			<key>colorindex</key>
 			<integer>9</integer>
+			<key>note</key>
+			<string>CLOSE</string>
 			<key>xpos</key>
-			<real>395</real>
+			<real>425</real>
 			<key>ypos</key>
-			<real>85</real>
+			<real>290</real>
 		</dict>
 		<key>748CC6DD-431D-47CA-B2A7-F54387FE69FC</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<real>210</real>
+			<real>225</real>
 			<key>ypos</key>
-			<real>195</real>
+			<real>185</real>
 		</dict>
 		<key>8CD51E99-89FA-439A-A640-C4174B1D5C01</key>
 		<dict>
@@ -493,7 +600,18 @@ $BIN create "$title"</string>
 			<key>xpos</key>
 			<real>685</real>
 			<key>ypos</key>
-			<real>160</real>
+			<real>150</real>
+		</dict>
+		<key>98B6F5C9-30A7-49D0-813C-ECF85C399CCA</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>MATCH DATE</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>195</real>
 		</dict>
 		<key>E7234EA6-7AE9-4354-9CEC-95A19238A3FC</key>
 		<dict>
@@ -605,6 +723,71 @@ $BIN create "$title"</string>
 			<string>popupbutton</string>
 			<key>variable</key>
 			<string>user_locale</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>1</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Monday</string>
+						<string>1</string>
+					</array>
+					<array>
+						<string>Tuesday</string>
+						<string>2</string>
+					</array>
+					<array>
+						<string>Wednesday</string>
+						<string>3</string>
+					</array>
+					<array>
+						<string>Thursday</string>
+						<string>4</string>
+					</array>
+					<array>
+						<string>Friday</string>
+						<string>5</string>
+					</array>
+					<array>
+						<string>Saturday</string>
+						<string>6</string>
+					</array>
+					<array>
+						<string>Sunday</string>
+						<string>7</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>When does your Noteplan week starts on?</string>
+			<key>label</key>
+			<string>Week starts on</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>user_week_starts_on</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string>Day is first</string>
+			</dict>
+			<key>description</key>
+			<string>When searching for exact day with space, like so: `n. 1 4`, is the "1" a day or a month?</string>
+			<key>label</key>
+			<string>Exact date with space: days first</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>user_exact_day_first</string>
 		</dict>
 		<dict>
 			<key>config</key>
