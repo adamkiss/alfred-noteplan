@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:alfred_noteplan/config.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +24,8 @@ const str_fts_result_arg_cmd_subtitle = 'Open the note in a new Noteplan window'
 const str_create_result_subtitle = 'Create a new note ✱ You\'ll be asked for location in the next step';
 str_create_folder_result_subtitle(String f, String t) => 'Create note "${t}" in folder "${f}"';
 
-extension StringCasingExtension on String { // source: https://stackoverflow.com/a/29629114/240239
+extension StringExtensions on String {
+	// source: https://stackoverflow.com/a/29629114/240239
 	String toCapitalized() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
 	String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 
@@ -30,25 +33,31 @@ extension StringCasingExtension on String { // source: https://stackoverflow.com
 		.map((part) => DateFormat(part, Config.locale).format(d))
 		.map((part) => part.toCapitalized())
 		.join(' ');
-}
 
-extension StringCleaningExtension on String {
-	String cleanForFts() {
-		// ignore: unnecessary_this
-		return this
-			// remove markdown headers
-			.replaceAll(RegExp(r'^#*\s*?', multiLine: true), '')
-			// remove markdown hr
-			.replaceAll(RegExp(r'^\s*?\-{3,}\s*?$', multiLine: true), '')
-			// remove bullets & quotes
-			.replaceAll(RegExp(r'^\s*?[\*>-]\s*?', multiLine: true), '')
-			// remove tasks
-			.replaceAll(RegExp(r'^\s*?[*-]?\s*?\[.?\]\s*?', multiLine: true), '')
-			// remove markdown styling
-			.replaceAll(RegExp(r'[*_]'), '')
-			// collapse whitespace
-			.replaceAll(RegExp(r'\s+/'), ' ')
-			.trim() // trim
-		;
+	String unindent() {
+		String? first_line_whitespace = RegExp(r'^(\s*)').firstMatch(this)?.group(0);
+		print(first_line_whitespace);
+		if (first_line_whitespace == null || first_line_whitespace.isEmpty) {
+			return this;
+		}
+
+		return replaceAll(RegExp('^${first_line_whitespace}', multiLine: true), '');
 	}
+
+	// ignore: unnecessary_this
+	String cleanForFts() => this
+		// remove markdown headers
+		.replaceAll(RegExp(r'^#+\s*?', multiLine: true), '')
+		// remove markdown hr
+		.replaceAll(RegExp(r'^\s*?\-{3,}\s*$', multiLine: true), '')
+		// remove bullets & quotes
+		.replaceAll(RegExp(r'^\s*?[\*>-]\s*', multiLine: true), '')
+		// remove tasks
+		.replaceAll(RegExp(r'^\s*?[*-]?\s*?\[.?\]\s*?', multiLine: true), '')
+		// remove markdown styling
+		.replaceAll(RegExp(r'[*_]'), '')
+		// collapse whitespace
+		.replaceAll(RegExp(r'\s+/'), ' ')
+		.trim() // trim
+	;
 }

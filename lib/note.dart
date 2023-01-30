@@ -60,7 +60,7 @@ class Note {
 		title = type.formatBasename(bname);
 	}
 
-	Tuple2 _parse_frontmatter(String raw) {
+	Tuple2<String, String> _parse_frontmatter(String raw) {
 		final fm = RegExp(
 			r'^---.*?title\:\s*?(.*?)\n.*?---(.*)',
 			caseSensitive: false,
@@ -74,7 +74,7 @@ class Note {
 		);
 	}
 
-	Tuple2 _parse_markdown(String raw, String bname) {
+	Tuple2<String, String> _parse_markdown(String raw, String bname) {
 		final h1 = RegExp(r'^#\s*(.*)(?:\n|\s---)');
 		late String title;
 		late String content;
