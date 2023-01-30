@@ -31,3 +31,24 @@ extension StringCasingExtension on String { // source: https://stackoverflow.com
 		.map((part) => part.toCapitalized())
 		.join(' ');
 }
+
+extension StringCleaningExtension on String {
+	String cleanForFts() {
+		// ignore: unnecessary_this
+		return this
+			// remove markdown headers
+			.replaceAll(RegExp(r'^#*\s*?', multiLine: true), '')
+			// remove markdown hr
+			.replaceAll(RegExp(r'^\s*?\-{3,}\s*?$', multiLine: true), '')
+			// remove bullets & quotes
+			.replaceAll(RegExp(r'^\s*?[\*>-]\s*?', multiLine: true), '')
+			// remove tasks
+			.replaceAll(RegExp(r'^\s*?[*-]?\s*?\[.?\]\s*?', multiLine: true), '')
+			// remove markdown styling
+			.replaceAll(RegExp(r'[*_]'), '')
+			// collapse whitespace
+			.replaceAll(RegExp(r'\s+/'), ' ')
+			.trim() // trim
+		;
+	}
+}

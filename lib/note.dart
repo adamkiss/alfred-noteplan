@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/note_type.dart';
-import 'package:intl/intl.dart';
+import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';
@@ -35,12 +34,12 @@ class Note {
 				: _parse_markdown(content_raw, bname);
 
 			title = parsed_content.item1;
-			content = _fts_clean(parsed_content.item2);
+			content = parsed_content.item2.cleanForFts();
 			return;
 		}
 
 		/** CALENDAR */
-		content = _fts_clean(content_raw);
+		content = content_raw.cleanForFts();
 
 		if (bname.contains('W')) { // Week
 			type = NoteType.weekly;
@@ -59,7 +58,6 @@ class Note {
 		}
 
 		title = type.formatBasename(bname);
-
 	}
 
 	Tuple2 _parse_frontmatter(String raw) {
@@ -91,23 +89,5 @@ class Note {
 		}
 
 		return Tuple2(title, content);
-	}
-
-	String _fts_clean(String body) {
-		return body
-			// remove markdown headers
-			.replaceAll(RegExp(r'^#*\s*?', multiLine: true), '')
-			// remove markdown hr
-			.replaceAll(RegExp(r'^\s*?\-{3,}\s*?$', multiLine: true), '')
-			// remove bullets & quotes
-			.replaceAll(RegExp(r'^\s*?[\*>-]\s*?', multiLine: true), '')
-			// remove tasks
-			.replaceAll(RegExp(r'^\s*?[*-]?\s*?\[.?\]\s*?', multiLine: true), '')
-			// remove markdown styling
-			.replaceAll(RegExp(r'[*_]'), '')
-			// collapse whitespace
-			.replaceAll(RegExp(r'\s+/'), ' ')
-			.trim() // trim
-		;
 	}
 }
