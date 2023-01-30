@@ -32,8 +32,8 @@ The commands `n` and `nn` are configurable, the command `n. ` is the configured 
 - `[wmq] [number]` -  weekly (monthly, quarterly) note of w/m/q X
 - `[wmq] -|+ [number]` - relative week's (month's, quarter's) note (spaces optional)
 - `yr|year` - this year's note
-- `y|yr|year [XY]` - note of the year 20XY
-- `y|yr|year -|+ [number]` - relative year (spaces optional)
+- `yr|year [XY]` - note of the year 20XY
+- `yr|year -|+ [number]` - relative year (spaces optional)
 
 ## Installation
 1. Download and import the workflow
