@@ -53,7 +53,7 @@ class DateParser {
 
 		// word yesterday
 		DateParserMatcher(
-			RegExp(r'^yes(?:t(?:e(?:r(?:d(?:a(?:y)?)?)?)?)?)?$'),
+			RegExp(r'^y(?:e(?:s(?:t(?:e(?:r(?:d(?:a(?:y)?)?)?)?)?)?)?)?$'),
 			(RegExpMatch m) => DateTime.now().subtract(Duration(days: 1)),
 			NoteType.daily
 		),

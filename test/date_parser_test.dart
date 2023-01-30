@@ -33,6 +33,8 @@ void main() {
 			expect(dpfn('tomorrow'), _now.add(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
 		});
 		test('yesterday', () {
+			expect(dpfn('y'),         _now.subtract(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
+			expect(dpfn('ye'),         _now.subtract(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
 			expect(dpfn('yes'),         _now.subtract(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
 			expect(dpfn('yest'),        _now.subtract(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
 			expect(dpfn('yester'),      _now.subtract(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
