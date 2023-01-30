@@ -1,4 +1,5 @@
-BIN="./noteplan_fts-$(uname -m)"
+# shellcheck disable=SC2148
+BIN="./noteplan-$(uname -m)"
 
 function info {
 cat <<- JSON

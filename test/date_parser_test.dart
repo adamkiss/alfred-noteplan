@@ -1,8 +1,8 @@
-import 'package:alfred_noteplan_fts_refresh/config.dart';
-import 'package:alfred_noteplan_fts_refresh/date_parser.dart';
-import 'package:alfred_noteplan_fts_refresh/date_utils.dart';
-import 'package:alfred_noteplan_fts_refresh/note_type.dart';
-import 'package:alfred_noteplan_fts_refresh/int_padding.dart';
+import 'package:alfred_noteplan/config.dart';
+import 'package:alfred_noteplan/date_parser.dart';
+import 'package:alfred_noteplan/date_utils.dart';
+import 'package:alfred_noteplan/note_type.dart';
+import 'package:alfred_noteplan/int_padding.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
 

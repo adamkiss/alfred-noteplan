@@ -1,5 +1,5 @@
-import 'package:alfred_noteplan_fts_refresh/note_type.dart';
-import 'package:alfred_noteplan_fts_refresh/int_padding.dart';
+import 'package:alfred_noteplan/note_type.dart';
+import 'package:alfred_noteplan/int_padding.dart';
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 

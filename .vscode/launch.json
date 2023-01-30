@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "alfred-noteplan-fts-dart",
+            "name": "alfred-noteplan",
             "request": "launch",
             "type": "dart",
-            "program": "bin/noteplan_fts.dart",
+            "program": "bin/noteplan.dart",
             "args": ["search", "adam kiss"],
             "env": {
                 "user_np_root": "/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp"

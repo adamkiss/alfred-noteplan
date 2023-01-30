@@ -1,5 +1,5 @@
-import 'package:alfred_noteplan_fts_refresh/config.dart';
-import 'package:alfred_noteplan_fts_refresh/strings.dart';
+import 'package:alfred_noteplan/config.dart';
+import 'package:alfred_noteplan/strings.dart';
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 

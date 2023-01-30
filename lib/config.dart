@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:alfred_noteplan_fts_refresh/alfred.dart';
-import 'package:alfred_noteplan_fts_refresh/strings.dart';
+import 'package:alfred_noteplan/alfred.dart';
+import 'package:alfred_noteplan/strings.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -54,7 +54,7 @@ class Config {
 		print(alf_to_results([
 			alf_item(
 				err,
-				'There has been an error in the noteplan_fts binary',
+				'There has been an error in the noteplan binary',
 				valid: false,
 				icon: {'path': 'icons/icon-error.icns'}
 			)

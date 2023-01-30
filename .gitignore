@@ -10,7 +10,7 @@ info.plist.bak
 /plist.txt
 
 # Workflow my & build data
-workflow/noteplan_fts-*
+workflow/noteplan-*
 workflow/prefs.plist
 workflow/database.sqlite*
 

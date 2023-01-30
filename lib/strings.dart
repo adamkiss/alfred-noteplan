@@ -1,10 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:alfred_noteplan_fts_refresh/config.dart';
+import 'package:alfred_noteplan/config.dart';
 import 'package:intl/intl.dart';
 
 const str_usage = ''
-	'Usage: noteplan_fts-[arch] [command] [arguments] \n'
+	'Usage: noteplan-[arch] [command] [arguments] \n'
 	'Commands: \n'
 	' - refresh <force?> - force is optional \n'
 	' - debug \n'

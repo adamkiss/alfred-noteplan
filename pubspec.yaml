@@ -1,5 +1,5 @@
-name: alfred_noteplan_fts_refresh
-description: Format & Refresh SQLite database for alfred-noteplan-fts workflow
+name: alfred_noteplan
+description: Format & Refresh SQLite database for alfred-noteplan workflow
 version: 1.0.0
 
 environment:

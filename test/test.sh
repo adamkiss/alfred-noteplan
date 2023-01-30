@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# shellcheck shell=bash
 
 # rebuild
 ./r.sh build:dart
@@ -30,10 +31,10 @@ echo
 
 echo "CREATE NOTE - folders"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
-./workflow/noteplan_fts-arm64 create 'Ahoy there captain!' | jq -r '.items | map(.title + ": "+ .arg)'
+./workflow/noteplan-arm64 create 'Ahoy there captain!' | jq -r '.items | map(.title + ": "+ .arg)'
 echo
 
 echo "SEARCH - adam kiss (outputs: 19 [18 + create])"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
-./workflow/noteplan_fts-arm64 search 'adam kiss' | jq '.items | map(.title + " - " + .subtitle)'
+./workflow/noteplan-arm64 search 'adam kiss' | jq '.items | map(.title + " - " + .subtitle)'
 echo

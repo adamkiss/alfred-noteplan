@@ -1,6 +1,6 @@
-# Noteplan Full-text Search for Alfred 2
+# Alfred Noteplan v2
 
-⚠️ This version is a release candidate for version 2, written in Dart. For "released" v1 writte in PHP, see [branch v1-archive](https://github.com/adamkiss/alfred-noteplan-fts/tree/v1-archive). The release candidate already has full feature parity with the first version, plus improved speed, support for new calendar notes, and no need for periodical run of index refresh. v1 is at this point available only for reference.
+⚠️ This version is a release candidate for version 2, written in Dart. For "released" v1 writte in PHP, see [branch v1-archive](https://github.com/adamkiss/alfred-noteplan/tree/v1-archive). The release candidate already has full feature parity with the first version, plus improved speed, support for new calendar notes, and no need for periodical run of index refresh. v1 is at this point available only for reference.
 
 ![OG Social image](social.jpg)
 

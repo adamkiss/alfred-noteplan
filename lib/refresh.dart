@@ -1,5 +1,5 @@
-import 'package:alfred_noteplan_fts_refresh/dbs.dart';
-import 'package:alfred_noteplan_fts_refresh/note.dart';
+import 'package:alfred_noteplan/dbs.dart';
+import 'package:alfred_noteplan/note.dart';
 
 int refresh(Dbs db, {bool force = false}) {
 	// Delete missing notes

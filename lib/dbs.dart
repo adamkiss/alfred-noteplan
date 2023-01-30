@@ -1,7 +1,7 @@
-import 'package:alfred_noteplan_fts_refresh/config.dart';
-import 'package:alfred_noteplan_fts_refresh/folder.dart';
-import 'package:alfred_noteplan_fts_refresh/note.dart';
-import 'package:alfred_noteplan_fts_refresh/note_match.dart';
+import 'package:alfred_noteplan/config.dart';
+import 'package:alfred_noteplan/folder.dart';
+import 'package:alfred_noteplan/note.dart';
+import 'package:alfred_noteplan/note_match.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 

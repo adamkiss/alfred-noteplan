@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.adamkiss.alfred-noteplan-fts-dart</string>
+	<string>com.adamkiss.alfred-noteplan-dart</string>
 	<key>category</key>
 	<string>Apps Control</string>
 	<key>connections</key>
@@ -163,7 +163,7 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>BIN="./noteplan_fts-$(uname -m)"
+				<string>BIN="./noteplan-$(uname -m)"
 
 function info {
 cat &lt;&lt;- JSON
@@ -334,7 +334,7 @@ esac</string>
 				<key>runningsubtext</key>
 				<string>Matching {query}</string>
 				<key>script</key>
-				<string>BIN="./noteplan_fts-$(uname -m)"
+				<string>BIN="./noteplan-$(uname -m)"
 
 function info {
 cat &lt;&lt;- JSON
@@ -455,7 +455,7 @@ esac</string>
 				<key>runningsubtext</key>
 				<string>Listing folders…</string>
 				<key>script</key>
-				<string>BIN="./noteplan_fts-$(uname -m)"
+				<string>BIN="./noteplan-$(uname -m)"
 $BIN create "$title"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>

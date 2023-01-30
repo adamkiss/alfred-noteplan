@@ -9,7 +9,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:alfred_noteplan_fts_refresh/strings.dart';
+import 'package:alfred_noteplan/strings.dart';
 
 String alf_to_results (List<Map> results) {
 	return jsonEncode({'items': results});

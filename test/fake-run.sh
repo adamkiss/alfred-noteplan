@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
-cd workflow # imitate CWD to workflow
+# shellcheck shell=bash
 
-source ../test/workflow.sh
+cd workflow || exit 1 # imitate CWD to workflow
+
+# shellcheck disable=SC1091
+source ../test/workflow-search.sh
