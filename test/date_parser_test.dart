@@ -184,23 +184,24 @@ void main() {
 			expect(dpfn('week 24'), '${_now.year}-W${24.padLeft(2)}', reason: 'exact week: 24 + space');
 		});
 		test('month', () {
-			expect(dpfn('m'),          _now.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  1, _now.day);
-			expect(dpfn('m +'),        dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  1, _now.day);
-			expect(dpfn('m +1'),       dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  2, _now.day);
-			expect(dpfn('m + 2'),      dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  23, _now.day);
-			expect(dpfn('m+ 23'),      dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  -1, _now.day);
-			expect(dpfn('m-'),         dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  -1, _now.day);
-			expect(dpfn('m -1'),       dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  -2, _now.day);
-			expect(dpfn('m - 2'),      dt.toNoteplanDateString(NoteType.monthly));
-			dt = DateTime(_now.year, _now.month +  -23, _now.day);
-			expect(dpfn('m- 23'),      dt.toNoteplanDateString(NoteType.monthly));
+			// note: if day > 28, movement around february might overflow to march
+			expect(dpfn('m'),          _now.toNoteplanDateString(NoteType.monthly), reason: 'm');
+			dt = DateTime(_now.year, _now.month +  1, 20);
+			expect(dpfn('m +'),        dt.toNoteplanDateString(NoteType.monthly), reason: 'm +');
+			dt = DateTime(_now.year, _now.month +  1, 20);
+			expect(dpfn('m +1'),       dt.toNoteplanDateString(NoteType.monthly), reason: 'm +1');
+			dt = DateTime(_now.year, _now.month +  2, 20);
+			expect(dpfn('m + 2'),      dt.toNoteplanDateString(NoteType.monthly), reason: 'm + 2');
+			dt = DateTime(_now.year, _now.month +  23, 20);
+			expect(dpfn('m+ 23'),      dt.toNoteplanDateString(NoteType.monthly), reason: 'm+ 23');
+			dt = DateTime(_now.year, _now.month +  -1, 20);
+			expect(dpfn('m-'),         dt.toNoteplanDateString(NoteType.monthly), reason: 'm-');
+			dt = DateTime(_now.year, _now.month +  -1, 20);
+			expect(dpfn('m -1'),       dt.toNoteplanDateString(NoteType.monthly), reason: 'm -1');
+			dt = DateTime(_now.year, _now.month +  -2, 20);
+			expect(dpfn('m - 2'),      dt.toNoteplanDateString(NoteType.monthly), reason: 'm - 2');
+			dt = DateTime(_now.year, _now.month +  -23, 20);
+			expect(dpfn('m- 23'),      dt.toNoteplanDateString(NoteType.monthly), reason: 'm- 23');
 		});
 		test('month - exact', () {
 			expect(dpfn('m2'),  '${_now.year}-${2.padLeft(2)}',  reason: 'exact month: 2');
