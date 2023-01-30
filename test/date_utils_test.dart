@@ -1,7 +1,6 @@
 import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/date_utils.dart';
 import 'package:alfred_noteplan/note_type.dart';
-import 'package:intl/intl.dart';
 import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
 

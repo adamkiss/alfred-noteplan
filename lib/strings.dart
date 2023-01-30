@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'dart:developer';
-
 import 'package:alfred_noteplan/config.dart';
 import 'package:intl/intl.dart';
 
