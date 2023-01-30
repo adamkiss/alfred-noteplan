@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:alfred_noteplan/note_type.dart';
 import 'package:alfred_noteplan/strings.dart';
@@ -17,12 +18,12 @@ class Note {
 	late final String content;
 	Map<String, dynamic> data = {};
 
-	Note(Row record):
-		filename = record['filename'],
-		content_raw = utf8.decode(record['content']).trim(),
-		modified = record['modified']
-	{
-		final note_type = record['note_type'];
+	Note(
+		this.filename,
+		this.content_raw,
+		this.modified,
+		final int note_type
+	){
 		final bname = basenameWithoutExtension(filename);
 
 		/** NOTES */
@@ -58,6 +59,16 @@ class Note {
 		}
 
 		title = type.formatBasename(bname);
+	}
+
+	/// Prepare [Row] as arguments for constructor and return new [Note]
+	static Note fromRow(Row record) {
+		return Note(
+			record['filename'],
+			utf8.decode(record['content']).trim(),
+			record['modified'],
+			record['note_type']
+		);
 	}
 
 	Tuple2<String, String> _parse_frontmatter(String raw) {

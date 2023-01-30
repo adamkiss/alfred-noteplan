@@ -7,7 +7,7 @@ int refresh(Dbs db, {bool force = false}) {
 
 	// Get changed notes in Cache
 	List<Note> new_notes = [];
-	for (var result in db.cache_get_updated(since: force ? 0 : db.get_last_update())) { new_notes.add(Note(result)); }
+	for (var result in db.cache_get_updated(since: force ? 0 : db.get_last_update())) { new_notes.add(Note.fromRow(result)); }
 
 	// Delete/reinsert the notes
 	if (new_notes.isNotEmpty) {
