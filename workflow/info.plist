@@ -128,11 +128,11 @@
 	<key>createdby</key>
 	<string>Adam Kiss</string>
 	<key>description</key>
-	<string>Full text search for Noteplan, shortcuts for note creation, and other usefule Noteplan stuff</string>
+	<string>Full text search for Noteplan, shortcuts for note creation, and other useful Noteplan stuff</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Noteplan Full-text Search</string>
+	<string>Noteplan</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -163,7 +163,8 @@
 				<key>runningsubtext</key>
 				<string>Looking for {query}</string>
 				<key>script</key>
-				<string>BIN="./noteplan-$(uname -m)"
+				<string># shellcheck disable=SC2148
+BIN="./noteplan-$(uname -m)"
 
 function info {
 cat &lt;&lt;- JSON
@@ -334,7 +335,8 @@ esac</string>
 				<key>runningsubtext</key>
 				<string>Matching {query}</string>
 				<key>script</key>
-				<string>BIN="./noteplan-$(uname -m)"
+				<string># shellcheck disable=SC2148
+BIN="./noteplan-$(uname -m)"
 
 function info {
 cat &lt;&lt;- JSON
@@ -520,9 +522,9 @@ $BIN create "$title"</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string># Noteplan Full-text Search for Alfred 2
+	<string># Alfred Noteplan v2
 
-Search, open, and create Noteplan notes with Alfred.
+Search, open, and create Noteplan notes with Alfred, and much more.
 
 ---
 
@@ -619,7 +621,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>xpos</key>
 			<real>510</real>
 			<key>ypos</key>
-			<real>360</real>
+			<real>525</real>
 		</dict>
 		<key>583FB278-5756-4AC2-A2BB-EA55CED6B10F</key>
 		<dict>
@@ -630,7 +632,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>360</real>
+			<real>525</real>
 		</dict>
 		<key>5D0CA85B-D6F6-4677-9559-11AFA08F01BC</key>
 		<dict>
@@ -641,7 +643,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>xpos</key>
 			<real>425</real>
 			<key>ypos</key>
-			<real>390</real>
+			<real>555</real>
 		</dict>
 		<key>68DA41FC-6D2C-4123-A82E-D20D0A3BBA66</key>
 		<dict>
@@ -905,8 +907,8 @@ title: TITLE
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-rc10</string>
+	<string>2.0.0-rc11</string>
 	<key>webaddress</key>
-	<string>https://adamkiss.com</string>
+	<string>https://github.com/adamkiss/alfred-noteplan</string>
 </dict>
 </plist>
