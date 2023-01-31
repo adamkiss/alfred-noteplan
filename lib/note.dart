@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:alfred_noteplan/bookmark.dart';
 import 'package:alfred_noteplan/note_type.dart';
@@ -130,7 +129,7 @@ class Note {
 					return null;
 				}
 
-				return Bookmark(filename, i.namedGroup('title')!, i.namedGroup('url')!);
+				return Bookmark(this, i.namedGroup('title')!, i.namedGroup('url')!);
 			})
 			.where((e) => e != null)
 			.toList(growable: false)
@@ -149,7 +148,7 @@ class Note {
 
 		return matches
 			.map((RegExpMatch m) => Snippet(
-				filename,
+				this,
 				m.namedGroup('language')!.trim(),
 				m.namedGroup('title')!.trim(),
 				m.namedGroup('content')!.trim(),

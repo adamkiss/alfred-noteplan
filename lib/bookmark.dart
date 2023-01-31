@@ -1,11 +1,12 @@
+import 'package:alfred_noteplan/note.dart';
 class Bookmark {
-	final String filename;
+	final Note note;
 	final String url;
 	final String title;
 	String? description; // currently noop
 
 	Bookmark(
-		this.filename,
+		this.note,
 		this.title,
 		this.url,
 		{this.description}

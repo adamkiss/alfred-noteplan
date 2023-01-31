@@ -35,17 +35,19 @@ class Dbs {
 			);
 			CREATE VIRTUAL TABLE IF NOT EXISTS main.bookmarks USING fts5(
 				filename UNINDEXED,
+				note_type UNINDEXED,
 				title,
 				url,
 				description,
-				prefix='2 3 4'
+				prefix='3 4 5'
 			);
 			CREATE VIRTUAL TABLE IF NOT EXISTS main.snippets USING fts5(
 				filename UNINDEXED,
+				note_type UNINDEXED,
 				language,
 				title,
 				content,
-				prefix='2 3 4'
+				prefix='3 4 5'
 			);
 			CREATE TABLE IF NOT EXISTS main.counter (
 				filename TEXT PRIMARY KEY,
@@ -101,11 +103,12 @@ class Dbs {
 		}
 
 		_db.prepare('''
-			INSERT INTO main.bookmarks (filename, title, url)
-			VALUES ${bookmarks.map((_) => '(?, ?, ?)').join(',')}
+			INSERT INTO main.bookmarks (filename, note_type, title, url)
+			VALUES ${bookmarks.map((_) => '(?, ?, ?, ?)').join(',')}
 		''').execute(
 			bookmarks.map((e) => [
-				e.filename,
+				e.note.filename,
+				e.note.type.value,
 				e.title,
 				e.url
 			]).expand((e) => e).toList(growable: false)
@@ -119,11 +122,12 @@ class Dbs {
 		}
 
 		_db.prepare('''
-			INSERT INTO main.snippets (filename, language, title, content)
-			VALUES ${snippets.map((_) => '(?, ?, ?, ?)').join(',')}
+			INSERT INTO main.snippets (filename, note_type, language, title, content)
+			VALUES ${snippets.map((_) => '(?, ?, ?, ?, ?)').join(',')}
 		''').execute(
 			snippets.map((e) => [
-				e.filename,
+				e.note.filename,
+				e.note.type.value,
 				e.language,
 				e.title,
 				e.content,
