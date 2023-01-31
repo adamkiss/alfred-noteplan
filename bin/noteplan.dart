@@ -71,6 +71,18 @@ void main (List<String> arguments) {
 	final int last_update = db.get_last_update();
 	if (_last_update_more_than(last_update)) { refresh(db); }
 
+	// Bookmarks
+	if (command == 'bookmarks') {
+		print(alf_to_results(db.search_bookmarks(query)));
+		exit(0);
+	}
+
+	// Snippets
+	if (command == 'snippets') {
+		print(alf_to_results(db.search_snippets(query)));
+		exit(0);
+	}
+
 	// Date parsing
 	if (command == 'date') {
 		try {
@@ -100,7 +112,7 @@ void main (List<String> arguments) {
 	}
 
 	// Finally: Full-text search
-	List<NoteMatch> found = db.search(query);
+	List<NoteMatch> found = db.search_notes(query);
 	print(alf_to_results(
 		found
 			.map((e) => e.to_alfred_result())

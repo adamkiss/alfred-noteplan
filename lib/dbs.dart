@@ -4,6 +4,7 @@ import 'package:alfred_noteplan/folder.dart';
 import 'package:alfred_noteplan/note.dart';
 import 'package:alfred_noteplan/note_match.dart';
 import 'package:alfred_noteplan/snippet.dart';
+import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
@@ -148,10 +149,8 @@ class Dbs {
 		''').execute([timestamp ?? DateTime.now().millisecondsSinceEpoch]);
 	}
 
-	}
-
-	List<NoteMatch> search(String query) {
-		final String preparedQuery = _query_to_fts_query(query);
+	List<NoteMatch> search_notes(String query) {
+		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
 				filename,
@@ -167,6 +166,45 @@ class Dbs {
 		''');
 
 		return results.map((Row row) => NoteMatch(row)).toList(growable: false);
+	}
+
+	List<Map<String, dynamic>> search_bookmarks(String query) {
+		final String preparedQuery = query.toFtsQuery();
+		final ResultSet results = _db.select('''
+			SELECT
+				filename,
+				note_type,
+				title,
+				url
+			FROM
+				main.bookmarks('${preparedQuery}')
+			ORDER BY
+				rank
+			LIMIT
+				18
+		''');
+
+		return results.map((Row result) => Bookmark.to_alfred_result(result)).toList(growable: false);
+	}
+
+	List<Map<String, dynamic>> search_snippets(String query) {
+		final String preparedQuery = query.toFtsQuery();
+		final ResultSet results = _db.select('''
+			SELECT
+				filename,
+				note_type,
+				language,
+				title,
+				content
+			FROM
+				main.snippets('${preparedQuery}')
+			ORDER BY
+				rank
+			LIMIT
+				18
+		''');
+
+		return results.map((Row result) => Snippet.to_alfred_result(result)).toList(growable: false);
 	}
 
 	ResultSet cache_get_updated({int since = 0}) {
