@@ -34,7 +34,6 @@ extension StringExtensions on String {
 
 	String unindent() {
 		String? first_line_whitespace = RegExp(r'^(\s*)').firstMatch(this)?.group(0);
-		print(first_line_whitespace);
 		if (first_line_whitespace == null || first_line_whitespace.isEmpty) {
 			return this;
 		}
@@ -45,7 +44,7 @@ extension StringExtensions on String {
 	// ignore: unnecessary_this
 	String cleanForFts() => this
 		// remove markdown headers
-		.replaceAll(RegExp(r'^#+\s*?', multiLine: true), '')
+		.replaceAll(RegExp(r'^#+\s*', multiLine: true), '')
 		// remove markdown hr
 		.replaceAll(RegExp(r'^\s*?\-{3,}\s*$', multiLine: true), '')
 		// remove bullets & quotes
