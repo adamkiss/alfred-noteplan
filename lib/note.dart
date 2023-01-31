@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:alfred_noteplan/bookmark.dart';
 import 'package:alfred_noteplan/note_type.dart';
+import 'package:alfred_noteplan/snippet.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -17,6 +18,9 @@ class Note {
 	late final String title;
 	late final String content;
 	Map<String, dynamic> data = {};
+
+	late final List<Bookmark> bookmarks;
+	late final List<Snippet> snippets;
 
 	Note(
 		this.filename,
@@ -36,11 +40,16 @@ class Note {
 
 			title = parsed_content.item1;
 			content = parsed_content.item2.cleanForFts();
+			bookmarks = _parse_bookmarks(parsed_content.item2);
+			snippets = _parse_snippets(parsed_content.item2);
 			return;
 		}
 
 		/** CALENDAR */
 		content = content_raw.cleanForFts();
+		bookmarks = _parse_bookmarks(content_raw);
+		snippets = _parse_snippets(content_raw);
+
 
 		if (bname.contains('W')) { // Week
 			type = NoteType.weekly;
@@ -100,5 +109,52 @@ class Note {
 		}
 
 		return Tuple2(title, content);
+	}
+
+	List<Bookmark> _parse_bookmarks(String? body) {
+		body ??= content;
+		final RegExp bookmark_re = RegExp(r'\[(?<title>[^\[\]]*?)\]\((?<url>[^\[\]]*?)\)');
+		final Iterable<RegExpMatch> matches = bookmark_re.allMatches(body);
+
+		if (matches.isEmpty) {
+			return [];
+		}
+
+		return matches
+			.map((RegExpMatch i) {
+				// Discard probably Noteplan files/images
+				if (
+					i.namedGroup('title')! == 'file' ||
+					i.namedGroup('title')! == 'image'
+				) {
+					return null;
+				}
+
+				return Bookmark(filename, i.namedGroup('title')!, i.namedGroup('url')!);
+			})
+			.where((e) => e != null)
+			.toList(growable: false)
+			.cast<Bookmark>();
+	}
+
+	List<Snippet> _parse_snippets(String? body) {
+		body ??= content;
+
+		final RegExp snippet_re = RegExp(r'^```(?<language>.*?)\s*\((?<title>.*?)\)?$\n(?<content>[\s\S]*?)^```', multiLine: true);
+		final Iterable<RegExpMatch> matches = snippet_re.allMatches(body);
+
+		if (matches.isEmpty) {
+			return [];
+		}
+
+		return matches
+			.map((RegExpMatch m) => Snippet(
+				filename,
+				m.namedGroup('language')!.trim(),
+				m.namedGroup('title')!.trim(),
+				m.namedGroup('content')!.trim(),
+			))
+			.toList(growable: false)
+			.cast<Snippet>();
 	}
 }

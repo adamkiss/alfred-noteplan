@@ -1,7 +1,9 @@
+import 'package:alfred_noteplan/bookmark.dart';
 import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/folder.dart';
 import 'package:alfred_noteplan/note.dart';
 import 'package:alfred_noteplan/note_match.dart';
+import 'package:alfred_noteplan/snippet.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
@@ -31,6 +33,20 @@ class Dbs {
 				type UNINDEXED,
 				prefix='1 2 3'
 			);
+			CREATE VIRTUAL TABLE IF NOT EXISTS main.bookmarks USING fts5(
+				filename UNINDEXED,
+				title,
+				url,
+				description,
+				prefix='2 3 4'
+			);
+			CREATE VIRTUAL TABLE IF NOT EXISTS main.snippets USING fts5(
+				filename UNINDEXED,
+				language,
+				title,
+				content,
+				prefix='2 3 4'
+			);
 			CREATE TABLE IF NOT EXISTS main.counter (
 				filename TEXT PRIMARY KEY,
 				value INTEGER DEFAULT 0
@@ -41,9 +57,9 @@ class Dbs {
 		''');
 	}
 
-	void delete_notes_to_update(Iterable<String> notes) {
+	void delete_where_filename_in(String table, Iterable<String> notes) {
 		_db.prepare('''
-			DELETE FROM main.notes
+			DELETE FROM main.${table}
 			WHERE filename IN (${List.filled(notes.length, '?').join(',')})
 		''').execute(notes.toList(growable: false));
 	}
@@ -74,6 +90,43 @@ class Dbs {
 				e.title,
 				e.content,
 				e.type.value
+			]).expand((e) => e).toList(growable: false)
+		);
+	}
+
+	void insert_bookmarks(List<Note> notes) {
+		List<Bookmark> bookmarks = [];
+		for (var note in notes) {
+			bookmarks.addAll(note.bookmarks);
+		}
+
+		_db.prepare('''
+			INSERT INTO main.bookmarks (filename, title, url)
+			VALUES ${bookmarks.map((_) => '(?, ?, ?)').join(',')}
+		''').execute(
+			bookmarks.map((e) => [
+				e.filename,
+				e.title,
+				e.url
+			]).expand((e) => e).toList(growable: false)
+		);
+	}
+
+	void insert_snippets(List<Note> notes) {
+		List<Snippet> snippets = [];
+		for (var note in notes) {
+			snippets.addAll(note.snippets);
+		}
+
+		_db.prepare('''
+			INSERT INTO main.snippets (filename, language, title, content)
+			VALUES ${snippets.map((_) => '(?, ?, ?, ?)').join(',')}
+		''').execute(
+			snippets.map((e) => [
+				e.filename,
+				e.language,
+				e.title,
+				e.content,
 			]).expand((e) => e).toList(growable: false)
 		);
 	}
