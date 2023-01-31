@@ -1155,7 +1155,7 @@ title: TITLE
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-rc11</string>
+	<string>2.0.0-rc12</string>
 	<key>webaddress</key>
 	<string>https://github.com/adamkiss/alfred-noteplan</string>
 </dict>
