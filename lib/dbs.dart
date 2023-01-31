@@ -148,13 +148,6 @@ class Dbs {
 		''').execute([timestamp ?? DateTime.now().millisecondsSinceEpoch]);
 	}
 
-	String _query_to_fts_query(String query) {
-		return '${query
-			.replaceAll(RegExp(r'[^\p{L}\s\d]', unicode: true), '')
-			.replaceAll(RegExp(r'\s+'), ' ')
-			.trim()
-			.replaceAll(' ', '* ')}'
-			'*';
 	}
 
 	List<NoteMatch> search(String query) {

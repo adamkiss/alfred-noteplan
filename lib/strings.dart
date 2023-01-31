@@ -57,4 +57,12 @@ extension StringExtensions on String {
 		.replaceAll(RegExp(r'\s+/'), ' ')
 		.trim() // trim
 	;
+
+	String toFtsQuery() =>
+		'${replaceAll(RegExp(r'[^\p{L}\s\d]', unicode: true), '')
+		.replaceAll(RegExp(r'\s+'), ' ')
+		.trim()
+		.replaceAll(' ', '* ')}'
+		'*'
+	;
 }
