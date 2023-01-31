@@ -45,12 +45,49 @@ build:icons () { #: Build the icns file from iconsets
     mv icons/iconsets/*.icns workflow/icons
 }
 
+
+build:plistcheck () { #: dumps the objects "prebuild" tries update with scripts in test/workflow-*.sh
+    # should return: 
+    # "Full-text search for Noteplan" in line 1
+    # "Opens exact Calendar note" in line 2
+    # "Find a URL you've saved in your notes"
+    # "Find and paste a snippet from your notes"
+    ERROR=0
+    [[
+        $(/usr/libexec/PlistBuddy -c "Print :objects:1:config:subtext" workflow/info.plist)
+        == "Full-text search for Noteplan"
+    ]] || ERROR=1
+    [[
+        $(/usr/libexec/PlistBuddy -c "Print :objects:3:config:subtext" workflow/info.plist)
+        == "Opens exact Calendar note"
+    ]] || ERROR=1
+    [[
+        $(/usr/libexec/PlistBuddy -c "Print :objects:6:config:subtext" workflow/info.plist)
+        == "Find a URL you've saved in your notes"
+    ]] || ERROR=1
+    [[
+        $(/usr/libexec/PlistBuddy -c "Print :objects:8:config:subtext" workflow/info.plist)
+        == "Find and paste a snippet from your notes"
+    ]] || ERROR=1
+    if (( $ERROR == 1 )); then
+        echo "workflow/info.plist: text doesn't match. Exiting…"
+        exit 1
+    fi
+}
+
 build:script () { #: Copy the script part from the workflow.sh into info.plist
     cp workflow/info.plist workflow/info.plist.bak
-    SCRIPT=`cat test/workflow-search.sh | sed -E 's/(["'\''])/\\\\\1/g'`
-    /usr/libexec/PlistBuddy -c "Set :objects:0:config:script $SCRIPT" workflow/info.plist
+    SCRIPT=`cat test/workflow-search-notes.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    /usr/libexec/PlistBuddy -c "Set :objects:1:config:script $SCRIPT" workflow/info.plist
+
     SCRIPT=`cat test/workflow-date.sh | sed -E 's/(["'\''])/\\\\\1/g'`
     /usr/libexec/PlistBuddy -c "Set :objects:3:config:script $SCRIPT" workflow/info.plist
+
+    SCRIPT=`cat test/workflow-search-bookmarks.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    /usr/libexec/PlistBuddy -c "Set :objects:6:config:script $SCRIPT" workflow/info.plist
+
+    SCRIPT=`cat test/workflow-search-snippets.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    /usr/libexec/PlistBuddy -c "Set :objects:8:config:script $SCRIPT" workflow/info.plist
 }
 
 build:workflow () { #: Zip the workflow folder into release/dist folder
@@ -63,6 +100,7 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
 prebuild () { #: Run the whole build - the local part
     # build:icons
     build:dart-local
+    build:plistcheck
     build:script
 }
 
@@ -91,12 +129,11 @@ dev:dumplist () { #: dump the info.plist into plist.txt
     /usr/libexec/PlistBuddy -c 'print: ":name"' workflow/info.plist > plist.txt
 }
 
-dev:plisttest () { #: dumps the objects "prebuild" tries update with scripts in test/workflow-*.sh
-    # should return: 
-    # "Full-text search for Noteplan" in line 1
-    # "Opens exact Calendar note" in line 2
-    /usr/libexec/PlistBuddy -c "Print :objects:0:config:subtext" workflow/info.plist
-    /usr/libexec/PlistBuddy -c "Print :objects:3:config:subtext" workflow/info.plist
+dev:plisttest () {
+    for i in {0..15}; do
+        echo -n "$i - "
+        /usr/libexec/PlistBuddy -c "Print :objects:${i}:config:subtext" workflow/info.plist
+    done
 }
 
 test () { #: run tests
