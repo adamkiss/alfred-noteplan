@@ -21,7 +21,7 @@ build:icons () { #: Build the icns file from iconsets
     mkdir icons/iconsets
     rm -fr icons/iconsets/**
     # shellcheck disable=all
-    for I (create folder note daily weekly monthly quarterly yearly); do
+    for I (create folder note daily weekly monthly quarterly yearly hyperlink code-bit); do
         mkdir icons/iconsets/icon-$I.iconset
     
         cp icons/ps-export/icon-$I-16.png icons/iconsets/icon-$I.iconset/icon_16x16.png
