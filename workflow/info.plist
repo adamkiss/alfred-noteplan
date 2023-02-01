@@ -508,7 +508,7 @@ esac</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>{var:workflow_trigger_bookmarks}</string>
+				<string>{var:workflow_trigger_hyperlinks}</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -522,7 +522,7 @@ esac</string>
 				<key>script</key>
 				<string># shellcheck disable=SC2148
 BIN="./noteplan-$(uname -m)"
-$BIN bookmarks "$1"</string>
+$BIN hyperlinks "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -530,7 +530,7 @@ $BIN bookmarks "$1"</string>
 				<key>subtext</key>
 				<string>Find a URL you've saved in your notes</string>
 				<key>title</key>
-				<string>Noteplan: Search bookmarks</string>
+				<string>Noteplan: Search hyperlinks</string>
 				<key>type</key>
 				<integer>5</integer>
 				<key>withspace</key>
@@ -567,7 +567,7 @@ $BIN bookmarks "$1"</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>{var:workflow_trigger_snippets}</string>
+				<string>{var:workflow_trigger_code_bits}</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -581,15 +581,15 @@ $BIN bookmarks "$1"</string>
 				<key>script</key>
 				<string># shellcheck disable=SC2148
 BIN="./noteplan-$(uname -m)"
-$BIN snippets "$1"</string>
+$BIN code_bits "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Find and paste a snippet from your notes</string>
+				<string>Find and paste a code bit from your notes</string>
 				<key>title</key>
-				<string>Noteplan: Search snippets</string>
+				<string>Noteplan: Search code bits</string>
 				<key>type</key>
 				<integer>5</integer>
 				<key>withspace</key>
@@ -732,6 +732,8 @@ The all caps `TITLE` is replaced with the title you've chosen, helping Noteplan 
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
 - `n. [date phrase]` - Very simple exact/relative date parser
 - `nn [Title of the note]` - Creates a new note, in the folder of your choice
+- `nh [Phrase]` - Search through all the hyperlinks you noted down - and open them immediately
+- `nc [Phrase]` - Search for all your titled code bits - and paste them to the frontmost app
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
 - `n !!` - Show debug information
@@ -790,7 +792,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>colorindex</key>
 			<integer>5</integer>
 			<key>note</key>
-			<string>SNIPPETS</string>
+			<string>CODE BITS</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
@@ -885,7 +887,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>note</key>
-			<string>BOOKMARKS</string>
+			<string>HYPERLINKS</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
@@ -972,7 +974,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>nb</string>
+				<string>nh</string>
 				<key>placeholder</key>
 				<string></string>
 				<key>required</key>
@@ -981,19 +983,19 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Workflow trigger to start the bookmark search</string>
+			<string>Workflow trigger to start the hyperlink search</string>
 			<key>label</key>
-			<string>Trigger: Search bookmarks</string>
+			<string>Trigger: Search hyperlinks</string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
-			<string>workflow_trigger_bookmarks</string>
+			<string>workflow_trigger_hyperlinks</string>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
 				<key>default</key>
-				<string>ns</string>
+				<string>nc</string>
 				<key>placeholder</key>
 				<string></string>
 				<key>required</key>
@@ -1002,13 +1004,13 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Workflow trigger to start the snippet search</string>
+			<string>Workflow trigger to start the code bit search</string>
 			<key>label</key>
-			<string>Trigger: Search snippets</string>
+			<string>Trigger: Search code bits</string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
-			<string>workflow_trigger_snippets</string>
+			<string>workflow_trigger_code_bits</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1155,7 +1157,7 @@ title: TITLE
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-rc12</string>
+	<string>2.0.0-rc13</string>
 	<key>webaddress</key>
 	<string>https://github.com/adamkiss/alfred-noteplan</string>
 </dict>

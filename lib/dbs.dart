@@ -1,9 +1,9 @@
-import 'package:alfred_noteplan/bookmark.dart';
+import 'package:alfred_noteplan/hyperlink.dart';
 import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/folder.dart';
 import 'package:alfred_noteplan/note.dart';
 import 'package:alfred_noteplan/note_match.dart';
-import 'package:alfred_noteplan/snippet.dart';
+import 'package:alfred_noteplan/code_bit.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -34,7 +34,7 @@ class Dbs {
 				type UNINDEXED,
 				prefix='1 2 3'
 			);
-			CREATE VIRTUAL TABLE IF NOT EXISTS main.bookmarks USING fts5(
+			CREATE VIRTUAL TABLE IF NOT EXISTS main.hyperlinks USING fts5(
 				filename UNINDEXED,
 				note_type UNINDEXED,
 				title,
@@ -42,7 +42,7 @@ class Dbs {
 				description,
 				prefix='3 4 5'
 			);
-			CREATE VIRTUAL TABLE IF NOT EXISTS main.snippets USING fts5(
+			CREATE VIRTUAL TABLE IF NOT EXISTS main.code_bits USING fts5(
 				filename UNINDEXED,
 				note_type UNINDEXED,
 				language,
@@ -97,17 +97,17 @@ class Dbs {
 		);
 	}
 
-	void insert_bookmarks(List<Note> notes) {
-		List<Bookmark> bookmarks = [];
+	void insert_hyperlinks(List<Note> notes) {
+		List<Hyperlink> hyperlinks = [];
 		for (var note in notes) {
-			bookmarks.addAll(note.bookmarks);
+			hyperlinks.addAll(note.hyperlinks);
 		}
 
 		_db.prepare('''
-			INSERT INTO main.bookmarks (filename, note_type, title, url)
-			VALUES ${bookmarks.map((_) => '(?, ?, ?, ?)').join(',')}
+			INSERT INTO main.hyperlinks (filename, note_type, title, url)
+			VALUES ${hyperlinks.map((_) => '(?, ?, ?, ?)').join(',')}
 		''').execute(
-			bookmarks.map((e) => [
+			hyperlinks.map((e) => [
 				e.note.filename,
 				e.note.type.value,
 				e.title,
@@ -116,17 +116,17 @@ class Dbs {
 		);
 	}
 
-	void insert_snippets(List<Note> notes) {
-		List<Snippet> snippets = [];
+	void insert_code_bits(List<Note> notes) {
+		List<CodeBit> code_bits = [];
 		for (var note in notes) {
-			snippets.addAll(note.snippets);
+			code_bits.addAll(note.code_bits);
 		}
 
 		_db.prepare('''
-			INSERT INTO main.snippets (filename, note_type, language, title, content)
-			VALUES ${snippets.map((_) => '(?, ?, ?, ?, ?)').join(',')}
+			INSERT INTO main.code_bits (filename, note_type, language, title, content)
+			VALUES ${code_bits.map((_) => '(?, ?, ?, ?, ?)').join(',')}
 		''').execute(
-			snippets.map((e) => [
+			code_bits.map((e) => [
 				e.note.filename,
 				e.note.type.value,
 				e.language,
@@ -168,7 +168,7 @@ class Dbs {
 		return results.map((Row row) => NoteMatch(row)).toList(growable: false);
 	}
 
-	List<Map<String, dynamic>> search_bookmarks(String query) {
+	List<Map<String, dynamic>> search_hyperlinks(String query) {
 		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
@@ -177,17 +177,17 @@ class Dbs {
 				title,
 				url
 			FROM
-				main.bookmarks('${preparedQuery}')
+				main.hyperlinks('${preparedQuery}')
 			ORDER BY
 				rank
 			LIMIT
 				18
 		''');
 
-		return results.map((Row result) => Bookmark.to_alfred_result(result)).toList(growable: false);
+		return results.map((Row result) => Hyperlink.to_alfred_result(result)).toList(growable: false);
 	}
 
-	List<Map<String, dynamic>> search_snippets(String query) {
+	List<Map<String, dynamic>> search_code_bits(String query) {
 		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
@@ -197,14 +197,14 @@ class Dbs {
 				title,
 				content
 			FROM
-				main.snippets('${preparedQuery}')
+				main.code_bits('${preparedQuery}')
 			ORDER BY
 				rank
 			LIMIT
 				18
 		''');
 
-		return results.map((Row result) => Snippet.to_alfred_result(result)).toList(growable: false);
+		return results.map((Row result) => CodeBit.to_alfred_result(result)).toList(growable: false);
 	}
 
 	ResultSet cache_get_updated({int since = 0}) {

@@ -6,40 +6,44 @@ import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-class Snippet {
+class Hyperlink{
 	final Note note;
-	final String language;
+	final String url;
 	final String title;
-	final String content;
+	String? description; // currently noop
 
-	Snippet(
+	Hyperlink(
 		this.note,
-		this.language,
 		this.title,
-		this.content,
+		this.url,
+		{this.description}
 	);
 
 	/// alfred result formatter working on raw SQL data
 	static Map<String, dynamic> to_alfred_result(Row result) => alf_item(
 		result['title'],
-		'${result['language']} ✱ ${basenameWithoutExtension(result['filename'])}',
-		arg: result['content'],
-		variables: {'action': 'copy-paste'},
+		'${basenameWithoutExtension(result['filename'])} ✱ ${result['url']}',
+		arg: result['url'],
+		icon: {'path': 'icons/icon-hyperlink.icns'},
+		variables: {'action': 'open'},
 		mods: {
 			'cmd': {
 				'valid': true,
 				'arg': NoteType.create_from_string(result['note_type']) == NoteType.note
 					? Noteplan.openNoteUrl(result['filename'])
 					: Noteplan.openCalendarUrl(basenameWithoutExtension(result['filename'])),
-				'subtitle': str_snippet_open_note,
-				'variables': {'action': 'open'}
+				'subtitle': str_bookmark_open_note
 			},
 			'shift': {
 				'valid': true,
 				'subtitle': str_bookmark_copy,
 				'variables': {'action': 'copy-to-clipboard'}
 			},
+			'cmd+shift': {
+				'valid': true,
+				'subtitle': str_bookmark_copy_paste,
+				'variables': {'action': 'copy-paste'}
+			},
 		}
 	);
-
 }

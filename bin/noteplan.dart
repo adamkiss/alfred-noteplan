@@ -72,14 +72,14 @@ void main (List<String> arguments) {
 	if (_last_update_more_than(last_update)) { refresh(db); }
 
 	// Bookmarks
-	if (command == 'bookmarks') {
-		print(alf_to_results(db.search_bookmarks(query)));
+	if (command == 'hyperlinks') {
+		print(alf_to_results(db.search_hyperlinks(query)));
 		exit(0);
 	}
 
 	// Snippets
-	if (command == 'snippets') {
-		print(alf_to_results(db.search_snippets(query)));
+	if (command == 'code_bits') {
+		print(alf_to_results(db.search_code_bits(query)));
 		exit(0);
 	}
 

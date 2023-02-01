@@ -1,5 +1,5 @@
 import 'package:alfred_noteplan/note.dart';
-import 'package:alfred_noteplan/bookmark.dart';
+import 'package:alfred_noteplan/hyperlink.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:test/test.dart';
 
@@ -13,8 +13,8 @@ void main() {
 	);
 
 	test("Empty note", () {
-		expect(emptyNote.bookmarks.isEmpty, true);
-		expect(emptyNote.snippets.isEmpty, true);
+		expect(emptyNote.hyperlinks.isEmpty, true);
+		expect(emptyNote.code_bits.isEmpty, true);
 		expect(emptyNote.title, "Note");
 	});
 
@@ -40,8 +40,8 @@ void main() {
 	);
 
 	test("Note without frontmatter", () {
-		expect(pureNote.bookmarks.isEmpty, true);
-		expect(pureNote.snippets.isEmpty, true);
+		expect(pureNote.hyperlinks.isEmpty, true);
+		expect(pureNote.code_bits.isEmpty, true);
 		expect(pureNote.title, "This is the title");
 		expect(pureNote.content, """
 		- item 1
@@ -88,21 +88,21 @@ void main() {
 
 	test("Note with a frontmatter", () {
 		expect(noteWithFM.title, "I am r/verysmart");
-		expect(noteWithFM.snippets.isEmpty, true);
-		expect(noteWithFM.bookmarks.isNotEmpty, true);
+		expect(noteWithFM.code_bits.isEmpty, true);
+		expect(noteWithFM.hyperlinks.isNotEmpty, true);
 
-		expect(noteWithFM.bookmarks.length, 3);
-		expect(noteWithFM.bookmarks[0].url, 'https://adamkiss.com');
-		expect(noteWithFM.bookmarks[0].title, 'Very cool website');
-		expect(noteWithFM.bookmarks[0].description, null);
+		expect(noteWithFM.hyperlinks.length, 3);
+		expect(noteWithFM.hyperlinks[0].url, 'https://adamkiss.com');
+		expect(noteWithFM.hyperlinks[0].title, 'Very cool website');
+		expect(noteWithFM.hyperlinks[0].description, null);
 
-		expect(noteWithFM.bookmarks[1].url, 'https://github.com/adamkiss/alfred-noteplan');
-		expect(noteWithFM.bookmarks[1].title, 'This workflow');
-		expect(noteWithFM.bookmarks[1].description, null);
+		expect(noteWithFM.hyperlinks[1].url, 'https://github.com/adamkiss/alfred-noteplan');
+		expect(noteWithFM.hyperlinks[1].title, 'This workflow');
+		expect(noteWithFM.hyperlinks[1].description, null);
 
-		expect(noteWithFM.bookmarks[2].url, 'https://en.wikipedia.org/wiki/The_Witcher');
-		expect(noteWithFM.bookmarks[2].title, 'The Witcher is a book you should read');
-		expect(noteWithFM.bookmarks[2].description, null);
+		expect(noteWithFM.hyperlinks[2].url, 'https://en.wikipedia.org/wiki/The_Witcher');
+		expect(noteWithFM.hyperlinks[2].title, 'The Witcher is a book you should read');
+		expect(noteWithFM.hyperlinks[2].description, null);
 	});
 
 	///   ///   ///   ///   ///
@@ -119,7 +119,7 @@ void main() {
 		```
 		<?php
 
-		app()->route('/bookmarks/(:any)', fn(string \$id) => new Route(\$id));
+		app()->route('/hyperlinks/(:any)', fn(string \$id) => new Route(\$id));
 		```
 
 		## Language only (ignored)
@@ -156,13 +156,13 @@ void main() {
 
 	test("Note with a lot of code", () {
 		expect(noteWithCode.title, "I was writing these all night");
-		expect(noteWithCode.bookmarks.isEmpty, true);
-		expect(noteWithCode.snippets.isNotEmpty, true);
+		expect(noteWithCode.hyperlinks.isEmpty, true);
+		expect(noteWithCode.code_bits.isNotEmpty, true);
 
-		expect(noteWithCode.snippets.length, 2);
-		expect(noteWithCode.snippets[0].language, 'dart');
-		expect(noteWithCode.snippets[0].title, 'Enum of my stupidity');
-		expect(noteWithCode.snippets[1].language, 'swift');
-		expect(noteWithCode.snippets[1].title, 'I still don\'t understand - And people call it "elegant"?');
+		expect(noteWithCode.code_bits.length, 2);
+		expect(noteWithCode.code_bits[0].language, 'dart');
+		expect(noteWithCode.code_bits[0].title, 'Enum of my stupidity');
+		expect(noteWithCode.code_bits[1].language, 'swift');
+		expect(noteWithCode.code_bits[1].title, 'I still don\'t understand - And people call it "elegant"?');
 	});
 }

@@ -51,7 +51,7 @@ build:plistcheck () { #: dumps the objects "prebuild" tries update with scripts 
     # "Full-text search for Noteplan" in line 1
     # "Opens exact Calendar note" in line 2
     # "Find a URL you've saved in your notes"
-    # "Find and paste a snippet from your notes"
+    # "Find and paste a code bit from your notes"
     ERROR=0
     [[
         $(/usr/libexec/PlistBuddy -c "Print :objects:1:config:subtext" workflow/info.plist)
@@ -67,7 +67,7 @@ build:plistcheck () { #: dumps the objects "prebuild" tries update with scripts 
     ]] || ERROR=1
     [[
         $(/usr/libexec/PlistBuddy -c "Print :objects:8:config:subtext" workflow/info.plist)
-        == "Find and paste a snippet from your notes"
+        == "Find and paste a code bit from your notes"
     ]] || ERROR=1
     if (( $ERROR == 1 )); then
         echo "workflow/info.plist: text doesn't match. Exiting…"
@@ -83,10 +83,10 @@ build:script () { #: Copy the script part from the workflow.sh into info.plist
     SCRIPT=`cat test/workflow-date.sh | sed -E 's/(["'\''])/\\\\\1/g'`
     /usr/libexec/PlistBuddy -c "Set :objects:3:config:script $SCRIPT" workflow/info.plist
 
-    SCRIPT=`cat test/workflow-search-bookmarks.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    SCRIPT=`cat test/workflow-search-hyperlinks.sh | sed -E 's/(["'\''])/\\\\\1/g'`
     /usr/libexec/PlistBuddy -c "Set :objects:6:config:script $SCRIPT" workflow/info.plist
 
-    SCRIPT=`cat test/workflow-search-snippets.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    SCRIPT=`cat test/workflow-search-code-bits.sh | sed -E 's/(["'\''])/\\\\\1/g'`
     /usr/libexec/PlistBuddy -c "Set :objects:8:config:script $SCRIPT" workflow/info.plist
 }
 
@@ -125,11 +125,7 @@ dev:unlink () { #: remove the WIP version link from Alfred
     rm /Users/adam/Code/dotfiles/config/alfred5/Alfred.alfredpreferences/workflows/alfred-noteplan;
 }
 
-dev:dumplist () { #: dump the info.plist into plist.txt
-    /usr/libexec/PlistBuddy -c 'print: ":name"' workflow/info.plist > plist.txt
-}
-
-dev:plisttest () {
+dev:plisttest () { #: list all the object to search for the trigger notes
     for i in {0..15}; do
         echo -n "$i - "
         /usr/libexec/PlistBuddy -c "Print :objects:${i}:config:subtext" workflow/info.plist

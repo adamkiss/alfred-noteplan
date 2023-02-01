@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:alfred_noteplan/bookmark.dart';
+import 'package:alfred_noteplan/hyperlink.dart';
 import 'package:alfred_noteplan/note_type.dart';
-import 'package:alfred_noteplan/snippet.dart';
+import 'package:alfred_noteplan/code_bit.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -18,8 +18,8 @@ class Note {
 	late final String content;
 	Map<String, dynamic> data = {};
 
-	late final List<Bookmark> bookmarks;
-	late final List<Snippet> snippets;
+	late final List<Hyperlink> hyperlinks;
+	late final List<CodeBit> code_bits;
 
 	Note(
 		this.filename,
@@ -39,15 +39,15 @@ class Note {
 
 			title = parsed_content.item1;
 			content = parsed_content.item2.cleanForFts();
-			bookmarks = _parse_bookmarks(parsed_content.item2);
-			snippets = _parse_snippets(parsed_content.item2);
+			hyperlinks = _parse_hyperlinks(parsed_content.item2);
+			code_bits = _parse_code_bits(parsed_content.item2);
 			return;
 		}
 
 		/** CALENDAR */
 		content = content_raw.cleanForFts();
-		bookmarks = _parse_bookmarks(content_raw);
-		snippets = _parse_snippets(content_raw);
+		hyperlinks = _parse_hyperlinks(content_raw);
+		code_bits = _parse_code_bits(content_raw);
 
 
 		if (bname.contains('W')) { // Week
@@ -110,7 +110,7 @@ class Note {
 		return Tuple2(title, content);
 	}
 
-	List<Bookmark> _parse_bookmarks(String? body) {
+	List<Hyperlink> _parse_hyperlinks(String? body) {
 		body ??= content;
 		final RegExp bookmark_re = RegExp(r'\[(?<title>[^\[\]]*?)\]\((?<url>[^\[\]]*?)\)');
 		final Iterable<RegExpMatch> matches = bookmark_re.allMatches(body);
@@ -129,14 +129,14 @@ class Note {
 					return null;
 				}
 
-				return Bookmark(this, i.namedGroup('title')!, i.namedGroup('url')!);
+				return Hyperlink(this, i.namedGroup('title')!, i.namedGroup('url')!);
 			})
 			.where((e) => e != null)
 			.toList(growable: false)
-			.cast<Bookmark>();
+			.cast<Hyperlink>();
 	}
 
-	List<Snippet> _parse_snippets(String? body) {
+	List<CodeBit> _parse_code_bits(String? body) {
 		body ??= content;
 
 		final RegExp snippet_re = RegExp(r'^```(?<language>.*?)\s*\((?<title>.*?)\)?$\n(?<content>[\s\S]*?)^```', multiLine: true);
@@ -147,13 +147,13 @@ class Note {
 		}
 
 		return matches
-			.map((RegExpMatch m) => Snippet(
+			.map((RegExpMatch m) => CodeBit(
 				this,
 				m.namedGroup('language')!.trim(),
 				m.namedGroup('title')!.trim(),
 				m.namedGroup('content')!.trim(),
 			))
 			.toList(growable: false)
-			.cast<Snippet>();
+			.cast<CodeBit>();
 	}
 }

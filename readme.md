@@ -12,6 +12,8 @@ Search, open, and create Noteplan notes with Alfred.
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
 - `n. [date phrase]` - Very simple exact/relative date parser
 - `nn [Title of the note]` - Creates a new note, in the folder of your choice
+- `nh [Phrase]` - Search through all the hyperlinks you noted down - and open them immediately
+- `nc [Phrase]` - Search for all your titled code bits - and paste them to the frontmost app
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
 - `n !!` - Show debug information

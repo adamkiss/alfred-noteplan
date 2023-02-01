@@ -6,43 +6,41 @@ import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-class Bookmark {
+class CodeBit {
 	final Note note;
-	final String url;
+	final String language;
 	final String title;
-	String? description; // currently noop
+	final String content;
 
-	Bookmark(
+	CodeBit(
 		this.note,
+		this.language,
 		this.title,
-		this.url,
-		{this.description}
+		this.content,
 	);
 
 	/// alfred result formatter working on raw SQL data
 	static Map<String, dynamic> to_alfred_result(Row result) => alf_item(
 		result['title'],
-		'${basenameWithoutExtension(result['filename'])} ✱ ${result['url']}',
-		arg: result['url'],
-		variables: {'action': 'open'},
+		'${result['language']} ✱ ${basenameWithoutExtension(result['filename'])}',
+		arg: result['content'],
+		icon: {'path': 'icons/icon-code-bit.icns'},
+		variables: {'action': 'copy-paste'},
 		mods: {
 			'cmd': {
 				'valid': true,
 				'arg': NoteType.create_from_string(result['note_type']) == NoteType.note
 					? Noteplan.openNoteUrl(result['filename'])
 					: Noteplan.openCalendarUrl(basenameWithoutExtension(result['filename'])),
-				'subtitle': str_bookmark_open_note
+				'subtitle': str_snippet_open_note,
+				'variables': {'action': 'open'}
 			},
 			'shift': {
 				'valid': true,
 				'subtitle': str_bookmark_copy,
 				'variables': {'action': 'copy-to-clipboard'}
 			},
-			'cmd+shift': {
-				'valid': true,
-				'subtitle': str_bookmark_copy_paste,
-				'variables': {'action': 'copy-paste'}
-			},
 		}
 	);
+
 }

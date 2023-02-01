@@ -1,3 +1,3 @@
 # shellcheck disable=SC2148
 BIN="./noteplan-$(uname -m)"
-$BIN bookmarks "$1"
+$BIN code_bits "$1"

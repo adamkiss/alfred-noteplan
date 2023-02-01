@@ -16,11 +16,11 @@ int refresh(Dbs db, {bool force = false}) {
 		db.delete_where_filename_in('notes', notes_to_update);
 		db.insert_notes(new_notes);
 
-		db.delete_where_filename_in('bookmarks', notes_to_update);
-		db.insert_bookmarks(new_notes);
+		db.delete_where_filename_in('hyperlinks', notes_to_update);
+		db.insert_hyperlinks(new_notes);
 
-		db.delete_where_filename_in('snippets', notes_to_update);
-		db.insert_snippets(new_notes);
+		db.delete_where_filename_in('code_bits', notes_to_update);
+		db.insert_code_bits(new_notes);
 	}
 
 	// Save the last update and cleanup
