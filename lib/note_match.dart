@@ -15,7 +15,7 @@ class NoteMatch {
 	NoteMatch(Row result):
 		filename = result['filename'],
 		title = result['title'],
-		snippet = result['snippet'],
+		snippet = result['snippet'] ?? result['content'],
 		type = NoteType.create_from_string(result['type'])
 	;
 

@@ -214,6 +214,7 @@ class Dbs {
 				'note' as result_type,
 				filename,
 				title,
+				null as language,
 				type,
 				snippet(notes, 2, '${str_open_snippet}', '${str_close_snippet}', '…', 5) as content,
 				rank
@@ -224,6 +225,7 @@ class Dbs {
 				'hyperlink' as result_type,
 				filename,
 				title,
+				null as language,
 				note_type,
 				url,
 				rank
@@ -234,6 +236,7 @@ class Dbs {
 				'code bit' as result_type,
 				filename,
 				title,
+				language,
 				note_type,
 				content,
 				rank

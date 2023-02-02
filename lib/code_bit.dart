@@ -29,7 +29,7 @@ class CodeBit {
 		mods: {
 			'cmd': {
 				'valid': true,
-				'arg': NoteType.create_from_string(result['note_type']) == NoteType.note
+				'arg': NoteType.create_from_string(result['note_type'] ?? result['type']) == NoteType.note
 					? Noteplan.openNoteUrl(result['filename'])
 					: Noteplan.openCalendarUrl(basenameWithoutExtension(result['filename'])),
 				'subtitle': str_snippet_open_note,

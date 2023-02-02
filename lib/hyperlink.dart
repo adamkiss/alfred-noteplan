@@ -22,14 +22,14 @@ class Hyperlink{
 	/// alfred result formatter working on raw SQL data
 	static Map<String, dynamic> to_alfred_result(Row result) => alf_item(
 		result['title'],
-		'${basenameWithoutExtension(result['filename'])} ✱ ${result['url']}',
-		arg: result['url'],
+		'${basenameWithoutExtension(result['filename'])} ✱ ${result['url'] ?? result['content']}',
+		arg: result['url'] ?? result['content'],
 		icon: {'path': 'icons/icon-hyperlink.icns'},
 		variables: {'action': 'open'},
 		mods: {
 			'cmd': {
 				'valid': true,
-				'arg': NoteType.create_from_string(result['note_type']) == NoteType.note
+				'arg': NoteType.create_from_string(result['note_type'] ?? result['type']) == NoteType.note
 					? Noteplan.openNoteUrl(result['filename'])
 					: Noteplan.openCalendarUrl(basenameWithoutExtension(result['filename'])),
 				'subtitle': str_bookmark_open_note
