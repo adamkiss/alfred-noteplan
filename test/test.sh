@@ -41,5 +41,10 @@ echo
 
 echo "Bookmark search - kirby"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
-./workflow/noteplan-arm64 bookmarks 'kirby' | jq '.items | map(.title + " - " + .subtitle)'
+./workflow/noteplan-arm64 hyperlinks 'kirby' | jq '.items | map(.title + " - " + .subtitle)'
+echo
+
+echo "All search - kirby"
+user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
+./workflow/noteplan-arm64 all 'kirby' | jq '.items | map(.title + " - " + .subtitle)'
 echo
