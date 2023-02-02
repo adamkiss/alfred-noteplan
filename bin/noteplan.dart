@@ -74,12 +74,14 @@ void main (List<String> arguments) {
 	// Bookmarks
 	if (command == 'hyperlinks') {
 		print(alf_to_results(db.search_hyperlinks(query)));
+    db.dispose();
 		exit(0);
 	}
 
 	// Snippets
 	if (command == 'code_bits') {
 		print(alf_to_results(db.search_code_bits(query)));
+    db.dispose();
 		exit(0);
 	}
 
