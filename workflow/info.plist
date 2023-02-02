@@ -262,7 +262,7 @@ case "$1" in
         $BIN refresh force
         ;;
     *)
-        $BIN search "$1"
+        $BIN all "$1"
         ;;
 esac</string>
 				<key>scriptargtype</key>
