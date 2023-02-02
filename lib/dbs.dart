@@ -149,7 +149,7 @@ class Dbs {
 		''').execute([timestamp ?? DateTime.now().millisecondsSinceEpoch]);
 	}
 
-	List<NoteMatch> search_notes(String query) {
+	List<NoteMatch> search_notes(String query, {int limit = 18}) {
 		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
@@ -162,13 +162,13 @@ class Dbs {
 			ORDER BY
 				rank
 			LIMIT
-				18
+				${limit}
 		''');
 
 		return results.map((Row row) => NoteMatch(row)).toList(growable: false);
 	}
 
-	List<Map<String, dynamic>> search_hyperlinks(String query) {
+	List<Map<String, dynamic>> search_hyperlinks(String query, {int limit = 18}) {
 		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
@@ -181,13 +181,13 @@ class Dbs {
 			ORDER BY
 				rank
 			LIMIT
-				18
+				${limit}
 		''');
 
 		return results.map((Row result) => Hyperlink.to_alfred_result(result)).toList(growable: false);
 	}
 
-	List<Map<String, dynamic>> search_code_bits(String query) {
+	List<Map<String, dynamic>> search_code_bits(String query, {int limit = 18}) {
 		final String preparedQuery = query.toFtsQuery();
 		final ResultSet results = _db.select('''
 			SELECT
@@ -201,10 +201,58 @@ class Dbs {
 			ORDER BY
 				rank
 			LIMIT
-				18
+				${limit}
 		''');
 
 		return results.map((Row result) => CodeBit.to_alfred_result(result)).toList(growable: false);
+	}
+
+	List<Map<String, dynamic>> search_all(String query) {
+		final String preparedQuery = query.toFtsQuery();
+		final ResultSet results = _db.select('''
+			SELECT
+				'note' as result_type,
+				filename,
+				title,
+				type,
+				snippet(notes, 2, '›', '‹', '…', 5) as content,
+				rank
+			FROM
+				main.notes('${preparedQuery}')
+			UNION
+			SELECT
+				'hyperlink' as result_type,
+				filename,
+				title,
+				note_type,
+				url,
+				rank
+			FROM
+				main.hyperlinks('${preparedQuery}')
+			UNION
+			SELECT
+				'code bit' as result_type,
+				filename,
+				title,
+				note_type,
+				content,
+				rank
+			FROM
+				main.code_bits('${preparedQuery}')
+			ORDER BY
+				rank
+			LIMIT
+				18
+		''');
+
+		return results.map((Row result) {
+			switch (result['result_type']) {
+			  case 'note': return NoteMatch(result).to_alfred_result();
+			  case 'hyperlink': return Hyperlink.to_alfred_result(result);
+			  case 'code bit': return CodeBit.to_alfred_result(result);
+			  default: throw Exception('Unknown result type: ${result['result_type']}');
+			}
+		}).toList(growable: false);
 	}
 
 	ResultSet cache_get_updated({int since = 0}) {
