@@ -156,7 +156,7 @@ class Dbs {
 				filename,
 				title,
 				type,
-				snippet(notes, 2, '›', '‹', '…', 5) as snippet
+				snippet(notes, 2, '${str_open_snippet}', '${str_close_snippet}', '…', 5) as snippet
 			FROM
 				main.notes('${preparedQuery}')
 			ORDER BY
@@ -215,7 +215,7 @@ class Dbs {
 				filename,
 				title,
 				type,
-				snippet(notes, 2, '›', '‹', '…', 5) as content,
+				snippet(notes, 2, '${str_open_snippet}', '${str_close_snippet}', '…', 5) as content,
 				rank
 			FROM
 				main.notes('${preparedQuery}')

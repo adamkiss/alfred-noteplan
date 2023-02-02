@@ -29,6 +29,9 @@ const str_bookmark_copy_paste = 'Copy the URL to clipboard and paste to frontmos
 const str_snippet_open_note = 'Open the note the snippet was found in';
 const str_snippet_copy = 'Copy the snippet to clipboard without pasting';
 
+const str_open_snippet = '‹';
+const str_close_snippet = '›';
+
 extension StringExtensions on String {
 	// source: https://stackoverflow.com/a/29629114/240239
 	String toCapitalized() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
