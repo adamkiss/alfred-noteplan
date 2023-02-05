@@ -103,6 +103,10 @@ class Dbs {
 			hyperlinks.addAll(note.hyperlinks);
 		}
 
+		if (hyperlinks.isEmpty) {
+			return;
+		}
+
 		_db.prepare('''
 			INSERT INTO main.hyperlinks (filename, note_type, title, url)
 			VALUES ${hyperlinks.map((_) => '(?, ?, ?, ?)').join(',')}
@@ -120,6 +124,10 @@ class Dbs {
 		List<CodeBit> code_bits = [];
 		for (var note in notes) {
 			code_bits.addAll(note.code_bits);
+		}
+
+		if (code_bits.isEmpty) {
+			return;
 		}
 
 		_db.prepare('''
