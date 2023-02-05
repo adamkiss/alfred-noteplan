@@ -38,7 +38,7 @@ class DateParser {
 
 		// word today
 		DateParserMatcher(
-			RegExp(r'^(?:t|tod|toda|today)$'),
+			RegExp(r'^(?:t|to|tod|toda|today)$'),
 			(RegExpMatch m) => DateTime.now(),
 			NoteType.daily
 		),

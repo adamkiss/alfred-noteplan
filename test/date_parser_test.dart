@@ -21,10 +21,10 @@ void main() {
 	group('daily: words', () {
 		test('today', () {
 			expect(dpfn('t'),        _now.toNoteplanDateString(NoteType.daily));
+			expect(dpfn('to'),       _now.toNoteplanDateString(NoteType.daily));
 			expect(dpfn('tod'),      _now.toNoteplanDateString(NoteType.daily));
 			expect(dpfn('toda'),     _now.toNoteplanDateString(NoteType.daily));
 			expect(dpfn('today'),    _now.toNoteplanDateString(NoteType.daily));
-			expect(() => dpfn('to'), throwsArgumentError);
 		});
 		test('tomorrow', () {
 			expect(dpfn('tom'),      _now.add(Duration(days: 1)).toNoteplanDateString(NoteType.daily));
