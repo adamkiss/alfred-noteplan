@@ -41,18 +41,18 @@ The commands `n` and `nn` are configurable, the command `n. ` is the configured 
 1. Download and import the workflow
     - You can find the workflow on the [Releases page](https://github.com/adamkiss/alfred-noteplan/releases).
     - Expand the _Assets_ of the latest release (at the top) and download the file with the `.workflow` extension.
-3. Configure it to your taste
+2. Configure it to your taste
     - the most important and required part is the **Noteplan root folder**
     - get it through `Noteplan Options` > `Sync` > `'Advanced' for your active Sync option` > `Open local database`
     - this will open a Finder window
     - in this window, with **nothing selected**, press <kbd>Command</kbd>+<kbd>Option</kbd>+<kbd>C</kbd> to copy the pathname 
     - paste that into the workflow import window
-4. Trust the app. This step is necessary because [the app is not signed](#why-all-the-warnings).      
+3. Trust the app. This step is necessary because [the app is not signed](#why-all-the-warnings).      
    1. Type `n ` in Alfred - macOS will warn you that this app is unsigned and you can move it to bin or cancel.
    2. Open **System Settings** > **Privacy & Security**, scroll down, and click "Allow Anyway". (In macOS before 13/Ventura, _System Settings_ is called _System Preferences_.)
    3. Type `n ` in Alfred again - macOS will warn you _again_ that this app was downloaded from the internet and might not be safe.
    4. The dialog now has an **Open** option. Click **Open** to finalize the authorization.
-5. You can now do a search, date query or add a new note
+4. You can now do a search, date query or add a new note
 
 ### Why all the warnings?
 To have macOS accept your app as safe, the developer needs to cryptographically sign it. That requires a $99/year Apple Developer Program, which I currently don't need for anything else.
