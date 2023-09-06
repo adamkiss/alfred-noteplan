@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:alfred_noteplan/alfred.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 
 class Config {

@@ -44,6 +44,16 @@ user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
 ./workflow/noteplan-arm64 hyperlinks 'kirby' | jq '.items | map(.title + " - " + .subtitle)'
 echo
 
+echo "Code bit search - php"
+user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
+./workflow/noteplan-arm64 code_bits 'php' | jq '.items | map(.title + " - " + .subtitle)'
+echo
+
+echo "Code bit search - go"
+user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
+./workflow/noteplan-arm64 code_bits 'go' | jq '.items | map(.title + " - " + .subtitle)'
+echo
+
 echo "All search - kirby"
 user_np_root=$user_np_root user_new_note_template=$user_new_note_template \
 ./workflow/noteplan-arm64 all 'kirby' | jq '.items | map(.title + " - " + .subtitle)'

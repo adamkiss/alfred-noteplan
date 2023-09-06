@@ -1,5 +1,4 @@
 import 'package:alfred_noteplan/note.dart';
-import 'package:alfred_noteplan/hyperlink.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:test/test.dart';
 
