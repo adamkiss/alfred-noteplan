@@ -320,7 +320,7 @@ esac</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>{var:workflow_trigger_open}.</string>
+				<string>{var:workflow_trigger_date}</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1016,6 +1016,27 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 			<key>config</key>
 			<dict>
 				<key>default</key>
+				<string>nd</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Workflow trigger to start the exact date matching</string>
+			<key>label</key>
+			<string>Trigger: Date matcher</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>workflow_trigger_date</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
 				<string>en_GB</string>
 				<key>pairs</key>
 				<array>
@@ -1103,7 +1124,7 @@ Copyright (c) 2023 Adam Kiss, MIT License</string>
 				<string>Day is first</string>
 			</dict>
 			<key>description</key>
-			<string>When searching for exact day with space, like so: `n. 1 4`, is the "1" a day or a month?</string>
+			<string>When searching for exact day with a space (`nd 1 4`), is the "1" a day or a month?</string>
 			<key>label</key>
 			<string>Exact date with space: days first</string>
 			<key>type</key>
