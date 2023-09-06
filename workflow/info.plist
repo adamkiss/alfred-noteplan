@@ -724,21 +724,37 @@ The all caps `TITLE` is replaced with the title you've chosen, helping Noteplan 
 - files are matched from the beginning, so `archive` will match every note in a folder archive, while `archive/ignored` will match only those in subfolder of archive called ignored.
 - if you have two folders "archive/ignored" and "archived/ignored-not-really", "archive/ignored" will match both. Use "archive/ignored/" with a trailing slash to ensure only the files you want ignored are ignored.
 
-
 ---
-
 
 ## Usage
 - `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
-- `n. [date phrase]` - Very simple exact/relative date parser
-- `nn [Title of the note]` - Creates a new note, in the folder of your choice
 - `nh [Phrase]` - Search through all the hyperlinks you noted down - and open them immediately
 - `nc [Phrase]` - Search for all your titled code bits - and paste them to the frontmost app
+- `nd [date phrase]` - Very simple exact/relative date parser
+- `nn [Title of the note]` - Creates a new note, in the folder of your choice
 - `n !r` - Refresh note database
 - `n !rf` - Force refresh every note in the database
 - `n !!` - Show debug information
 
 The commands `n` and `nn` are configurable, the command `n. ` is the configured command `n` + `.` (selected because there's a macOS settings that translates double space to full stop and space, which (I think) `on` by default)
+
+All commands are configurable. To keep the workflow from being too complicated, if you don't wish to use a feature, just set the trigger to something complicated like `XYZ-extremely-unlikely-to-use`
+
+### Hyperlinks
+
+Every hyperlink - `[The title and a description](https://example.com)` - is searchable, through the title and description and the link itself as well. **The default action for a hyperlink is to open it in a default browser**, to open the containing note, hit &lt;kbd&gt;CMD&lt;/kbd&gt;+&lt;kbd&gt;↩&lt;/kbd&gt;.
+
+### Code bits
+
+Every block of code **with a title/description** is matched as a snippet. **Default action is "copy and paste in the frontmost app"**, to open the containing note, hit &lt;kbd&gt;CMD&lt;/kbd&gt;+&lt;kbd&gt;↩&lt;/kbd&gt;.
+
+#### Example code bit:
+
+```
+    ```language (Title and a description in parentheses)
+        This code bit will be matched as codebit by content, language and the title and description.
+    ```
+```
 
 ### Date parser
 - `t … today` - today's note
@@ -758,18 +774,19 @@ The commands `n` and `nn` are configurable, the command `n. ` is the configured 
 - `yr|year -|+ [number]` - relative year (spaces optional)
 
 ## Installation
-1. Download and import the workflow
-2. Configure it to your taste
+1. Configure the workflow
     - the most important and required part is the **Noteplan root folder**
     - get it through `Noteplan Options` &gt; `Sync` &gt; `'Advanced' for your active Sync option` &gt; `Open local database`
     - this will open a Finder window
     - in this window, with **nothing selected**, press &lt;kbd&gt;Command&lt;/kbd&gt;+&lt;kbd&gt;Option&lt;/kbd&gt;+&lt;kbd&gt;C&lt;/kbd&gt; to copy the pathname 
     - paste that into the workflow import window
-3. Run `n ` - macos will warn you that this app is unsigned and you can move it to bin or cancel
-4. Open **System Settings** &gt; **Privacy &amp; Security**, scroll down, and click "Allow Anyway"
-5. Run `n ` - macos will warn you that this app was downloaded from the internet nad might not be safe. Click 'open'
-6. Profit!
-7. You can now do a search, date query or add a new note
+2. Trust the app. This step is necessary because [the app is not signed](#why-all-the-warnings).      
+   1. Type `n ` in Alfred - macOS will warn you that this app is unsigned and you can move it to bin or cancel.
+   2. Open **System Settings** &gt; **Privacy &amp; Security**, scroll down, and click "Allow Anyway". (In macOS before 13/Ventura, _System Settings_ is called _System Preferences_.)
+   3. Type `n ` in Alfred again - macOS will warn you _again_ that this app was downloaded from the internet and might not be safe.
+   4. The dialog now has an **Open** option. Click **Open** to finalize the authorization.
+3. Profit!
+4. You can now do a search, date query or add a new n
 
 ## License
 
@@ -1178,7 +1195,7 @@ title: TITLE
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.0.0-rc13</string>
+	<string>2.0.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/adamkiss/alfred-noteplan</string>
 </dict>
