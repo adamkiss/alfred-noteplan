@@ -2,8 +2,6 @@ import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/date_utils.dart';
 import 'package:alfred_noteplan/note_type.dart';
 import 'package:test/test.dart';
-import 'package:tuple/tuple.dart';
-
 
 void main() {
 	test('Week of the year: Adjusting from ISO 8601 to Noteplan', () {
@@ -85,51 +83,51 @@ void main() {
 
 	group('Tuple date movement', () {
 		test('Fails for weekly', () {
-			Tuple3<NoteType, int, int> t = Tuple3(NoteType.weekly, 2023, 1);
+			(NoteType, int, int) t = (NoteType.weekly, 2023, 1);
 			expect(() => t.shift(10), throwsStateError);
 			expect(() => t.shift(-10), throwsStateError);
 			expect(() => t.shift(0), throwsStateError);
 		});
 		test('Monthly', () {
-			Tuple3<NoteType, int, int> t = Tuple3(NoteType.monthly, 2023, 1);
-			expect(t.shift(5).item3, 6);
+			(NoteType, int, int) t = (NoteType.monthly, 2023, 1);
+			expect(t.shift(5).$3, 6);
 
-			expect(t.shift(12).item3, 1);
-			expect(t.shift(12).item2, 2024);
+			expect(t.shift(12).$3, 1);
+			expect(t.shift(12).$2, 2024);
 
-			expect(t.shift(-2).item3, 11);
-			expect(t.shift(-2).item2, 2022);
+			expect(t.shift(-2).$3, 11);
+			expect(t.shift(-2).$2, 2022);
 
-			expect(t.shift(-23).item3, 2);
-			expect(t.shift(-23).item2, 2021);
+			expect(t.shift(-23).$3, 2);
+			expect(t.shift(-23).$2, 2021);
 		});
 
 		test('Quarterly', () {
-			Tuple3<NoteType, int, int> t = Tuple3(NoteType.quarterly, 2023, 1);
-			expect(t.shift(5).item3, 2);
+			(NoteType, int, int) t = (NoteType.quarterly, 2023, 1);
+			expect(t.shift(5).$3, 2);
 
-			expect(t.shift(12).item3, 1);
-			expect(t.shift(12).item2, 2026);
+			expect(t.shift(12).$3, 1);
+			expect(t.shift(12).$2, 2026);
 
-			expect(t.shift(-2).item3, 3);
-			expect(t.shift(-2).item2, 2022);
+			expect(t.shift(-2).$3, 3);
+			expect(t.shift(-2).$2, 2022);
 
-			expect(t.shift(-23).item3, 2);
-			expect(t.shift(-23).item2, 2017);
+			expect(t.shift(-23).$3, 2);
+			expect(t.shift(-23).$2, 2017);
 		});
 
 		test('Yearly', () {
-			Tuple3<NoteType, int, int> t = Tuple3(NoteType.yearly, 2023, 1);
-			expect(t.shift(5).item2, 2028);
+			(NoteType, int, int) t = (NoteType.yearly, 2023, 1);
+			expect(t.shift(5).$2, 2028);
 
-			expect(t.shift(12).item3, 1);
-			expect(t.shift(12).item2, 2035);
+			expect(t.shift(12).$3, 1);
+			expect(t.shift(12).$2, 2035);
 
-			expect(t.shift(-2).item3, 1);
-			expect(t.shift(-2).item2, 2021);
+			expect(t.shift(-2).$3, 1);
+			expect(t.shift(-2).$2, 2021);
 
-			expect(t.shift(-23).item3, 1);
-			expect(t.shift(-23).item2, 2000);
+			expect(t.shift(-23).$3, 1);
+			expect(t.shift(-23).$2, 2000);
 		});
 	});
 
@@ -137,8 +135,8 @@ void main() {
 		DateTime now = DateTime(2023, 1, 11);
 
 		test('Fails correctly', () {
-			expect(() => Tuple3(NoteType.note, 2023, 1).toNoteplanDateString(), throwsArgumentError);
-			expect(() => Tuple3(NoteType.daily, 2023, 1).toNoteplanDateString(), throwsArgumentError);
+			expect(() => (NoteType.note, 2023, 1).toNoteplanDateString(), throwsArgumentError);
+			expect(() => (NoteType.daily, 2023, 1).toNoteplanDateString(), throwsArgumentError);
 			expect(() => now.toNoteplanDateString(NoteType.note), throwsArgumentError);
 		});
 

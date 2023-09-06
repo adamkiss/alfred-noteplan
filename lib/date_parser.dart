@@ -1,7 +1,6 @@
 import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/note_type.dart';
 import 'package:alfred_noteplan/date_utils.dart';
-import 'package:tuple/tuple.dart';
 
 class DateParser {
 	final String query;
@@ -24,7 +23,7 @@ class DateParser {
 		}
 	}
 
-	Tuple2<String, String> toNoteplan() => dt!.toNoteplan(type!);
+	(String, String) toNoteplan() => dt!.toNoteplan(type!);
 
 	static int _maybeParse(String? parseMatch, int defaultValue) {
 		return int.tryParse(parseMatch ?? '', radix: 10) ?? defaultValue;

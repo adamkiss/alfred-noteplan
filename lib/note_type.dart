@@ -1,7 +1,5 @@
 import 'package:alfred_noteplan/config.dart';
 import 'package:alfred_noteplan/strings.dart';
-import 'package:intl/intl.dart';
-import 'package:tuple/tuple.dart';
 
 enum NoteType {
 	note      ,
@@ -116,6 +114,6 @@ enum NoteType {
 		}
 	}
 
-	/// Format [Tuple2<int, int>] or [Tuple2<String, String>] based on Config.titleFormat<type> for this [NoteType]
-	String formatTitleTuple2(Tuple2 t) => formatTitleWithValues(t.item1, t.item2);
+	/// Format [(int, int) Record] or [(String, String) record] based on Config.titleFormat<type> for this [NoteType]
+	String formatTitleRecord((dynamic, dynamic) t) => formatTitleWithValues(t.$1, t.$2);
 }

@@ -1,7 +1,6 @@
 import 'package:alfred_noteplan/note_type.dart';
 import 'package:alfred_noteplan/int_padding.dart';
 import 'package:intl/intl.dart';
-import 'package:tuple/tuple.dart';
 
 extension DateUtils on DateTime {
 	int get quarter => int.parse(DateFormat('Q').format(this), radix: 10);
@@ -50,10 +49,10 @@ extension DateUtils on DateTime {
 		return d.subtract(Duration(days: 7)); // return the "previous week" first day
 	}
 
-	/// Convert [DateTime] to [Tuple3<type, year, ??>] based on [NoteType]
-	Tuple3<NoteType, int, int> toTuple3(NoteType type, {int weekStartsWith = DateTime.monday}) {
+	/// Convert [DateTime] to [(type, year, ??) record] based on [NoteType]
+	(NoteType, int, int) toRecord(NoteType type, {int weekStartsWith = DateTime.monday}) {
 		if (! NoteType.convertableToTuple3.contains(type)) {
-			throw ArgumentError('DateTime.toTuple3: can\'t convert ${type} to Tuple3');
+			throw ArgumentError('DateTime.toRecord: can\'t convert ${type} to Record');
 		}
 
 		switch (type) {
@@ -62,10 +61,10 @@ extension DateUtils on DateTime {
 				int ryear = year;
 				if (month == 1 && rweek > 50) { ryear -= 1; }
 				if (month == 12 && rweek < 3) { ryear += 1;}
-				return Tuple3(type, ryear, rweek);
-			case NoteType.monthly: return Tuple3(type, year, month);
-			case NoteType.quarterly: return Tuple3(type, year, quarter);
-			default: return Tuple3(type, year, 1);
+				return (type, ryear, rweek);
+			case NoteType.monthly: return (type, year, month);
+			case NoteType.quarterly: return (type, year, quarter);
+			default: return (type, year, 1);
 		}
 	}
 
@@ -83,7 +82,7 @@ extension DateUtils on DateTime {
 					day.padLeft(2)
 				].join();
 			default:
-				return toTuple3(type).toNoteplanDateString();
+				return toRecord(type).toNoteplanDateString();
 		}
 	}
 
@@ -96,53 +95,53 @@ extension DateUtils on DateTime {
 			case NoteType.weekly:
 			case NoteType.quarterly:
 			case NoteType.yearly:
-				final t3 = toTuple3(type);
-				return type.formatTitleWithValues(t3.item2, t3.item3);
+				final t3 = toRecord(type);
+				return type.formatTitleWithValues(t3.$2, t3.$3);
 		  	default:
 		  		throw ArgumentError('DateTime.toNoteplanTitle: can\'t convert ${type} to filename.');
 		}
 	}
 
-	/// Returns a [Tuple2<title, datestring>] for a given date
-	Tuple2<String, String> toNoteplan(NoteType type) {
-		return Tuple2(
+	/// Returns a [(String, String) record] for a given date
+	(String, String) toNoteplan(NoteType type) {
+		return (
 			toNoteplanTitle(type),
 			toNoteplanDateString(type)
 		);
 	}
 }
 
-extension Tuple3Utils on Tuple3<NoteType, int, int> {
+extension RecordsUtils on (NoteType, int, int) {
 	/// shift the 'month/quarter/year' by [int] units
-	Tuple3<NoteType, int, int> shift(int change) {
-		if (! NoteType.shiftable.contains(item1)) {
-			throw StateError('Tuple3.shift unsupported for NoteType.weekly');
+	(NoteType, int, int) shift(int change) {
+		if (! NoteType.shiftable.contains($1)) {
+			throw StateError('Record.shift unsupported for NoteType.weekly');
 		}
 		int max = {
 			NoteType.monthly: 12,
 			NoteType.quarterly: 4,
 			NoteType.yearly: 1
-		}[item1]!;
-		int y = item2;
-		int x = item3 + change;
+		}[$1]!;
+		int y = $2;
+		int x = $3 + change;
 		while (x > max) { x -= max; y += 1; }
 		while (x < 1)     { x += max; y -= 1; }
-		return Tuple3(item1, y, x);
+		return ($1, y, x);
 	}
 
 	/// Get a Noteplan note name from [Tuple3<type, year, ??>]
 	String toNoteplanDateString() {
-		if ([NoteType.daily, NoteType.note].contains(item1)) {
+		if ([NoteType.daily, NoteType.note].contains($1)) {
 			throw ArgumentError(
-				'Tuple3.toNoteplanDateString: wrong NoteType in Tuple3<${item1}, ${item2}, ${item3}>'
+				'Record(NoteType, int, int).toNoteplanDateString: wrong NoteType in Record (${$1}, ${$2}, ${$3})'
 			);
 		}
 
-		switch (item1) {
-			case NoteType.weekly: return '${item2.padLeft(4)}-W${item3.padLeft(2)}';
-			case NoteType.monthly: return '${item2.padLeft(4)}-${item3.padLeft(2)}';
-			case NoteType.quarterly: return '${item2.padLeft(4)}-Q${item3}';
-			default: return item2.padLeft(4);
+		switch ($1) {
+			case NoteType.weekly: return '${$2.padLeft(4)}-W${$3.padLeft(2)}';
+			case NoteType.monthly: return '${$2.padLeft(4)}-${$3.padLeft(2)}';
+			case NoteType.quarterly: return '${$2.padLeft(4)}-Q${$3}';
+			default: return $2.padLeft(4);
 		}
 	}
 }

@@ -9,7 +9,6 @@ import 'package:alfred_noteplan/note_match.dart';
 import 'package:alfred_noteplan/noteplan.dart';
 import 'package:alfred_noteplan/refresh.dart';
 import 'package:alfred_noteplan/strings.dart';
-import 'package:tuple/tuple.dart';
 
 bool _last_update_more_than(int last_update, {int compare = 10}) {
 	return DateTime.now().millisecondsSinceEpoch > (last_update + compare);
@@ -96,19 +95,19 @@ void main (List<String> arguments) {
 	if (command == 'date') {
 		try {
 			final DateParser parsed = DateParser(query);
-			final Tuple2 np = parsed.toNoteplan();
+			final (String, String) np = parsed.toNoteplan();
 
 			alf_exit([
 				alf_item(
-					np.item1,
-					'Open or create a ${parsed.type!.value} note named "${np.item2}.md"',
-					arg: Noteplan.openCalendarUrl(np.item2),
+					np.$1,
+					'Open or create a ${parsed.type!.value} note named "${np.$2}.md"',
+					arg: Noteplan.openCalendarUrl(np.$2),
 					valid: true,
 					variables: {'action':'open'},
 					mods: {
 						'cmd': {
 							'subtitle': str_fts_result_arg_cmd_subtitle,
-							'arg': Noteplan.openCalendarUrl(np.item2, sameWindow: false)
+							'arg': Noteplan.openCalendarUrl(np.$2, sameWindow: false)
 						}
 					}
 				)

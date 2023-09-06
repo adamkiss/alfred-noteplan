@@ -6,7 +6,6 @@ import 'package:alfred_noteplan/code_bit.dart';
 import 'package:alfred_noteplan/strings.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
-import 'package:tuple/tuple.dart';
 
 class Note {
 	final String filename;
@@ -37,10 +36,10 @@ class Note {
 				? _parse_frontmatter(content_raw)
 				: _parse_markdown(content_raw, bname);
 
-			title = parsed_content.item1;
-			content = parsed_content.item2.cleanForFts();
-			hyperlinks = _parse_hyperlinks(parsed_content.item2);
-			code_bits = _parse_code_bits(parsed_content.item2);
+			title = parsed_content.$1;
+			content = parsed_content.$2.cleanForFts();
+			hyperlinks = _parse_hyperlinks(parsed_content.$2);
+			code_bits = _parse_code_bits(parsed_content.$2);
 			return;
 		}
 
@@ -79,7 +78,7 @@ class Note {
 		);
 	}
 
-	Tuple2<String, String> _parse_frontmatter(String raw) {
+	(String, String) _parse_frontmatter(String raw) {
 		final fm = RegExp(
 			r'^---.*?title\:\s*?(.*?)\n.*?---(.*)',
 			caseSensitive: false,
@@ -87,13 +86,13 @@ class Note {
 		);
 
 		final match = fm.firstMatch(raw);
-		return Tuple2(
+		return (
 			match!.group(1)!.trim(), // title
 			match.group(2)!.trim() // content
 		);
 	}
 
-	Tuple2<String, String> _parse_markdown(String raw, String bname) {
+	(String, String) _parse_markdown(String raw, String bname) {
 		final h1 = RegExp(r'^#\s*(.*)(?:\n|\s---)');
 		late String title;
 		late String content;
@@ -107,7 +106,7 @@ class Note {
 			content = raw;
 		}
 
-		return Tuple2(title, content);
+		return (title, content);
 	}
 
 	List<Hyperlink> _parse_hyperlinks(String? body) {

@@ -9,7 +9,6 @@ dependencies:
   intl: ^0.18.0
   path: ^1.8.3
   sqlite3: ^1.9.1
-  tuple: ^2.0.1
 
 dev_dependencies:
   lints: ^2.0.0
