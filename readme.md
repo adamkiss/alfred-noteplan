@@ -1,6 +1,6 @@
 # Alfred Noteplan v2
 
-![OG Social image](social.jpg)
+![OG Social image](social.png)
 
 ## What is this
 
