@@ -86,7 +86,10 @@ void main (List<String> arguments) {
 
 	// Search (notes, hyperlinks and code bits)
 	if (command == 'all') {
-		print(alf_to_results(db.search_all(query)));
+		print(alf_to_results(
+			db.search_all(query)
+			..add(alf_create_item(query))
+		));
 		db.dispose();
 		exit(0);
 	}

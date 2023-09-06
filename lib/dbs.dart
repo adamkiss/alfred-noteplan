@@ -263,7 +263,7 @@ class Dbs {
 			  case 'code bit': return CodeBit.to_alfred_result(result);
 			  default: throw Exception('Unknown result type: ${result['result_type']}');
 			}
-		}).toList(growable: false);
+		}).toList();
 	}
 
 	ResultSet cache_get_updated({int since = 0}) {
