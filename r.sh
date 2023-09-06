@@ -77,7 +77,7 @@ build:plistcheck () { #: dumps the objects "prebuild" tries update with scripts 
 
 build:script () { #: Copy the script part from the workflow.sh into info.plist
     cp workflow/info.plist workflow/info.plist.bak
-    SCRIPT=`cat test/workflow-search-notes.sh | sed -E 's/(["'\''])/\\\\\1/g'`
+    SCRIPT=`cat test/workflow-search-all.sh | sed -E 's/(["'\''])/\\\\\1/g'`
     /usr/libexec/PlistBuddy -c "Set :objects:1:config:script $SCRIPT" workflow/info.plist
 
     SCRIPT=`cat test/workflow-date.sh | sed -E 's/(["'\''])/\\\\\1/g'`
