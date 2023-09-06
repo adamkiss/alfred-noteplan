@@ -3,7 +3,7 @@ description: Format & Refresh SQLite database for alfred-noteplan workflow
 version: 1.0.0
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies: 
   intl: ^0.18.0
