@@ -32,7 +32,7 @@ class Note {
 		if (note_type == 1) {
 			type = NoteType.note;
 
-			final parsed_content = content_raw.startsWith('---')
+			final parsed_content = _hasFrontmatterWithTitle(content_raw)
 				? _parse_frontmatter(content_raw)
 				: _parse_markdown(content_raw, bname);
 
@@ -47,7 +47,6 @@ class Note {
 		content = content_raw.cleanForFts();
 		hyperlinks = _parse_hyperlinks(content_raw);
 		code_bits = _parse_code_bits(content_raw);
-
 
 		if (bname.contains('W')) { // Week
 			type = NoteType.weekly;
@@ -76,6 +75,16 @@ class Note {
 			record['modified'],
 			record['note_type']
 		);
+	}
+
+	bool _hasFrontmatterWithTitle(String raw) {
+		final fm = RegExp(
+			r'^---.*?title\:\s*?(.*?)\n.*?---(.*)',
+			caseSensitive: false,
+			dotAll: true
+		);
+
+		return fm.hasMatch(raw);
 	}
 
 	(String, String) _parse_frontmatter(String raw) {
