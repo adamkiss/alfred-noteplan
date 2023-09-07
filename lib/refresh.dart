@@ -7,7 +7,14 @@ int refresh(Dbs db, {bool force = false}) {
 
 	// Get changed notes in Cache
 	List<Note> new_notes = [];
-	for (var result in db.cache_get_updated(since: force ? 0 : db.get_last_update())) { new_notes.add(Note.fromRow(result)); }
+	for (var result in db.cache_get_updated(since: force ? 0 : db.get_last_update())) {
+		try {
+			new_notes.add(Note.fromRow(result));
+		} catch (e) {
+			// swallow not creation error and continue
+			// this should skip over errors and just… not show erroneous notes
+		}
+	}
 
 	// Delete/reinsert the notes
 	if (new_notes.isNotEmpty) {
