@@ -1,10 +1,10 @@
-# Alfred Noteplan v2
+# Noteplan for Alfred
 
 ![OG Social image](social.png)
 
 ## What is this
 
-Noteplan for Alfred brings all your Noteplan notes to Alfred! Use it to:
+Noteplan for Alfred brings all your Noteplan notes to Alfred 5 and beyond! Use it to:
 
 - 🔍 Search through all of your notes, with **full-text search**
 - ⚡ **Use Noteplan as link manager** - Search through all of your hyperlinks, and immediately open them in your default browser
@@ -12,8 +12,12 @@ Noteplan for Alfred brings all your Noteplan notes to Alfred! Use it to:
 - ✨ Create new notes easily
 - 📆 Go to an exact date, fuzzy date or even a weekly/monthly/quarterly note
 
+Note: this workflow **requires Alfred 5**. It uses configuration options introduced in the version 5.
+
 ## Usage
-- `n [Search phrase]` - Full text search. If there isn't any note available, "Create new note" command is the only result
+- `n [Search phrase]` - Full-text search through all notes, code bits and hyperlinks
+    - Also contains a "create new note" option
+    - if there's no match, the note creation is the only option
 - `nh [Phrase]` - Search through all the hyperlinks you noted down - and open them immediately
 - `nc [Phrase]` - Search for all your titled code bits - and paste them to the frontmost app
 - `nd [date phrase]` - Very simple exact/relative date parser
@@ -34,11 +38,11 @@ Every block of code **with a title/description** is matched as a snippet. **Defa
 
 #### Example code bit:
 
+````
+```language (Title and a description in parentheses)
+   This code bit will be matched as codebit by content, language and the title and description.
 ```
-    ```language (Title and a description in parentheses)
-        This code bit will be matched as codebit by content, language and the title and description.
-    ```
-```
+````
 
 ### Date parser
 - `t … today` - today's note
@@ -74,10 +78,10 @@ Every block of code **with a title/description** is matched as a snippet. **Defa
 5. You can now do a search, date query or add a new note
 
 ### Why all the warnings?
-To have macOS accept your app as safe, the developer needs to cryptographically sign it. That requires a $99/year Apple Developer Program, which I don't need for anything else, so the two warnings are acceptable for a free workflow, in my opinion.
+To have macOS accept your app as safe, the developer needs to cryptographically sign it. That requires a $99/year Apple Developer Program, which I don't need for anything else, so the two warnings are acceptable for a free workflow in my opinion.
 
 ### Wasn't there a refresh command?
-There was. But with the new version, the workflow refreshes only changed notes since last update, and that's often a tiny number, so the databse is updated every time this workflow is run (with a timeout ~10 seconds, so when you're constructing your query, it runs only on the first letter).
+There was. But with the new version, the workflow refreshes changed notes only, and that's often tiny number, so the database is updated every time this workflow is run (with debounce at ~10 seconds, so while you're querying your notes, it doesn't try to refresh every call).
 
 ## License
 
