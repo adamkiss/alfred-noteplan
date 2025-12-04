@@ -18,7 +18,7 @@
         {
             "label": "Build the executable",
             "type": "shell",
-            "command": "./r.sh build:dart",
+            "command": "./task build",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

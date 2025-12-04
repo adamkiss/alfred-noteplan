@@ -7,8 +7,8 @@
         {
             "name": "alfred-noteplan",
             "request": "launch",
-            "type": "dart",
-            "program": "bin/noteplan.dart",
+            "type": "go",
+            "program": "src/main.go",
             "args": ["search", "adam kiss"],
             "env": {
                 "user_np_root": "/Users/adam/Library/Containers/co.noteplan.NotePlan-setapp/Data/Library/Application Support/co.noteplan.NotePlan-setapp"

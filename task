@@ -1,18 +1,8 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 
-build:licenses () { #: Get all the licenses from pubspec.lock
-    cat LICENSE > workflow/LICENSES
-    echo "\n\n----------\n" >> workflow/LICENSES
-    dart-pubspec-licenses-lite -i pubspec.lock | grep -v null >> workflow/LICENSES
-}
-
-build:dart () { #: Build the version for the current architecture
-    dart compile exe bin/noteplan.dart -o "workflow/noteplan-$(uname -m)"
-}
-
-build:dart-local () { #: Build the version in the version controlled space
-    dart compile exe bin/noteplan.dart -o "bin-cache/noteplan-$(uname -m)"
+build:go () { #: Build the version for the current architecture
+    true;
 }
 
 build:icons () { #: Build the icns file from iconsets
@@ -44,7 +34,6 @@ build:icons () { #: Build the icns file from iconsets
 
     mv icons/iconsets/*.icns workflow/icons
 }
-
 
 build:plistcheck () { #: dumps the objects "prebuild" tries update with scripts in test/workflow-*.sh
     # should return: 
@@ -97,18 +86,19 @@ build:workflow () { #: Zip the workflow folder into release/dist folder
     zip -r "../alfred-noteplan-$VERSION-$BUILD.alfredworkflow" icons/ info.plist icon.png LICENSES noteplan-arm64 noteplan-x86_64
 }
 
-prebuild () { #: Run the whole build - the local part
-    # build:icons
-    build:dart-local
+build () { #: Run the build and packaging - on the runner
+    echo "WIP"
+    exit 0
+    build:icons
+    build:go
     build:plistcheck
     build:script
+    build:workflow
 }
 
-build () { #: Run the build and packaging - on the runner
-    build:dart
-    cp bin-cache/noteplan-arm64 workflow/ # GA doesn't run on arm64 arch
-    build:licenses
-    build:workflow
+run () { #: run main.go with args
+    cd src
+    go run . "$@"
 }
 
 version () { #: get the workflow version
@@ -139,7 +129,7 @@ test () { #: run tests
 #
 # BOILERPLATE
 #
-r='./r.sh'
+r='./task'
 NAME='alfred-noteplan'
 
 about () { #: show help & commands
