@@ -1,7 +1,18 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+
+	"github.com/adamkiss/alfred-noteplan/utils"
+)
 
 func HandleTest(params []string) {
-	fmt.Println(params)
+
+	start := time.Now()
+
+	str := "+d+m+w+2d"
+	fmt.Println(utils.MatchQueryToDate(str))
+
+	fmt.Println(time.Since(start))
 }

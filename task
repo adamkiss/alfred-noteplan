@@ -123,7 +123,8 @@ dev:plisttest () { #: list all the object to search for the trigger notes
 }
 
 test () { #: run tests
-    zsh test/test.sh
+    cd src
+    go test ./... "$@"
 }
 
 #
